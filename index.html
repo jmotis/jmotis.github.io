@@ -504,7 +504,7 @@ Do you:
 When you go to church on Easter Sunday, you are reminded of how lucky you are as one of God’s chosen people. 
 &lt;br&gt;&lt;br&gt;Do you: 
 &lt;br&gt;
-[[celebrate your good fortune by increasing your donations to the poor-&gt;May 1665]][$reputation +=1][$wealth +=1]]
+[[celebrate your good fortune by increasing your donations to the poor-&gt;May 1665][$reputation +=1; $wealth +=1]]
 &lt;br&gt;
 [[save your money in case of future misfortune-&gt;May 1665][$reputation -=1][$wealth +=3]]
 &lt;br&gt;
@@ -516,19 +516,19 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 When you go to church on Easter Sunday, you are reminded of how lucky you are as one of God’s chosen people.
 &lt;br&gt;&lt;br&gt;Do you: 
 &lt;br&gt;
-[[celebrate your good fortune by increasing your donations to the poor-&gt;May 1665][$reputation +=1][$wealth +=2]]
+[[celebrate your good fortune by increasing your donations to the poor-&gt;May 1665][$reputation +=1; $wealth +=2]]
 &lt;br&gt;
-[[save your money in case of future misfortune-&gt;May 1665][$reputation -=1][$wealth +=6]]?
+[[save your money in case of future misfortune-&gt;May 1665][$reputation -=1; $wealth +=6]]?
 &lt;br&gt;
-[[take some time off and go fox hunting in the countryside-&gt;May 1665][$reputation -=1][$wealth +=2]]
+[[take some time off and go fox hunting in the countryside-&gt;May 1665][$reputation -=1; $wealth +=2]]
 &lt;&lt;/if&gt;&gt;
 
 &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;Court is abuzz with gossip about the war and there’s plenty to keep an ambitious courtier busy.
 &lt;br&gt;&lt;br&gt;Do you: 
 &lt;br&gt;
-[[throw in and help with the war effort-&gt;May 1665][$reputation +=5][$wealth -=1]]
+[[throw in and help with the war effort-&gt;May 1665][$reputation +=5; $wealth -=1]]
 &lt;br&gt;
-[[keep yourself out of the fray and focus on your own needs-&gt;May 1665][$reputation -=1][$wealth +=10]]?
+[[keep yourself out of the fray and focus on your own needs-&gt;May 1665][$reputation -=1; $wealth +=10]]?
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/linkappend&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="StoryInit" tags="" position="650,25" size="100,100">&lt;&lt;set $reputation to 0&gt;&gt;
@@ -1135,10 +1135,9 @@ As the summer heat engulfs the city, plague numbers continue to rise. But at lea
 &lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt;
 Early one Sunday morning, you wake to the frantic ringing of church bells.  This isn&#39;t the ordinary call to service—&lt;&lt;if $religion is &quot;member of the Church of England&quot;&gt;&gt;something you were looking forward to attending after you slept in&lt;&lt;else&gt;&gt;as if you&#39;d ever attend a service in the Church of England!&lt;&lt;/if&gt;&gt;—but rather a call to arms.  When you stumble outside, you discover the city has caught fire around you.
 
-&lt;&lt;if $age is &quot;child&quot;&gt;&gt;You immediately wake the nearest adult, who takes charge. You grab your favorite toy, &lt;&lt;/if&gt;&gt;&lt;&lt;if $age is &quot;adolescent&quot;&gt;&gt;You immediately wake the nearest adult, who takes charge. You grab some of your clothes, &lt;&lt;/if&gt;&gt;then it&#39;s time to flee, with the fire nipping at your heels.  You will have nightmares about this moment for weeks.
-
-&lt;&lt;if $age is &quot;young adult&quot; or &quot;middle-aged adult&quot; or &quot;elderly adult&quot;&gt;&gt;
-&lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;You immediately alert your master and mistress, who send you out to find as many additional carts or boats as you can, to carry away their goods.  &lt;&lt;if $reputation lte 2&gt;&gt;Unfortunately, everyone is so busy saving their own households, they have little to spare for you.  All you have is the single cart you already own.  &lt;&lt;else&gt;&gt;Luckily, you have friends and neighbors who hold you in high esteem and are willing to lend you carts.&lt;&lt;/if&gt;&gt;The household loads it/them up and you all flee with the fire nipping at your heels.
+&lt;&lt;if $age is &quot;child&quot;&gt;&gt;You immediately wake the nearest adult, who takes charge. You grab your favorite toy, then it&#39;s time to flee, with the fire nipping at your heels.  You will have nightmares about this moment for weeks.
+&lt;&lt;elseif $age is &quot;adolescent&quot;&gt;&gt;You immediately wake the nearest adult, who takes charge. You grab some of your clothes, then it&#39;s time to flee, with the fire nipping at your heels.  You will have nightmares about this moment for weeks.
+&lt;&lt;else&gt;&gt;&lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;You immediately alert your master and mistress, who send you out to find as many additional carts or boats as you can, to carry away their goods.  &lt;&lt;if $reputation lte 2&gt;&gt;Unfortunately, everyone is so busy saving their own households, they have little to spare for you.  All you have is the single cart you already own.  &lt;&lt;else&gt;&gt;Luckily, you have friends and neighbors who hold you in high esteem and are willing to lend you carts.&lt;&lt;/if&gt;&gt;The household loads it/them up and you all flee with the fire nipping at your heels.
 
 &lt;&lt;elseif $socio is &quot;nobles&quot; or &quot;merchants&quot;&gt;&gt;You immediately send servants to find as many carts or boats as they can, to carry away your goods, and begin gathering your most important possessions—your money, your papers, your tally sticks. &lt;&lt;if $reputation lte 2&gt;&gt;Unfortunately, everyone is so busy saving their own households, they have little to spare for your servants who return empty-handed. All you have is the single cart you already own, which will barely carry anything.&lt;&lt;else&gt;&gt;Luckily, the servants soon return with several carts and you manage to send your most precious household goods out of the path of danger.  &lt;&lt;/if&gt;&gt;  After much agonizing, you task a servant to dig holes in the yard to bury your wine, Parmezan cheese, and most expensive books. Then you and the rest of your household gather all the things you can hold and flee with the fire nipping at your heels.
 
@@ -1170,13 +1169,12 @@ Everyone is still reeling from the shock of the Great Fire at the beginning of [
 
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;You spend the next several weeks living in a field. The local parish church serves food three times a day to keep you and the others from starving, but winter is coming and you know that you&#39;ll freeze to death if you don&#39;t manage to find permanent shelter before then. &lt;&lt;if reputation lte 2&gt;&gt;Unfortunately, the first frost comes and you are still homeless.  &lt;&lt;if $origin is not &quot;London&quot;&gt;&gt; Your only choices are to [[return to your home in $origin-&gt;go quietly]] or to pray you don&#39;t [[freeze]].&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;You spend the next several weeks living in a field. The local parish church serves food three times a day to keep you and the others from starving, but winter is coming and you know that you&#39;ll freeze to death if you don&#39;t manage to find permanent shelter before then. &lt;&lt;if $reputation lte 2&gt;&gt;Unfortunately, the first frost comes and you are still homeless.  &lt;&lt;if $origin is not &quot;London&quot;&gt;&gt; Your only choices are to [[return to your home in $origin-&gt;go quietly]] or to &lt;&lt;else&gt;&gt;You &lt;&lt;/if&gt;&gt;pray you don&#39;t [[freeze]].
 &lt;&lt;else&gt;&gt;Luckily, just as the first frost hits the city, you manage to find a friend-of-a-friend who is willing to let you sleep on the floor until you can get more permanent lodgings.
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;
 You spend the next several weeks living in a field.  Luckily, there is plenty of work clearing away the debris of the fire and you manage to scrape together enough money to afford new lodgings in the eastern suburbs of the city.  It&#39;s just a single room and you&#39;re a little worried that the building will fall down around you one night, but at least it&#39;s better than freezing to death in the fields.
-
-&lt;&lt;else&gt;&gt;You spend the next several weeks working to clear out the wreckage of your former home.  Even though you work as fast as you can, you won&#39;t be able to rebuild before winter.  &lt;&lt;if reputation lte 2&gt;&gt;Your poor reputation means that no one is willing to let you stay as a guest with them for long&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt; so you end up having to leave the city for the winter&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt; so you end up having to sleep in your office all winter&lt;&lt;else&gt;&gt; so you end up having to stay in crappy lodgings that are well beneath your station&lt;&lt;/if&gt;&gt; and are very unhappy about it.&lt;&lt;else&gt;&gt;Because of your good reputation, friends allow you to stay with them through the winter.&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;You spend the next several weeks working to clear out the wreckage of your former home.  Even though you work as fast as you can, you won&#39;t be able to rebuild before winter.  &lt;&lt;if $reputation lte 2&gt;&gt;Your poor reputation means that no one is willing to let you stay as a guest with them for long&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt; so you end up having to leave the city for the winter&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt; so you end up having to sleep in your office all winter&lt;&lt;else&gt;&gt; so you end up having to stay in crappy lodgings that are well beneath your station&lt;&lt;/if&gt;&gt; and are very unhappy about it.&lt;&lt;else&gt;&gt;Because of your good reputation, friends allow you to stay with them through the winter.&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;else&gt;&gt;
 There&#39;s so many people homeless that there&#39;s money to be made for someone who&#39;s willing to rent out a few rooms of their house, especially with such rainy weather and the increasing cold. &lt;&lt;if $socio is &quot;nobles&quot; or &quot;merchants&quot;&gt;&gt;Such activity is beneath your social station, of course, but you are envious of all the people profiting off the disaster.&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt; You open up your house and make a lot of money, but take a hit to your reputation because your neighbors accuse you of profiting off the disaster.&lt;&lt;else&gt;&gt; Not that you have room for such a thing, unfortunately.&lt;&lt;/if&gt;&gt;
@@ -1621,7 +1619,7 @@ NTS: give him all your money to fund the war effort&lt;&lt;set $reputation +=2&g
 
 &lt;&lt;/linkreplace&gt;&gt;
 &lt;&lt;/linkreplace&gt;&gt;</tw-passagedata><tw-passagedata pid="49" name="YouPesthouse" tags="" position="1575,100" size="100,100">&lt;&lt;silently&gt;&gt;&lt;&lt;set $plagueInfection to 2&gt;&gt;&lt;&lt;/silently&gt;&gt;
-&lt;&lt;nobr&gt;&gt;
+&lt;&lt;nobr&gt;&gt;&lt;&lt;/nobr&gt;&gt;
 The pesthouse is a terrible place to be confined, with countless sick people all crammed in close together so you can hear their every moan. They die terrifyingly fast and their cots refill just as quickly. You toss and turn in your dirty, sweat-soaked sheets, as your fever spikes and you fear for your life. 
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if $socio is &quot;merchants&quot;&gt;&gt;It occurs to you that perhaps you ought to have written your will, but your reputation is so poor and the pesthouse is so terrifying that no one can be convinced to bring you the writing materials you need.&lt;br&gt;&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt;It occurs to you that perhaps you ought to have written your will, but your reputation is so poor and the pesthouse is so terrifying that you can&#39;t convince a scrivener to come help you.&lt;&lt;/if&gt;&gt;
