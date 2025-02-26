@@ -1558,7 +1558,8 @@ NTS: This is also what happened to your family.
 
 &lt;&lt;/silently&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="January 1665" tags="storyline 1665" position="1075,475" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot; or $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;single&quot;&gt;&gt;&lt;&lt;marriage-market&gt;&gt;
+&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot; or $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;single&quot;&gt;&gt;&lt;&lt;set $seeking to 0&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $seeking is 0&gt;&gt;&lt;&lt;marriage-market&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;set $fever to random(1,10)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
@@ -1583,6 +1584,11 @@ NTS: This is also what happened to your family.
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $ward to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $ward is 1&gt;&gt;&lt;&lt;ward&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
 &lt;&lt;else&gt;&gt;
 The Christmas festivities end with a great snowfall. It&#39;s bitterly cold and the frost doesn&#39;t break for over two weeks. &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $age is &quot;child&quot;&gt;&gt;Your family leaves you safe and warm at home while they attend on the king and queen at Court.&lt;&lt;else&gt;&gt;That isn&#39;t enough to stop you from attending on the king and queen at Court and buying them expensive New Year&#39;s gifts to gain their favor. &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;Freezing rain alternates with snow all winter and rumors swirl about the Dutch fleet.&lt;br&gt;&lt;br&gt;
 
@@ -1708,6 +1714,7 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="StoryInit" tags="" position="425,50" size="100,100">&lt;&lt;set $investigate to 0&gt;&gt;
 &lt;&lt;set $money to 0&gt;&gt;
 &lt;&lt;set $expenses to 0&gt;&gt;
@@ -2301,8 +2308,8 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="16" name="May 1665" tags="storyline 1665" position="1200,475" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -2333,6 +2340,11 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $ward isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $ward to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $ward is 1&gt;&gt;&lt;&lt;ward&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
 &lt;&lt;else&gt;&gt;
 As if war wasn’t bad enough, you begin to hear rumors around the city that several houses have been shut up because their inhabitants have &lt;span class=&quot;def&quot; title=&quot;A deadly infection usually spread to humans by fleas infected with the bacterium yersinia pestis. It manifests in several different ways, including bubonic (lymph node), pneumonic (lungs), and septicemic (bloodstream) plague. Bubonic plague was the least deadly form, at only ~50% fatal, while pneumonic plague was 99% fatal and can be spread directly to other people by coughing and septicemic plague was 100% fatal. Plague killed hundreds of millions of people before the development of antibiotic treatments and still kills some people today. Symptoms include fever, headaches, vomiting, weakness, coughing, shortness of breath, chest pain, abdominal pain, swollen lymph nodes, gangrene, meningitis, and most famously, the appearance of large buboes, or painful pus-filled swellings in the thighs, neck, groin, and armpits. They may turn black and rot away or rupture, spreading the infection around the body.&quot;&gt;plague&lt;/span&gt;. 
 You
@@ -2369,9 +2381,10 @@ You
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="17" name="June 1665" tags="storyline 1665" position="1325,475" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -2394,7 +2407,11 @@ You
 &lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
-
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
+&lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
 &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;
 &lt;&lt;else&gt;&gt;
@@ -2567,13 +2584,10 @@ You
         &lt;&lt;/if&gt;&gt;
 /* If not in city walls or western suburbs */
     &lt;&lt;elseif $location isnot &quot;in another part of the western suburbs&quot;&gt;&gt;[[Worse, the first case of plague has appeared in your parish.-&gt;First Plague Day]]
-    &lt;&lt;/if&gt;&gt;
-    &lt;&lt;/linkappend&gt;&gt;
-&lt;br&gt;&lt;br&gt;
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
+
+
 /* If location is western suburbs */
-    &lt;&lt;if $location is &quot;in another part of the western suburbs&quot;&gt;&gt;
+    &lt;&lt;elseif $location is &quot;in another part of the western suburbs&quot;&gt;&gt;
         &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
             &lt;&lt;if $role is &quot;corpsebearer&quot; or $role is &quot;searcher&quot; or $role is &quot;nurse&quot;&gt;&gt;
                 &lt;&lt;plague-work&gt;&gt;
@@ -2621,9 +2635,13 @@ You
             Otherwise, you can [[remain in the city with your entire household.-&gt;July 1665]]&lt;br&gt;&lt;br&gt;
         &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/linkappend&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;/if&gt;&gt;
 
 
+
+ 
 
 &lt;&lt;fumigant&gt;&gt;
 
@@ -2637,9 +2655,10 @@ You
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="18" name="August 1665" tags="storyline 1665" position="1075,625" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -2662,7 +2681,11 @@ You
 &lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
-
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
+&lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
     &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;
 &lt;&lt;else&gt;&gt;
@@ -2724,9 +2747,10 @@ So many people are sick and shut up in their houses that the city has imposed a 
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="19" name="September 1665" tags="storyline 1665" position="1200,625" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -2750,6 +2774,11 @@ So many people are sick and shut up in their houses that the city has imposed a 
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
 &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;
@@ -2807,9 +2836,10 @@ You can continue to try and avoid the plague by visiting the &lt;span class=&quo
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="20" name="October 1665" tags="storyline 1665" position="1325,625" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -2834,7 +2864,11 @@ You can continue to try and avoid the plague by visiting the &lt;span class=&quo
 &lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
-
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
+&lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
 &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;
 &lt;&lt;else&gt;&gt;
@@ -2874,9 +2908,10 @@ You hope the cold will deepen--and plague numbers continue to fall--as you head 
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="21" name="November 1665" tags="storyline 1665" position="1450,625" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -2901,7 +2936,11 @@ You hope the cold will deepen--and plague numbers continue to fall--as you head 
 &lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
-
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
+&lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
 &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;
 &lt;&lt;else&gt;&gt;
@@ -2919,9 +2958,10 @@ You don&#39;t expect great things this Christmas, but you are still looking forw
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="22" name="December 1665" tags="storyline 1665" position="1075,775" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -2945,6 +2985,11 @@ You don&#39;t expect great things this Christmas, but you are still looking forw
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
 &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;
@@ -2970,9 +3015,10 @@ Maybe things will be better in [[1666-&gt;January 1666]].&lt;&lt;/replace&gt;&gt
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="23" name="January 1666" tags="storyline 1666" position="1200,775" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -2996,6 +3042,11 @@ Maybe things will be better in [[1666-&gt;January 1666]].&lt;&lt;/replace&gt;&gt
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
 &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;
@@ -3025,10 +3076,11 @@ After six months of travel, the king finally returns the Court to &lt;span class
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 </tw-passagedata><tw-passagedata pid="24" name="February 1666" tags="storyline 1666" position="1325,775" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -3052,6 +3104,11 @@ After six months of travel, the king finally returns the Court to &lt;span class
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
 &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;
@@ -3075,9 +3132,10 @@ Your &lt;span class=&quot;def&quot; title=&quot;The smallest administrative unit
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="25" name="March 1666" tags="storyline 1666" position="1450,775" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -3101,6 +3159,11 @@ Your &lt;span class=&quot;def&quot; title=&quot;The smallest administrative unit
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
 &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;
@@ -3160,9 +3223,10 @@ It&#39;s not a great lead up for [[April 1666]].
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="26" name="April 1666" tags="storyline 1666" position="1075,925" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -3196,6 +3260,11 @@ It&#39;s not a great lead up for [[April 1666]].
 &lt;&lt;if $ward isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $ward to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $ward is 1&gt;&gt;&lt;&lt;ward&gt;&gt;
 &lt;&lt;else&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
+&lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
 &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;
 &lt;&lt;else&gt;&gt;
@@ -3221,9 +3290,10 @@ At least there&#39;s some good news to balance out the bad as you head into [[Ma
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="27" name="May 1666" tags="storyline 1666" position="1200,925" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -3257,6 +3327,11 @@ At least there&#39;s some good news to balance out the bad as you head into [[Ma
 &lt;&lt;if $ward isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $ward to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $ward is 1&gt;&gt;&lt;&lt;ward&gt;&gt;
 &lt;&lt;else&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
+&lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
 &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;
 
@@ -3284,9 +3359,10 @@ As a devout Catholic, you are among the loudest revelers in the celebrations of 
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="28" name="June 1666" tags="storyline 1666" position="1325,925" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -3319,6 +3395,11 @@ As a devout Catholic, you are among the loudest revelers in the celebrations of 
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $ward isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $ward to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $ward is 1&gt;&gt;&lt;&lt;ward&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
 &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;
@@ -3378,9 +3459,10 @@ One thing is for certain, though. The weather is so hot that &lt;span class=&quo
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="29" name="July 1666" tags="storyline 1666" position="1450,925" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -3414,6 +3496,11 @@ One thing is for certain, though. The weather is so hot that &lt;span class=&quo
 &lt;&lt;if $ward isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $ward to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $ward is 1&gt;&gt;&lt;&lt;ward&gt;&gt;
 &lt;&lt;else&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
+&lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
 &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;
 
@@ -3446,10 +3533,11 @@ You wonder if you will make it to [[August 1666]].
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 </tw-passagedata><tw-passagedata pid="30" name="August 1666" tags="storyline 1666" position="1075,1075" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -3482,6 +3570,11 @@ You wonder if you will make it to [[August 1666]].
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $ward isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $ward to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $ward is 1&gt;&gt;&lt;&lt;ward&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
 &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;
@@ -3512,9 +3605,10 @@ You hope it will be enough to tide you through the last hot month of the year, a
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="31" name="September 1666" tags="fire storyline 1666" position="1200,1075" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -3547,6 +3641,11 @@ You hope it will be enough to tide you through the last hot month of the year, a
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $ward isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $ward to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $ward is 1&gt;&gt;&lt;&lt;ward&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
 &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;
@@ -3605,10 +3704,11 @@ Everyone is still reeling from the shock of the Great Fire at the beginning of [
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 </tw-passagedata><tw-passagedata pid="32" name="October 1666" tags="storyline 1666" position="1325,1075" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -3641,6 +3741,11 @@ Everyone is still reeling from the shock of the Great Fire at the beginning of [
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $ward isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $ward to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $ward is 1&gt;&gt;&lt;&lt;ward&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
 &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;
@@ -3671,9 +3776,10 @@ The weather may be miserable, but every disaster has a silver lining. Between th
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="33" name="November 1666" tags="storyline 1666" position="1450,1075" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -3706,6 +3812,11 @@ The weather may be miserable, but every disaster has a silver lining. Between th
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $ward isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $ward to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $ward is 1&gt;&gt;&lt;&lt;ward&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
 &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;
@@ -3730,9 +3841,10 @@ As &lt;span class=&quot;def&quot; title=&quot;A Christian holiday beginning on A
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="34" name="December 1666" tags="storyline 1666" position="1600,1075" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -3766,6 +3878,11 @@ As &lt;span class=&quot;def&quot; title=&quot;A Christian holiday beginning on A
 &lt;&lt;if $ward isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $ward to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $ward is 1&gt;&gt;&lt;&lt;ward&gt;&gt;
 &lt;&lt;else&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
+&lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
 &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;
 
@@ -3774,6 +3891,7 @@ Fires still &lt;span class=&quot;def&quot; title=&quot;To burn slowly but withou
 
 Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -3988,8 +4106,8 @@ They have decided it will be your job to
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="38" name="July 1665" tags="storyline 1665" position="1450,475" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10)&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;if random(1,10) is 1&gt;&gt;&lt;&lt;set $pregnant to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $pregnant is 4&gt;&gt;&lt;&lt;pregnant&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $miscarriage is 1&gt;&gt;&lt;&lt;miscarriage&gt;&gt;
@@ -4011,6 +4129,11 @@ They have decided it will be your job to
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
+&lt;&lt;else&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;if $money gte 14400&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;&lt;&lt;if $money gte 3600&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;else&gt;&gt;&lt;&lt;if $money gte 720&gt;&gt;&lt;&lt;set $toomuch to 1&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $toomuch is 1&gt;&gt;&lt;&lt;purchase&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
     &lt;&lt;elseif _infectedFamily.length gte 1&gt;&gt;&lt;&lt;sickFam&gt;&gt;
@@ -4170,6 +4293,7 @@ The &lt;span class=&quot;def&quot; title=&quot;A deadly infection usually spread
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="39" name="FamPesthouse" tags="infection-rates" position="50,500" size="100,100">&lt;&lt;nobr&gt;&gt;
 It is a difficult decision, but your family decide it&#39;s for the best to send your sick to the &lt;span class=&quot;def&quot; title=&quot;A hospital used for the treatment and isolation of people infected with Bubonic plague or other infectious diseases&quot;&gt;pesthouse&lt;/span&gt;. 
 &lt;br&gt;&lt;br&gt;
@@ -4242,28 +4366,29 @@ As morning dawns, a terrible realization settles over your &lt;span class=&quot;
     &lt;&lt;/for&gt;&gt;&lt;&lt;/silently&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="41" name="return to the story" tags="widget" position="900,450" size="100,100">&lt;&lt;widget &quot;storyline-return&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 /* NTS if you were imprisoned or impressed, show a bit of text here that says what happened while you were away. Add code that moves you forward a play equivalent to your imprisonment time. */
-While you&#39;ve been occupied with other matters, 
-&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;[[Continue.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;[[Continue.-&gt;November 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;[[Continue.-&gt;October 1666]]
-&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;[[Continue.-&gt;September 1666]]
-&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;[[Continue.-&gt;August 1666]]
-&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;[[Continue.-&gt;July 1666]]
-&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;[[Continue.-&gt;June 1666]]
-&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;[[Continue.-&gt;May 1666]]
-&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;[[Continue.-&gt;April 1666]]
-&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;[[Continue.-&gt;March 1666]]
-&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;[[Continue.-&gt;February 1666]]
-&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;[[Continue.-&gt;January 1666]]
-&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;[[Continue.-&gt;December 1665]]
-&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;[[Continue.-&gt;November 1665]]
-&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;[[Continue.-&gt;October 1665]]
-&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;[[Continue.-&gt;September 1665]]
-&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;[[Continue.-&gt;August 1665]]
-&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;[[Continue.-&gt;July 1665]]
-&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;[[Continue.-&gt;June 1665]]
-&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;[[Continue.-&gt;May 1665]]
+While you&#39;ve been occupied with other matters, &lt;&lt;nobr&gt;&gt;
+&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;the king&#39;s palace caught fire but was fortunately saved. Even more fortunate, he has declared the plague to be officially over! [[Continue.-&gt;December 1666]]
+&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;many people spent a miserable winter after the destruction of the Fire. [[Continue.-&gt;November 1666]]
+&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;there was a Great Fire which burned much of the inner city and many people were displaced. [[Continue.-&gt;October 1666]]
+&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;the plague has gotten worse, but it sounds as if the Navy is doing well in their war with the Dutch. [[Continue.-&gt;September 1666]]
+&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;the whole city heard the sounds of more distant fighting. [[Continue.-&gt;August 1666]]
+&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;it&#39;s been very hot and the plague has gotten worse. Even more frightening, the whole city heard the sounds of distant fighting. [[Continue.-&gt;July 1666]]
+&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;the plague has gotten much worse, but people still went out to celebrate the king&#39;s birthday. [[Continue.-&gt;June 1666]]
+&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;the plague has gotten much worse.[[Continue.-&gt;May 1666]]
+&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;the plague has gotten worse again and the Queen&#39;s mother died. [[Continue.-&gt;April 1666]]
+&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;the king has returned and things are looking up. [[Continue.-&gt;March 1666]]
+&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;the plague has improved. Many people return to the city, including the king. [[Continue.-&gt;February 1666]]
+&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;the plague has grown worse. Even the king has fled now. [[Continue.-&gt;January 1666]]
+&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;the plague has improved. [[Continue.-&gt;December 1665]]
+&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;the plague is getting slightly better, but many people continue to die. [[Continue.-&gt;November 1665]]
+&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;the plague has grown worse. [[Continue.-&gt;October 1665]]
+&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;the plague has grown worse and the city is taking preventive measures. [[Continue.-&gt;September 1665]]
+&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;the war continues and plague deaths are rising. [[Continue.-&gt;August 1665]]
+&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;the city rang with the sounds of a great, but distant battle. People have begun to flee the city and its plague. [[Continue.-&gt;July 1665]]
+&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;plague has begun to spread in town. [[Continue.-&gt;June 1665]]
+&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;the holiday celebrations died down and war was officially declared. But life otherwise continues as normal. [[Continue.-&gt;May 1665]]
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="42" name="Hide" tags="infection-rates" position="525,850" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;set $plagueInfection to 2&gt;&gt;&lt;&lt;/silently&gt;&gt;
 You attempt to hide your illness from everyone, hoping that if you just ignore it then the lump will go away.&lt;br&gt;&lt;br&gt;
@@ -5000,12 +5125,12 @@ Luckily, there are no plague cases in your &lt;span class=&quot;def&quot; title=
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
 	&lt;&lt;if $role is &quot;corpsebearer&quot;&gt;&gt;As a corpsebearer, every night, you must go round to the locked up houses of your &lt;span class=&quot;def&quot; title=&quot;The smallest administrative unit of the English church. An official known as the parish clerk kept local records of christenings, burials, and marriages of everyone who lived within the parish. In this period, parish officials were responsible for maintaining the local social safety net, which included supporting and licensing beggars.&quot;&gt;parish&lt;/span&gt; and call for them to bring out their dead, while praying to God that you remain safe.
-&lt;br&gt;
+&lt;br&gt;&lt;br&gt;
 &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/7/7a/Wilson_%22The_plague...%22%3B_a_corpses_bearer_Wellcome_L0016624.jpg&quot; width=&quot;100%&quot;&gt;
 //Printed by R. Price, A corpse bearer; reproduction of an engraving from a series of London Cries, 1655. Wellcome Images//
 
      &lt;&lt;elseif $role is &quot;searcher&quot;&gt;&gt;As a searcher, every time you are called to someone&#39;s house to determine a cause of death, you pray to God to protect you. You are starting to have nightmares about seeing &lt;span class=&quot;def&quot; title=&quot;Painful pus-filled swellings in the thighs, neck, groin, and armpits. They may turn black and rot away or rupture, spreading the infection around the body.&quot;&gt;buboes&lt;/span&gt; and the tokens of &lt;span class=&quot;def&quot; title=&quot;A deadly infection usually spread to humans by fleas infected with the bacterium yersinia pestis. It manifests in several different ways, including bubonic (lymph node), pneumonic (lungs), and septicemic (bloodstream) plague. Bubonic plague was the least deadly form, at only ~50% fatal, while pneumonic plague was 99% fatal and can be spread directly to other people by coughing and septicemic plague was 100% fatal. Plague killed hundreds of millions of people before the development of antibiotic treatments and still kills some people today. Symptoms include fever, headaches, vomiting, weakness, coughing, shortness of breath, chest pain, abdominal pain, swollen lymph nodes, gangrene, meningitis, and most famously, the appearance of large buboes, or painful pus-filled swellings in the thighs, neck, groin, and armpits. They may turn black and rot away or rupture, spreading the infection around the body.&quot;&gt;plague&lt;/span&gt; on your neighbors.
-    &lt;br&gt;
+    &lt;br&gt;&lt;br&gt;
     &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; width=&quot;100%&quot;&gt;
     //Nathaniel Parr, published by Thomas Astley, Plague in 1665, 1747.//
      
@@ -5016,12 +5141,12 @@ Luckily, there are no plague cases in your &lt;span class=&quot;def&quot; title=
 
 &lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;
 	&lt;&lt;if $role is &quot;corpsebearer&quot;&gt;&gt;Every night, you go round to the locked up houses of your &lt;span class=&quot;def&quot; title=&quot;The smallest administrative unit of the English church. An official known as the parish clerk kept local records of christenings, burials, and marriages of everyone who lived within the parish. In this period, parish officials were responsible for maintaining the local social safety net, which included supporting and licensing beggars.&quot;&gt;parish and call for them to bring out their dead, while praying to God that you remain safe.
-        &lt;br&gt;
+        &lt;br&gt;&lt;br&gt;
 &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/7/7a/Wilson_%22The_plague...%22%3B_a_corpses_bearer_Wellcome_L0016624.jpg&quot; width=&quot;100%&quot;&gt;
 //Printed by R. Price, A corpse bearer; reproduction of an engraving from a series of London Cries, 1655. Wellcome Images//
     
     &lt;&lt;elseif $role is &quot;searcher&quot;&gt;&gt;Every time you are called to someone&#39;s house to determine a cause of death, you pray to God to protect you. You are starting to have nightmares about seeing &lt;span class=&quot;def&quot; title=&quot;Painful pus-filled swellings in the thighs, neck, groin, and armpits. They may turn black and rot away or rupture, spreading the infection around the body.&quot;&gt;buboes&lt;/span&gt; and the tokens of &lt;span class=&quot;def&quot; title=&quot;A deadly infection usually spread to humans by fleas infected with the bacterium yersinia pestis. It manifests in several different ways, including bubonic (lymph node), pneumonic (lungs), and septicemic (bloodstream) plague. Bubonic plague was the least deadly form, at only ~50% fatal, while pneumonic plague was 99% fatal and can be spread directly to other people by coughing and septicemic plague was 100% fatal. Plague killed hundreds of millions of people before the development of antibiotic treatments and still kills some people today. Symptoms include fever, headaches, vomiting, weakness, coughing, shortness of breath, chest pain, abdominal pain, swollen lymph nodes, gangrene, meningitis, and most famously, the appearance of large buboes, or painful pus-filled swellings in the thighs, neck, groin, and armpits. They may turn black and rot away or rupture, spreading the infection around the body.&quot;&gt;plague&lt;/span&gt; on your neighbors.
-    &lt;br&gt;
+    &lt;br&gt;&lt;br&gt;
     &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/67/Plague_in_1665_%28BM_1875%2C0508.1513%29.jpg&quot; width=&quot;100%&quot;&gt;
     //Nathaniel Parr, published by Thomas Astley, Plague in 1665, 1747.//
    
@@ -5031,6 +5156,8 @@ Luckily, there are no plague cases in your &lt;span class=&quot;def&quot; title=
 &lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt; (work text here)
 
 &lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt; (work text here)
+
+&lt;&lt;else&gt;&gt;(noble work text here)&lt;&lt;/if&gt;&gt;
 
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="69" name="storyLogo" tags="" position="275,100" size="100,100">&lt;a href=&quot;https://rrchnm.org/&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;https://avatars.githubusercontent.com/u/296531?s=280&amp;v=4&quot; height=&quot;50px&quot;&gt;&lt;/a&gt;</tw-passagedata><tw-passagedata pid="70" name="gameTitle" tags="" position="25,25" size="100,100">Gaming the Great Plague</tw-passagedata><tw-passagedata pid="71" name="storyAuthor" tags="" position="150,25" size="100,100">&lt;a href=&quot;https://rrchnm.org/&quot;&gt;RRCHNM&lt;/a&gt;</tw-passagedata><tw-passagedata pid="72" name="storyMenu" tags="" position="700,150" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;div class=&quot;status-box&quot;&gt;&lt;&lt;if $reputation gte 9&gt;&gt;&lt;div class=&quot;rep-best&quot;&gt;&#39;&#39;Reputation:&#39;&#39; &lt;br&gt; a worthy soul&lt;/div&gt;&lt;&lt;elseif $reputation gte 6 and $reputation lte 8&gt;&gt;&lt;div class=&quot;rep-good&quot;&gt;&#39;&#39;Reputation:&#39;&#39;&lt;br&gt;of good credit and quality&lt;/div&gt;&lt;&lt;elseif $reputation gte 3 and $reputation lte 5&gt;&gt;&lt;div class=&quot;rep-poor&quot;&gt;&#39;&#39;Reputation:&#39;&#39;&lt;br&gt;bad credit is better than none&lt;/div&gt;&lt;&lt;elseif $reputation lte 2&gt;&gt;&lt;div class=&quot;rep-worst&quot;&gt;&#39;&#39;Reputation:&#39;&#39;&lt;br&gt;a worthless and base rogue&lt;/div&gt;&lt;&lt;/if&gt;&gt;&lt;/div&gt;&lt;br&gt;
@@ -5051,7 +5178,6 @@ Luckily, there are no plague cases in your &lt;span class=&quot;def&quot; title=
 &lt;li&gt;Age: $age&lt;/li&gt;
 &lt;li&gt;Social class: $socio&lt;/li&gt;
 &lt;li&gt;Location: $location&lt;/li&gt;
-&lt;li&gt; $pregnant&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;&lt;ListNPCs&gt;&gt; 
@@ -5806,81 +5932,77 @@ How long do you stay?&lt;ul&gt;
 &lt;li&gt;[[Three months-&gt;steward-3][$money +=3; $reputation -=3]]&lt;/li&gt;
 &lt;/ul&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="95" name="steward-2" tags="" position="2275,25" size="100,100">
-&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;[[Return from the country.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;[[Return from the country.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;[[Return from the country.-&gt;November 1666]]
-&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;[[Return from the country.-&gt;October 1666]]
-&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;[[Return from the country.-&gt;September 1666]]
-&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;[[Return from the country.-&gt;August 1666]]
-&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;[[Return from the country.-&gt;July 1666]]
-&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;[[Return from the country.-&gt;June 1666]]
-&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;[[Return from the country.-&gt;May 1666]]
-&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;[[Return from the country.-&gt;April 1666]]
-&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;[[Return from the country.-&gt;March 1666]]
-&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;[[Return from the country.-&gt;February 1666]]
-&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;[[Return from the country.-&gt;January 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;[[Return from the country.-&gt;December 1665]]
-&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;[[Return from the country.-&gt;November 1665]]
-&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;[[Return from the country.-&gt;October 1665]]
-&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;[[Return from the country.-&gt;September 1665]]
-&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;[[Return from the country.-&gt;August 1665]]
-&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;[[Return from the country.-&gt;July 1665]]
-&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;[[Return from the country.-&gt;May 1665]]
-&lt;&lt;elseif hasVisited(&quot;December 1664&quot;)&gt;&gt;[[Return from the country.-&gt;January 1665]]
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="95" name="steward-2" tags="" position="2275,25" size="100,100">While you&#39;ve been occupied with other matters, &lt;&lt;nobr&gt;&gt;
+&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;the king&#39;s palace caught fire but was fortunately saved. Even more fortunate, he has declared the plague to be officially over! [[Continue.-&gt;December 1666]]
+&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;many people spent a miserable winter after the destruction of the Fire. [[Continue.-&gt;December 1666]]
+&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;there was a Great Fire which burned much of the inner city and many people were displaced. [[Continue.-&gt;November 1666]]
+&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;the plague has gotten worse, but it sounds as if the Navy is doing well in their war with the Dutch. However, no amount of Dutch ships burned can make alleviate the fear which gripped the entire city during a Great Fire which burned most of the inner city. [[Continue.-&gt;October 1666]]
+&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;the whole city heard the sounds of more distant fighting. Luckily, it sounds as though the Navy is doing well in their war against the Dutch. [[Continue.-&gt;September 1666]]
+&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;it&#39;s been very hot and the plague has gotten worse. Even more frightening, the whole city heard the sounds of distant fighting. [[Continue.-&gt;August 1666]]
+&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;the plague has gotten much worse, but people still went out to celebrate the king&#39;s birthday. Even more frightening, the whole city heard the sounds of distant fighting. [[Continue.-&gt;July 1666]]
+&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;the plague has gotten much worse, but last month people still went out to celebrate the king&#39;s birthday and return to the throne. [[Continue.-&gt;June 1666]]
+&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;the plague has gotten worse again and the Queen&#39;s mother died. [[Continue.-&gt;May 1666]]
+&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;the king has returned and things were looking up, but then the plague grew worse and the Queen&#39;s mother died. [[Continue.-&gt;April 1666]]
+&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;the plague has improved. Many people return to the city, including the king. [[Continue.-&gt;March 1666]]
+&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;the plague grew much worse and the king fled the city, but has now returned as the deaths decline. [[Continue.-&gt;February 1666]]
+&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;the plague got slightly better then much worse and even the king fled the city. [[Continue.-&gt;January 1666]]
+&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;the plague is getting slightly better, but many people continue to die. [[Continue.-&gt;December 1665]]
+&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;the plague has grown worse. [[Continue.-&gt;November 1665]]
+&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;the plague has grown worse and the city is taking preventive measures. [[Continue.-&gt;October 1665]]
+&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;the war continues and plague deaths are rising. The city is taking preventive measures. [[Continue.-&gt;September 1665]]
+&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;the city rang with the sounds of a great, but distant battle. People have begun to flee the city and its plague. [[Continue.-&gt;August 1665]]
+&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;plague has begun to spread in town and last month the city rang with the sounds of a great, but distant battle. People have begun to flee the city and its plague. [[Continue.-&gt;July 1665]]
+&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;the holiday celebrations died down and war was officially declared. But life otherwise continues as normal. [[Continue.-&gt;May 1665]]
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;
-</tw-passagedata><tw-passagedata pid="96" name="steward-3" tags="" position="2400,25" size="100,100">
-&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;[[Return from the country.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;[[Return from the country.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;[[Return from the country.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;[[Return from the country.-&gt;November 1666]]
-&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;[[Return from the country.-&gt;October 1666]]
-&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;[[Return from the country.-&gt;September 1666]]
-&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;[[Return from the country.-&gt;August 1666]]
-&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;[[Return from the country.-&gt;July 1666]]
-&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;[[Return from the country.-&gt;June 1666]]
-&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;[[Return from the country.-&gt;May 1666]]
-&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;[[Return from the country.-&gt;April 1666]]
-&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;[[Return from the country.-&gt;March 1666]]
-&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;[[Return from the country.-&gt;February 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;[[Return from the country.-&gt;January 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;[[Return from the country.-&gt;December 1665]]
-&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;[[Return from the country.-&gt;November 1665]]
-&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;[[Return from the country.-&gt;October 1665]]
-&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;[[Return from the country.-&gt;September 1665]]
-&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;[[Return from the country.-&gt;August 1665]]
-&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;[[Return from the country.-&gt;May 1665]]
-&lt;&lt;elseif hasVisited(&quot;December 1664&quot;)&gt;&gt;[[Return from the country.-&gt;January 1665]]
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="96" name="steward-3" tags="" position="2400,25" size="100,100">While you&#39;ve been occupied with other matters, &lt;&lt;nobr&gt;&gt;
+&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;the king&#39;s palace caught fire but was fortunately saved. Even more fortunate, he has declared the plague to be officially over! [[Continue.-&gt;December 1666]]
+&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;many people spent a miserable winter after the destruction of the Fire. [[Continue.-&gt;December 1666]]
+&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;there was a Great Fire which burned much of the inner city and many people were displaced. [[Continue.-&gt;December 1666]]
+&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;the plague has gotten worse, but it sounds as if the Navy is doing well in their war with the Dutch. However, no amount of Dutch ships burned can make alleviate the fear which gripped the entire city during a Great Fire which burned most of the inner city. [[Continue.-&gt;November 1666]]
+&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;the whole city heard the sounds of more distant fighting. Luckily, it sounds as though the Navy is doing well in their war against the Dutch. However, no amount of Dutch ships burned can make alleviate the fear which gripped the entire city during a Great Fire which burned most of the inner city. [[Continue.-&gt;October 1666]]
+&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;it&#39;s been very hot and the plague has gotten worse. Even more frightening, the whole city heard the sounds of distant fighting. Luckily, it sounds as though the Navy is doing well in their war against the Dutch. [[Continue.-&gt;September 1666]]
+&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;the plague has gotten much worse, but people still went out to celebrate the king&#39;s birthday. Even more frightening, the whole city heard the sounds of distant fighting. [[Continue.-&gt;August 1666]]
+&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;the plague has gotten much worse, but last month people still went out to celebrate the king&#39;s birthday and return to the throne. Even more frightening, the whole city heard the sounds of distant fighting. [[Continue.-&gt;July 1666]]
+&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;the plague has gotten worse again and the Queen&#39;s mother died. But people still ventured out last month to celebrate the king&#39;s birthday and return to the throne. [[Continue.-&gt;June 1666]]
+&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;the king has returned and things were looking up, but then the plague grew worse and the Queen&#39;s mother died. [[Continue.-&gt;May 1666]]
+&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;the plague improved and many people return to the city, including the king. But then it grew much worse and the Queen&#39;s mother died. [[Continue.-&gt;April 1666]]
+&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;the plague grew much worse and the king fled the city, but has now returned as the deaths decline. [[Continue.-&gt;March 1666]]
+&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;the plague got slightly better then much worse and even the king fled the city, only coming back when the deaths began to decline. [[Continue.-&gt;February 1666]]
+&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;the plague got much worse and even the king fled the city. [[Continue.-&gt;January 1666]]
+&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;the plague has grown worse. [[Continue.-&gt;December 1665]]
+&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;the plague has grown worse and the city is taking preventive measures. [[Continue.-&gt;November 1665]]
+&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;the war continues and plague deaths are rising. The city is taking preventive measures. [[Continue.-&gt;October 1665]]
+&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;the city rang with the sounds of a great, but distant battle. People have begun to flee the city and its plague. The city has begun taking preventive measures. [[Continue.-&gt;September 1665]]
+&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;plague has begun to spread in town and last month the city rang with the sounds of a great, but distant battle. People have begun to flee the city and its plague. [[Continue.-&gt;August 1665]]
+&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;the holiday celebrations died down and war was officially declared. But life otherwise continues as normal. [[Continue.-&gt;May 1665]]
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 </tw-passagedata><tw-passagedata pid="97" name="steward-1" tags="" position="2150,25" size="100,100">
 &lt;&lt;nobr&gt;&gt;
 /* NTS if you were imprisoned or impressed, show a bit of text here that says what happened while you were away. Add code that moves you forward a play equivalent to your imprisonment time. */
-&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;[[Return from the country.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;[[Return from the country.-&gt;November 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;[[Return from the country.-&gt;October 1666]]
-&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;[[Return from the country.-&gt;September 1666]]
-&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;[[Return from the country.-&gt;August 1666]]
-&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;[[Return from the country.-&gt;July 1666]]
-&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;[[Return from the country.-&gt;June 1666]]
-&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;[[Return from the country.-&gt;May 1666]]
-&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;[[Return from the country.-&gt;April 1666]]
-&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;[[Return from the country.-&gt;March 1666]]
-&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;[[Return from the country.-&gt;February 1666]]
-&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;[[Return from the country.-&gt;January 1666]]
-&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;[[Return from the country.-&gt;December 1665]]
-&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;[[Return from the country.-&gt;November 1665]]
-&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;[[Return from the country.-&gt;October 1665]]
-&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;[[Return from the country.-&gt;September 1665]]
-&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;[[Return from the country.-&gt;August 1665]]
-&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;[[Return from the country.-&gt;July 1665]]
-&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;[[Return from the country.-&gt;June 1665]]
-&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;[[Return from the country.-&gt;May 1665]]
-&lt;&lt;elseif hasVisited(&quot;December 1664&quot;)&gt;&gt;[[Return from the country.-&gt;January 1665]]
+While you&#39;ve been occupied with other matters, &lt;&lt;nobr&gt;&gt;
+&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;the king&#39;s palace caught fire but was fortunately saved. Even more fortunate, he has declared the plague to be officially over! [[Continue.-&gt;December 1666]]
+&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;many people spent a miserable winter after the destruction of the Fire. [[Continue.-&gt;November 1666]]
+&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;there was a Great Fire which burned much of the inner city and many people were displaced. [[Continue.-&gt;October 1666]]
+&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;the plague has gotten worse, but it sounds as if the Navy is doing well in their war with the Dutch. [[Continue.-&gt;September 1666]]
+&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;the whole city heard the sounds of more distant fighting. [[Continue.-&gt;August 1666]]
+&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;it&#39;s been very hot and the plague has gotten worse. Even more frightening, the whole city heard the sounds of distant fighting. [[Continue.-&gt;July 1666]]
+&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;the plague has gotten much worse, but people still went out to celebrate the king&#39;s birthday. [[Continue.-&gt;June 1666]]
+&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;the plague has gotten much worse.[[Continue.-&gt;May 1666]]
+&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;the plague has gotten worse again and the Queen&#39;s mother died. [[Continue.-&gt;April 1666]]
+&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;the king has returned and things are looking up. [[Continue.-&gt;March 1666]]
+&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;the plague has improved. Many people return to the city, including the king. [[Continue.-&gt;February 1666]]
+&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;the plague has grown worse. Even the king has fled now. [[Continue.-&gt;January 1666]]
+&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;the plague has improved. [[Continue.-&gt;December 1665]]
+&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;the plague is getting slightly better, but many people continue to die. [[Continue.-&gt;November 1665]]
+&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;the plague has grown worse. [[Continue.-&gt;October 1665]]
+&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;the plague has grown worse and the city is taking preventive measures. [[Continue.-&gt;September 1665]]
+&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;the war continues and plague deaths are rising. [[Continue.-&gt;August 1665]]
+&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;the city rang with the sounds of a great, but distant battle. People have begun to flee the city and its plague. [[Continue.-&gt;July 1665]]
+&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;plague has begun to spread in town. [[Continue.-&gt;June 1665]]
+&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;the holiday celebrations died down and war was officially declared. But life otherwise continues as normal. [[Continue.-&gt;May 1665]]
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 </tw-passagedata><tw-passagedata pid="98" name="accident" tags="widget" position="2025,150" size="100,100">&lt;&lt;widget &quot;accident&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
@@ -5897,28 +6019,29 @@ You have suffered an accident on the job, but thanks to God you are still alive.
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="99" name="healing" tags="" position="2150,150" size="100,100">&lt;&lt;nobr&gt;&gt;
-&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;[[Get back out there.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;[[Get back out there.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;[[Get back out there.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;[[Get back out there.-&gt;November 1666]]
-&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;[[Get back out there.-&gt;October 1666]]
-&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;[[Get back out there.-&gt;September 1666]]
-&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;[[Get back out there.-&gt;August 1666]]
-&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;[[Get back out there.-&gt;July 1666]]
-&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;[[Get back out there.-&gt;June 1666]]
-&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;[[Get back out there.-&gt;May 1666]]
-&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;[[Get back out there.-&gt;April 1666]]
-&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;[[Get back out there.-&gt;March 1666]]
-&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;[[Get back out there.-&gt;February 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;[[Get back out there.-&gt;January 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;[[Get back out there.-&gt;December 1665]]
-&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;[[Get back out there.-&gt;November 1665]]
-&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;[[Get back out there.-&gt;October 1665]]
-&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;[[Get back out there.-&gt;September 1665]]
-&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;[[Get back out there.-&gt;August 1665]]
-&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;[[Get back out there.-&gt;May 1665]]
-&lt;&lt;elseif hasVisited(&quot;December 1664&quot;)&gt;&gt;[[Get back out there.-&gt;January 1665]]
+While you&#39;ve been occupied with other matters, &lt;&lt;nobr&gt;&gt;
+&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;the king&#39;s palace caught fire but was fortunately saved. Even more fortunate, he has declared the plague to be officially over! [[Continue.-&gt;December 1666]]
+&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;many people spent a miserable winter after the destruction of the Fire. [[Continue.-&gt;November 1666]]
+&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;there was a Great Fire which burned much of the inner city and many people were displaced. [[Continue.-&gt;October 1666]]
+&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;the plague has gotten worse, but it sounds as if the Navy is doing well in their war with the Dutch. [[Continue.-&gt;September 1666]]
+&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;the whole city heard the sounds of more distant fighting. [[Continue.-&gt;August 1666]]
+&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;it&#39;s been very hot and the plague has gotten worse. Even more frightening, the whole city heard the sounds of distant fighting. [[Continue.-&gt;July 1666]]
+&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;the plague has gotten much worse, but people still went out to celebrate the king&#39;s birthday. [[Continue.-&gt;June 1666]]
+&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;the plague has gotten much worse.[[Continue.-&gt;May 1666]]
+&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;the plague has gotten worse again and the Queen&#39;s mother died. [[Continue.-&gt;April 1666]]
+&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;the king has returned and things are looking up. [[Continue.-&gt;March 1666]]
+&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;the plague has improved. Many people return to the city, including the king. [[Continue.-&gt;February 1666]]
+&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;the plague has grown worse. Even the king has fled now. [[Continue.-&gt;January 1666]]
+&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;the plague has improved. [[Continue.-&gt;December 1665]]
+&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;the plague is getting slightly better, but many people continue to die. [[Continue.-&gt;November 1665]]
+&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;the plague has grown worse. [[Continue.-&gt;October 1665]]
+&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;the plague has grown worse and the city is taking preventive measures. [[Continue.-&gt;September 1665]]
+&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;the war continues and plague deaths are rising. [[Continue.-&gt;August 1665]]
+&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;the city rang with the sounds of a great, but distant battle. People have begun to flee the city and its plague. [[Continue.-&gt;July 1665]]
+&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;plague has begun to spread in town. [[Continue.-&gt;June 1665]]
+&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;the holiday celebrations died down and war was officially declared. But life otherwise continues as normal. [[Continue.-&gt;May 1665]]
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 </tw-passagedata><tw-passagedata pid="100" name="elderly" tags="widget" position="2025,275" size="100,100">&lt;&lt;widget &quot;elderly&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
@@ -6087,28 +6210,29 @@ After the dancing and feasting, you go home with your new spouse [[at your side.
 &lt;li&gt;&lt;&lt;link &quot;elope&quot;&gt;&gt;&lt;&lt;set $reputation -=1&gt;&gt;&lt;&lt;unset $seeking&gt;&gt;&lt;&lt;unset $wedding&gt;&gt;&lt;&lt;set $plagueInfection to random(1,30)&gt;&gt;&lt;&lt;set $relationship to &quot;married&quot;&gt;&gt;&lt;&lt;addPartnerNPC&gt;&gt;&lt;&lt;replace &quot;#format&quot;&gt;&gt;Rather than going through the fuss of a formal wedding, you elope down to the &lt;&lt;if random(1,2) is 1&gt;&gt;debtors&#39; prison&lt;&lt;else&gt;&gt;Fleet prison&lt;&lt;/if&gt;&gt; where you find a priest willing to marry you without asking [[too many questions.-&gt;market]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/span&gt;
 
 &lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="110" name="market" tags="" position="2400,150" size="100,100">
-&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;[[Continue.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;[[Continue.-&gt;November 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;[[Continue.-&gt;October 1666]]
-&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;[[Continue.-&gt;September 1666]]
-&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;[[Continue.-&gt;August 1666]]
-&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;[[Continue.-&gt;July 1666]]
-&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;[[Continue.-&gt;June 1666]]
-&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;[[Continue.-&gt;May 1666]]
-&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;[[Continue.-&gt;April 1666]]
-&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;[[Continue.-&gt;March 1666]]
-&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;[[Continue.-&gt;February 1666]]
-&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;[[Continue.-&gt;January 1666]]
-&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;[[Continue.-&gt;December 1665]]
-&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;[[Continue.-&gt;November 1665]]
-&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;[[Continue.-&gt;October 1665]]
-&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;[[Continue.-&gt;September 1665]]
-&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;[[Continue.-&gt;August 1665]]
-&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;[[Continue.-&gt;July 1665]]
-&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;[[Continue.-&gt;June 1665]]
-&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;[[Continue.-&gt;May 1665]]
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="110" name="market" tags="" position="2400,150" size="100,100">While you&#39;ve been occupied with other matters, &lt;&lt;nobr&gt;&gt;
+&lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;the king&#39;s palace caught fire but was fortunately saved. Even more fortunate, he has declared the plague to be officially over! [[Continue.-&gt;December 1666]]
+&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;many people spent a miserable winter after the destruction of the Fire. [[Continue.-&gt;November 1666]]
+&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;there was a Great Fire which burned much of the inner city and many people were displaced. [[Continue.-&gt;October 1666]]
+&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;the plague has gotten worse, but it sounds as if the Navy is doing well in their war with the Dutch. [[Continue.-&gt;September 1666]]
+&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;the whole city heard the sounds of more distant fighting. [[Continue.-&gt;August 1666]]
+&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;it&#39;s been very hot and the plague has gotten worse. Even more frightening, the whole city heard the sounds of distant fighting. [[Continue.-&gt;July 1666]]
+&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;the plague has gotten much worse, but people still went out to celebrate the king&#39;s birthday. [[Continue.-&gt;June 1666]]
+&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;the plague has gotten much worse.[[Continue.-&gt;May 1666]]
+&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;the plague has gotten worse again and the Queen&#39;s mother died. [[Continue.-&gt;April 1666]]
+&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;the king has returned and things are looking up. [[Continue.-&gt;March 1666]]
+&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;the plague has improved. Many people return to the city, including the king. [[Continue.-&gt;February 1666]]
+&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;the plague has grown worse. Even the king has fled now. [[Continue.-&gt;January 1666]]
+&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;the plague has improved. [[Continue.-&gt;December 1665]]
+&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;the plague is getting slightly better, but many people continue to die. [[Continue.-&gt;November 1665]]
+&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;the plague has grown worse. [[Continue.-&gt;October 1665]]
+&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;the plague has grown worse and the city is taking preventive measures. [[Continue.-&gt;September 1665]]
+&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;the war continues and plague deaths are rising. [[Continue.-&gt;August 1665]]
+&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;the city rang with the sounds of a great, but distant battle. People have begun to flee the city and its plague. [[Continue.-&gt;July 1665]]
+&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;plague has begun to spread in town. [[Continue.-&gt;June 1665]]
+&lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;the holiday celebrations died down and war was officially declared. But life otherwise continues as normal. [[Continue.-&gt;May 1665]]
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;
 </tw-passagedata><tw-passagedata pid="111" name="seeking" tags="" position="2275,400" size="100,100">&lt;&lt;widget &quot;seeking&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;wedding&gt;&gt;
@@ -6143,6 +6267,29 @@ add text here
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;unset $pregnant&gt;&gt;&lt;&lt;unset $miscarriage&gt;&gt;
 Unfortunately, you have suffered a miscarriage and are no [[longer pregnant.-&gt;healing]]
+&lt;&lt;/nobr&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="115" name="purchase" tags="widget" position="2525,25" size="100,100">&lt;&lt;widget &quot;purchase&quot;&gt;&gt;
+&lt;&lt;nobr&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;Despite the low price of wheat from the abundant harvests of the last few years, you &lt;&lt;if $age is &quot;child&quot; or &quot;adolescent&quot;&gt;&gt;and your family&lt;&lt;/if&gt;&gt;have been accumulating a lot of spare wealth from your estate. You &lt;&lt;if $age is &quot;child&quot; or &quot;adolescent&quot;&gt;&gt;and your family &lt;&lt;/if&gt;&gt;decide that, to advance your status in court, you will purchase the &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;queen&lt;&lt;else&gt;&gt;king&lt;&lt;/if&gt;&gt; a gift. &lt;br&gt;&lt;br&gt;You send&lt;br&gt;
+&lt;ul&gt;
+&lt;li&gt;[[a series of lamprey pies-&gt;healing][$money -=1000; $reputation +=1]]&lt;/li&gt;
+&lt;li&gt;[[an ornate game board-&gt;healing][$money -=4000; $reputation +=3]]&lt;/li&gt;
+&lt;li&gt;[[a black gelding-&gt;healing][$money -=4000; $reputation +=3]]&lt;/li&gt;
+&lt;li&gt;[[a gilded plate-&gt;healing][$money -=3000; $reputation +=2]]&lt;/li&gt;
+&lt;/ul&gt;
+&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or &quot;adolescent&quot;&gt;&gt;and your family&#39;s&lt;&lt;else&gt;&gt;r&lt;&lt;/if&gt;&gt; business has been doing extremely well and you&#39;ve accumulated a lot of spare wealth. You &lt;&lt;if $age is &quot;child&quot; or &quot;adolescent&quot;&gt;&gt;and your family &lt;&lt;/if&gt;&gt;decide to spend some of it to advance your status in the city. &lt;br&gt;&lt;br&gt;You&lt;br&gt;&lt;br&gt;
+&lt;ul&gt;
+&lt;li&gt;[[make a lavish donation to your livery company-&gt;healing][$money -=2400; $reputation +=3]]&lt;/li&gt;
+&lt;li&gt;[[purchase a coach-&gt;healing][$money -=3600]]&lt;/li&gt;
+&lt;li&gt;[[throw an elaborate feast for the next holiday-&gt;healing][$money -=1200; $reputation +=1; infection-program]]&lt;/li&gt;
+&lt;/ul&gt;
+&lt;&lt;else&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or &quot;adolescent&quot;&gt;&gt;and your family&#39;s&lt;&lt;else&gt;&gt;r&lt;&lt;/if&gt;&gt; business has been doing extremely well and you&#39;ve accumulated a lot of spare wealth. You &lt;&lt;if $age is &quot;child&quot; or &quot;adolescent&quot;&gt;&gt;and your family &lt;&lt;/if&gt;&gt;decide to spend some of it to advance your status in the city. &lt;br&gt;&lt;br&gt;You&lt;br&gt;&lt;br&gt;
+&lt;ul&gt;
+&lt;li&gt;[[throw an elaborate feast for the next holiday-&gt;healing][$money -=300; $reputation +=1]]&lt;/li&gt;
+&lt;li&gt;[[buy yourself a new suit of clothes-&gt;healing][$money -=150; $reputation +=1]]&lt;/li&gt;
+&lt;li&gt;[[purchase a new set of tools for your trade-&gt;healing][$money -=600]]&lt;/li&gt;
+&lt;/ul&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata></tw-storydata>
 	<script id="script-sugarcube" type="text/javascript">
