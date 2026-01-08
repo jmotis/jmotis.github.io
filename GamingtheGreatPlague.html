@@ -1284,7 +1284,7 @@ But those are worries for the future! For now, it is time to eat, drink, and pla
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;set $murder =0&gt;&gt;
 
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="start" tags="" position="1075,200" size="100,100">This is a text-based adventure game. Click the underlined teal text to advance in the game. Hover over (or tap on mobile) the bold purple text for definitions. Best of luck surviving!
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="start" tags="" position="1075,200" size="100,100">This is a text-based adventure game. Click the underlined teal text to advance in the game. Hover over (or tap on mobile) the bold purple text for definitions. Check out the sidebar for information on your household and inventory, or to visit the &lt;span class=&quot;def&quot; data-def=&quot;A person who prepares and sells drugs for medicinal purposes. Also the shop where such activities take place.&quot;&gt;apothecary&lt;/span&gt;. Best of luck surviving!
 
 The year is 1664 and you are a resident of the great city of London in England. After decades of &lt;span class=&quot;def&quot; data-def=&quot;A series of armed civil conflicts in the 1640s and early 1650s that culminated in the execution of King Charles I, the flight of his son King Charles II, and the installation of Oliver Cromwell as the Lord Protector of England. The period was one of significant economic, political, and religious turmoil in England, Scotland, Wales, and Ireland. Eventually Cromwell died and Charles II was reinstated as the English monarch in 1660, an act called the Restoration.&quot;&gt;civil war&lt;/span&gt; and &lt;span class=&quot;def&quot; data-def=&quot;Refers to the government of Oliver Cromwell, who served as the Lord Protector of England from 1653-1658. This government was referred to as the Commonwealth (1649-1660) and was held together by Cromwell’s strong personality and military control.&quot;&gt;experimental government&lt;/span&gt;, the merry monarch King Charles II was restored to the thrones of England, Scotland, and Ireland just four years ago and (most of) the kingdoms rejoiced.
 
@@ -1292,7 +1292,7 @@ But enough about the king! [[What about you-&gt;identity]]?
 
 &lt;img src=&quot;https://wesleyan-dac-open-access.s3.amazonaws.com/images/DAC_1940-D1-131_001_OA.jpg&quot; width=&quot;100%&quot;&gt;
 //Map of London, before the Fire of 1666 by Wencelaus Holler. Wesleyan University Davison Art Center.//</tw-passagedata><tw-passagedata pid="4" name="identity" tags="" position="1225,200" size="100,100">&lt;&lt;chunkText&gt;&gt;
-While infant mortality is common in this era, God granted your parents a healthy &lt;&lt;set _birthgender = [&quot;son&quot;, &quot;daughter&quot;]&gt;&gt;&lt;&lt;listbox &quot;$gender&quot;&gt;&gt;&lt;&lt;optionsfrom _birthgender&gt;&gt;&lt;&lt;/listbox&gt;&gt; who not only survived but thrived and you are now a &lt;&lt;set _age = [&quot;child&quot;, &quot;adolescent&quot;, &quot;young adult&quot;, &quot;middle-aged adult&quot;, &quot;elderly adult&quot;]&gt;&gt;&lt;&lt;listbox &quot;$age&quot;&gt;&gt;&lt;&lt;optionsfrom _age&gt;&gt;&lt;&lt;/listbox&gt;&gt;.
+While infant mortality is common in this era, God granted your parents a healthy &lt;&lt;set $birthgender = [&quot;son&quot;, &quot;daughter&quot;]&gt;&gt;&lt;&lt;listbox &quot;$birthgender&quot;&gt;&gt;&lt;&lt;optionsfrom $birthgender&gt;&gt;&lt;&lt;/listbox&gt;&gt; who not only survived but thrived and you are now a &lt;&lt;set _age = [&quot;child&quot;, &quot;adolescent&quot;, &quot;young adult&quot;, &quot;middle-aged adult&quot;, &quot;elderly adult&quot;]&gt;&gt;&lt;&lt;listbox &quot;$age&quot;&gt;&gt;&lt;&lt;optionsfrom _age&gt;&gt;&lt;&lt;/listbox&gt;&gt;.
 &lt;&lt;if $birthgender is &quot;son&quot;&gt;&gt;&lt;&lt;set $gender to &quot;male&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $gender to &quot;female&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 /*removed historically accurate but politically incorrect &quot;non-binary&quot; gender choice for compliance with federal and K-12 school regulations*/
 &lt;&lt;next&gt;&gt;
@@ -5115,7 +5115,8 @@ Luckily, there are no plague cases in your &lt;span class=&quot;def&quot; data-d
 
 &lt;!-- PLACE LINKS TO YOUR MENU BELOW, BUT REMEMBER TO WRAP IN &lt;LI&gt; TAGS --&gt;
 
-&lt;&lt;if not tags().includes(&quot;quarantine&quot;)&gt;&gt;&lt;&lt;if visited(&quot;First Plague Day&quot;)&gt;&gt;&lt;li&gt;[[Apothecary]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;!--removing conditional code on apothecary so it&#39;s always accessible &lt;&lt;if not tags().includes(&quot;quarantine&quot;)&gt;&gt;&lt;&lt;if visited(&quot;First Plague Day&quot;)&gt;&gt;&lt;li&gt;[[Apothecary]]&lt;/li&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;--&gt;
+&lt;li&gt;[[Apothecary]]&lt;/li&gt;
 &lt;li&gt;&lt;&lt;link &quot;Inventory&quot;&gt;&gt;
     &lt;&lt;run Dialog.setup(&quot;Inventory&quot;, &quot;inventory&quot;); Dialog.wiki(Story.get(&quot;Inventory&quot;).text); Dialog.open()&gt;&gt;
 &lt;&lt;/link&gt;&gt;&lt;/li&gt;
