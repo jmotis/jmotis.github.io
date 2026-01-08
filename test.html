@@ -105,32 +105,23 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
 	<tw-storydata name="Gaming the Great Plague 10" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
-    color: #0066cc;
-    text-decoration: underline dotted;
+	color: #6A499B;
+	font-weight:bold;
+    /*text-decoration: underline dotted;*/
     cursor: pointer;
-    position: relative;
 }
 
 .def-tooltip {
-    position: absolute;
     background: #333;
     color: #fff;
     padding: 8px 12px;
     border-radius: 4px;
-    max-width: 300px;
+    max-width: calc(100vw - 20px);
+  	width: 300px;
     font-size: 0.9em;
     z-index: 1000;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: 5px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3)
 }
-
-/*.def {
-color: #6A499B;
-font-weight:bold;
-}*/
 
 .status-box {
   opacity: 100%;
@@ -829,20 +820,16 @@ ul.simple-inventory-list{margin:0 auto;padding:0}.simple-inventory-listing{list-
     grid-template-columns: 1fr 1fr 1fr;
 }</style><script role="script" id="twine-user-script" type="text/twine-javascript">/* adding tooltip behavior modification for mobile*/
 $(document).on('mouseenter', '.def', function() {
-    if (!('ontouchstart' in window)) { // Desktop only
-        var definition = $(this).attr('data-def');
-        var tooltip = $('<div class="def-tooltip">' + definition + '</div>');
-        $(this).append(tooltip);
+    if (!('ontouchstart' in window)) {
+        showTooltip($(this));
     }
 }).on('mouseleave', '.def', function() {
-    $(this).find('.def-tooltip').remove();
+    $('.def-tooltip').remove(); // Changed from $(this).find()
 }).on('click touchend', '.def', function(e) {
-    if ('ontouchstart' in window) { // Mobile only
+    if ('ontouchstart' in window) {
         e.preventDefault();
         $('.def-tooltip').remove();
-        var definition = $(this).attr('data-def');
-        var tooltip = $('<div class="def-tooltip">' + definition + '</div>');
-        $(this).append(tooltip);
+        showTooltip($(this));
         
         setTimeout(function() {
             $(document).one('click touchend', function() {
@@ -851,6 +838,44 @@ $(document).on('mouseenter', '.def', function() {
         }, 100);
     }
 });
+
+function showTooltip($elem) {
+    // Remove any existing tooltips first
+    $('.def-tooltip').remove();
+    
+    var definition = $elem.attr('data-def');
+    var tooltip = $('<div class="def-tooltip">' + definition + '</div>');
+    $('body').append(tooltip);
+    
+    // Get element position
+    var rect = $elem[0].getBoundingClientRect();
+    var tooltipHeight = tooltip.outerHeight();
+    var tooltipWidth = tooltip.outerWidth();
+    
+    // Calculate position
+    var left = rect.left + (rect.width / 2) - (tooltipWidth / 2);
+    var top = rect.top - tooltipHeight - 10;
+    
+    // Adjust if tooltip goes off left edge
+    if (left < 10) left = 10;
+    
+    // Adjust if tooltip goes off right edge
+    if (left + tooltipWidth > $(window).width() - 10) {
+        left = $(window).width() - tooltipWidth - 10;
+    }
+    
+    // If tooltip goes off top, show it below instead
+    if (top < 10) {
+        top = rect.bottom + 10;
+    }
+    
+    tooltip.css({
+        position: 'fixed',
+        left: left + 'px',
+        top: top + 'px',
+        transform: 'none'
+    });
+}
 
 /* weightedEither() Function - Start */
 window.weightedEither = function (types, ignore) {
