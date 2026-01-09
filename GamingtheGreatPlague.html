@@ -1276,7 +1276,7 @@ But those are worries for the future! For now, it is time to eat, drink, and pla
 
 &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/6c/Comet_1665.png&quot; width=&quot;100%&quot;&gt;
 //Great Comet of 1665//
-&lt;&lt;set $plagueInfection to 1&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;&lt;&lt;set $money +=5&gt;&gt;You &lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;and your family&lt;&lt;/if&gt;&gt; decide to save money and forego a large feast for the holiday.&lt;br&gt;&lt;br&gt; On Christmas Eve, you see a comet in the sky and you wonder if it is [[a sign of good things to come-&gt;January 1665]].&lt;br&gt;&lt;br&gt;
+&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;No&quot;&gt;&gt;&lt;&lt;replace &quot;#decision&quot;&gt;&gt;&lt;&lt;set $money +=5&gt;&gt;You &lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;and your family&lt;&lt;/if&gt;&gt; decide to save money and forego a large feast for the holiday.&lt;br&gt;&lt;br&gt; On Christmas Eve, you see a comet in the sky and you wonder if it is [[a sign of good things to come-&gt;January 1665]].&lt;br&gt;&lt;br&gt;
 
 
 &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/6/6c/Comet_1665.png&quot; width=&quot;100%&quot;&gt;
@@ -1639,22 +1639,22 @@ NTS: This is also what happened to your family.
 &lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot; or $age is &quot;elderly adult&quot;&gt;&gt;
 	&lt;&lt;if $relationship is &quot;single&quot;&gt;&gt;&lt;&lt;marriage-market&gt;&gt;
 	&lt;&lt;else&gt;&gt;
-		&lt;&lt;set $fever to random(1,10)&gt;&gt;
+		&lt;&lt;set $fever to random(1,20)&gt;&gt;
 		&lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 		&lt;&lt;else&gt;&gt;
-			&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;
+			&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;
             &lt;&lt;/if&gt;&gt;
 			&lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 			&lt;&lt;else&gt;&gt;
-				&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;
+				&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;
                 &lt;&lt;/if&gt;&gt;
 				&lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 				&lt;&lt;else&gt;&gt;
-					&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;
+					&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;
                     &lt;&lt;/if&gt;&gt;
 					&lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 					&lt;&lt;else&gt;&gt;
-						&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;
+						&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;
                         &lt;&lt;/if&gt;&gt;
 						&lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 						&lt;&lt;else&gt;&gt;
@@ -2397,19 +2397,19 @@ When you go to church on Easter Sunday, you are reminded of how lucky you are as
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $apprentice isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $apprentice to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -2466,19 +2466,19 @@ You
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 
@@ -2734,19 +2734,19 @@ You
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 
@@ -2823,19 +2823,19 @@ So many people are sick and shut up in their houses that the city has imposed a 
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
@@ -2906,19 +2906,19 @@ You can continue to try and avoid the plague by visiting the &lt;span class=&quo
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 
@@ -2973,19 +2973,19 @@ You hope the cold will deepen--and plague numbers continue to fall--as you head 
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 
@@ -3018,19 +3018,19 @@ You don&#39;t expect great things this Christmas, but you are still looking forw
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
@@ -3069,19 +3069,19 @@ Maybe things will be better in [[1666-&gt;January 1666]].&lt;&lt;/replace&gt;&gt
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
@@ -3125,19 +3125,19 @@ After six months of travel, the king finally returns the Court to &lt;span class
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
@@ -3174,19 +3174,19 @@ Your &lt;span class=&quot;def&quot; data-def=&quot;The smallest administrative u
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
@@ -3259,19 +3259,19 @@ It&#39;s not a great lead up for [[April 1666]].
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $apprentice isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $apprentice to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -3320,19 +3320,19 @@ At least there&#39;s some good news to balance out the bad as you head into [[Ma
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $apprentice isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $apprentice to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -3383,19 +3383,19 @@ As a devout Catholic, you are among the loudest revelers in the celebrations of 
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $apprentice isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $apprentice to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -3477,19 +3477,19 @@ One thing is for certain, though. The weather is so hot that &lt;span class=&quo
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $apprentice isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $apprentice to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -3546,19 +3546,19 @@ You wonder if you will make it to [[August 1666]].
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $apprentice isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $apprentice to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -3611,19 +3611,19 @@ You hope it will be enough to tide you through the last hot month of the year, a
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $apprentice isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $apprentice to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -3705,19 +3705,19 @@ Everyone is still reeling from the shock of the Great Fire at the beginning of [
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $apprentice isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $apprentice to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -3770,19 +3770,19 @@ The weather may be miserable, but every disaster has a silver lining. Between th
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $apprentice isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $apprentice to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -3829,19 +3829,19 @@ As &lt;span class=&quot;def&quot; data-def=&quot;A Christian holiday beginning o
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $apprentice isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $apprentice to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -4084,19 +4084,19 @@ They have decided it will be your job to
 &lt;&lt;if $seeking is 1&gt;&gt;&lt;&lt;set $wedding to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $wedding is 1&gt;&gt;&lt;&lt;wedding&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;set $fever to random(1,10)&gt;&gt;
+&lt;&lt;set $fever to random(1,20)&gt;&gt;
 &lt;&lt;if $fever is 1&gt;&gt;&lt;&lt;fever&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;&lt;&lt;set $steward to random(1,40)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $steward is 1&gt;&gt;&lt;&lt;steward&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $accident to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $accident is 1&gt;&gt;&lt;&lt;accident&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;&lt;&lt;set $runover to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $runover is 1&gt;&gt;&lt;&lt;runover&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,30)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;sickPC&gt;&gt;
@@ -5984,24 +5984,24 @@ You have suffered an accident on the job, but thanks to God you are still alive.
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="99" name="healing" tags="" position="2150,150" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;if hasVisited(&quot;November 1666&quot;)&gt;&gt;[[Get back out there.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;[[Get back out there.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;[[Get back out there.-&gt;December 1666]]
-&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;[[Get back out there.-&gt;November 1666]]
-&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;[[Get back out there.-&gt;October 1666]]
-&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;[[Get back out there.-&gt;September 1666]]
-&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;[[Get back out there.-&gt;August 1666]]
-&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;[[Get back out there.-&gt;July 1666]]
-&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;[[Get back out there.-&gt;June 1666]]
-&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;[[Get back out there.-&gt;May 1666]]
-&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;[[Get back out there.-&gt;April 1666]]
-&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;[[Get back out there.-&gt;March 1666]]
-&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;[[Get back out there.-&gt;February 1666]]
-&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;[[Get back out there.-&gt;January 1666]]
-&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;[[Get back out there.-&gt;December 1665]]
-&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;[[Get back out there.-&gt;November 1665]]
-&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;[[Get back out there.-&gt;October 1665]]
-&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;[[Get back out there.-&gt;September 1665]]
-&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;[[Get back out there.-&gt;August 1665]]
+&lt;&lt;elseif hasVisited(&quot;October 1666&quot;)&gt;&gt;[[Get back out there.-&gt;November 1666]]
+&lt;&lt;elseif hasVisited(&quot;September 1666&quot;)&gt;&gt;[[Get back out there.-&gt;October 1666]]
+&lt;&lt;elseif hasVisited(&quot;August 1666&quot;)&gt;&gt;[[Get back out there.-&gt;September 1666]]
+&lt;&lt;elseif hasVisited(&quot;July 1666&quot;)&gt;&gt;[[Get back out there.-&gt;August 1666]]
+&lt;&lt;elseif hasVisited(&quot;June 1666&quot;)&gt;&gt;[[Get back out there.-&gt;July 1666]]
+&lt;&lt;elseif hasVisited(&quot;May 1666&quot;)&gt;&gt;[[Get back out there.-&gt;June 1666]]
+&lt;&lt;elseif hasVisited(&quot;April 1666&quot;)&gt;&gt;[[Get back out there.-&gt;May 1666]]
+&lt;&lt;elseif hasVisited(&quot;March 1666&quot;)&gt;&gt;[[Get back out there.-&gt;April 1666]]
+&lt;&lt;elseif hasVisited(&quot;February 1666&quot;)&gt;&gt;[[Get back out there.-&gt;March 1666]]
+&lt;&lt;elseif hasVisited(&quot;January 1666&quot;)&gt;&gt;[[Get back out there.-&gt;February 1666]]
+&lt;&lt;elseif hasVisited(&quot;December 1665&quot;)&gt;&gt;[[Get back out there.-&gt;January 1666]]
+&lt;&lt;elseif hasVisited(&quot;November 1665&quot;)&gt;&gt;[[Get back out there.-&gt;December 1665]]
+&lt;&lt;elseif hasVisited(&quot;October 1665&quot;)&gt;&gt;[[Get back out there.-&gt;November 1665]]
+&lt;&lt;elseif hasVisited(&quot;September 1665&quot;)&gt;&gt;[[Get back out there.-&gt;October 1665]]
+&lt;&lt;elseif hasVisited(&quot;August 1665&quot;)&gt;&gt;[[Get back out there.-&gt;September 1665]]
+&lt;&lt;elseif hasVisited(&quot;July 1665&quot;)&gt;&gt;[[Get back out there.-&gt;August 1665]]
+&lt;&lt;elseif hasVisited(&quot;June 1665&quot;)&gt;&gt;[[Get back out there.-&gt;July 1665]]
+&lt;&lt;elseif hasVisited(&quot;May 1665&quot;)&gt;&gt;[[Get back out there.-&gt;June 1665]]
 &lt;&lt;elseif hasVisited(&quot;January 1665&quot;)&gt;&gt;[[Get back out there.-&gt;May 1665]]
 &lt;&lt;elseif hasVisited(&quot;December 1664&quot;)&gt;&gt;[[Get back out there.-&gt;January 1665]]
 &lt;&lt;/if&gt;&gt;
