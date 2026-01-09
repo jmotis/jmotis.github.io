@@ -1293,10 +1293,8 @@ But enough about the king! [[What about you-&gt;identity]]?
 &lt;img src=&quot;https://wesleyan-dac-open-access.s3.amazonaws.com/images/DAC_1940-D1-131_001_OA.jpg&quot; width=&quot;100%&quot;&gt;
 //Map of London, before the Fire of 1666 by Wencelaus Holler. Wesleyan University Davison Art Center.//</tw-passagedata><tw-passagedata pid="4" name="identity" tags="" position="1225,200" size="100,100">&lt;&lt;chunkText&gt;&gt;
 While infant mortality is common in this era, God granted your parents a healthy &lt;&lt;set $birthgender = [&quot;son&quot;, &quot;daughter&quot;]&gt;&gt;&lt;&lt;listbox &quot;$birthgender&quot;&gt;&gt;&lt;&lt;optionsfrom $birthgender&gt;&gt;&lt;&lt;/listbox&gt;&gt; who not only survived but thrived and you are now a &lt;&lt;set _age = [&quot;child&quot;, &quot;adolescent&quot;, &quot;young adult&quot;, &quot;middle-aged adult&quot;, &quot;elderly adult&quot;]&gt;&gt;&lt;&lt;listbox &quot;$age&quot;&gt;&gt;&lt;&lt;optionsfrom _age&gt;&gt;&lt;&lt;/listbox&gt;&gt;.
-&lt;&lt;if $birthgender is &quot;son&quot;&gt;&gt;&lt;&lt;set $gender to &quot;male&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $gender to &quot;female&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
-/*removed historically accurate but politically incorrect &quot;non-binary&quot; gender choice for compliance with federal and K-12 school regulations*/
 &lt;&lt;next&gt;&gt;
-&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;While the rich and powerful might get &lt;span class=&quot;def&quot; data-def=&quot;Engaged to be married&quot;&gt;betrothed&lt;/span&gt; as children and marry as teenagers, most people wait until their mid or late 20s when they have enough wealth to establish their own &lt;span class=&quot;def&quot; data-def=&quot;All the people living in a home. If there is an adult male living in the home, he is generally considered the head of the household. Widowed women with young children and single women may also be heads of the household. Members of the household then include the head of household, their spouse, and their children, as well as members of the extended family such as grandparents, siblings, aunts, uncles, nieces, nephews, and cousins. Households may additionally include apprentices, journeymen, and servants.&quot;&gt;households&lt;/span&gt;. You are currently &lt;&lt;set _relationship = [&quot;single&quot;, &quot;betrothed&quot;]&gt;&gt;&lt;&lt;listbox &quot;$relationship&quot;&gt;&gt;&lt;&lt;optionsfrom _relationship&gt;&gt;&lt;&lt;/listbox&gt;&gt;.&lt;&lt;else&gt;&gt;Most people get married in their mid or late 20s to start a family, and those who are widowed often remarry as well. You are currently &lt;&lt;set _relationship = [&quot;single&quot;, &quot;married&quot;, &quot;widowed&quot;]&gt;&gt;&lt;&lt;listbox &quot;$relationship&quot;&gt;&gt;&lt;&lt;optionsfrom _relationship&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;While the rich and powerful might get &lt;span class=&quot;def&quot; data-def=&quot;Engaged to be married&quot;&gt;betrothed&lt;/span&gt; as children and marry as teenagers, most people wait until their mid or late 20s when they have enough wealth to establish their own &lt;span class=&quot;def&quot; data-def=&quot;All the people living in a home. If there is an adult male living in the home, he is generally considered the head of the household. Widowed women with young children and single women may also be heads of the household. Members of the household then include the head of household, their spouse, and their children, as well as members of the extended family such as grandparents, siblings, aunts, uncles, nieces, nephews, and cousins. Households may additionally include apprentices, journeymen, and servants.&quot;&gt;households&lt;/span&gt;. You are currently &lt;&lt;set _relationship = [&quot;single&quot;, &quot;betrothed&quot;]&gt;&gt;&lt;&lt;listbox &quot;$relationship&quot;&gt;&gt;&lt;&lt;optionsfrom _relationship&gt;&gt;&lt;&lt;/listbox&gt;&gt;.&lt;&lt;else&gt;&gt;Most people get married in their mid or late 20s to start a family, and those who are widowed often remarry as well. You are currently &lt;&lt;set _relationship = [&quot;single&quot;, &quot;married&quot;, &quot;widowed&quot;]&gt;&gt;&lt;&lt;listbox &quot;$relationship&quot;&gt;&gt;&lt;&lt;optionsfrom _relationship&gt;&gt;&lt;&lt;/listbox&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if $birthgender is &quot;son&quot;&gt;&gt;&lt;&lt;set $gender to &quot;male&quot;&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $gender to &quot;female&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
 
 &lt;&lt;next&gt;&gt;
 
@@ -1753,7 +1751,7 @@ Do you:&lt;ul&gt;
 &lt;br&gt;&lt;br&gt;Are you:
 &lt;ul&gt;
 &lt;li&gt;[[careful to heed his warning-&gt;May 1665]]&lt;/li&gt;
-&lt;li&gt;&lt;&lt;if random(1,2) is 1&gt;&gt;[[not convinced it would be a worse life and spend as much of your--admittedly little--free time in the streets and alehouses as you did before|impressed][$impressed += 1]]&lt;&lt;else&gt;&gt;[[not convinced it would be a worse life and spend as much of your--admittedly little--free time in the streets and alehouses as you did before|May 1665][$reputation to Math.clamp($reputation - 1, 0, 10]]&lt;/li&gt;
+&lt;li&gt;&lt;&lt;if random(1,2) is 1&gt;&gt;[[not convinced it would be a worse life and spend as much of your--admittedly little--free time in the streets and alehouses as you did before|impressed][$impressed += 1]]&lt;&lt;else&gt;&gt;[[not convinced it would be a worse life and spend as much of your--admittedly little--free time in the streets and alehouses as you did before|May 1665][$reputation to Math.clamp($reputation - 1, 0, 10)]]&lt;/li&gt;
 &lt;/ul&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;else&gt;&gt;being harassed or mistaken for a woman of loose morals.
@@ -3007,6 +3005,7 @@ You don&#39;t expect great things this Christmas, but you are still looking forw
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="22" name="December 1665" tags="storyline 1665" position="1075,775" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;set $pregnant to random(1,10)&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -3104,6 +3103,7 @@ After six months of travel, the king finally returns the Court to &lt;span class
 
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;fumigant&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -3246,6 +3246,7 @@ It&#39;s not a great lead up for [[April 1666]].
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="26" name="April 1666" tags="storyline 1666" position="1075,925" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;set $pregnant to random(1,10)&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -3306,6 +3307,7 @@ At least there&#39;s some good news to balance out the bad as you head into [[Ma
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="27" name="May 1666" tags="storyline 1666" position="1200,925" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;set $pregnant to random(1,10)&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -3333,7 +3335,7 @@ At least there&#39;s some good news to balance out the bad as you head into [[Ma
 &lt;&lt;if $age is &quot;elderly adult&quot;&gt;&gt;&lt;&lt;set $elderly to random(1,20)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $elderly is 1&gt;&gt;&lt;&lt;elderly&gt;&gt;
 &lt;&lt;else&gt;&gt;
-&lt;&lt;if $apprentice isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;merchants&quot; or &quot;artisans&quot;&gt;&gt;&lt;&lt;set $apprentice to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $apprentice isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;merchants&quot; or $socio is &quot;artisans&quot;&gt;&gt;&lt;&lt;set $apprentice to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;if $apprentice is 1&gt;&gt;&lt;&lt;apprentice&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $worker isnot 2&gt;&gt;&lt;&lt;if $socio is &quot;day labourers&quot;&gt;&gt;&lt;&lt;set $worker to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -3358,6 +3360,7 @@ As a devout Catholic, you are among the loudest revelers in the celebrations of 
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;fumigant&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -3412,7 +3415,7 @@ The summer heat has hit London and everyone is feeling lethargic. Still, there a
 
 You hear rumors that the &lt;span class=&quot;def&quot; data-def=&quot;The English Royal Navy, which was primarily composed of heavily armed warships.&quot;&gt;fleet&lt;/span&gt; has engaged the Dutch in battle again and the streets are full of people arguing over whether the four days of rumbling was cannon fire or thunder. Yes, the hot weather could have led to four days of distant thunder but the skies are clear and &lt;span class=&quot;def&quot; data-def=&quot;An organized group of naval sailors who forcibly conscripted men of fighting age (18-55) to serve in the Royal Navy during times of war. They usually impressed merchant seamen and fishermen but sometimes abducted non-sailors from town.&quot;&gt;press gangs&lt;/span&gt; roam the street, grabbing any man they can.
 
-&lt;&lt;if $age isnot &quot;child&quot; or &quot;adolescent&quot;&gt;&gt;&lt;span id=&quot;volunteer&quot;&gt;Do you want to join in the fight?
+&lt;&lt;if $age isnot &quot;child&quot; or $age isnot &quot;adolescent&quot;&gt;&gt;&lt;span id=&quot;volunteer&quot;&gt;Do you want to join in the fight?
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;link &quot;Volunteer for the navy&quot;&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Stay out of the fighting&quot;&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;
 
@@ -3450,6 +3453,7 @@ One thing is for certain, though. The weather is so hot that &lt;span class=&quo
 &lt;&lt;/if&gt;&gt;
 
 &lt;&lt;fumigant&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -3505,7 +3509,7 @@ The heat of the city is oppressive but the worst is not the heat but the wails o
 
 Those who remain in the city hear the sounds of another battle in the distance--but any battle that is close enough for you can hear the cannon fire is too close. 
 &lt;br&gt;&lt;br&gt;
-&lt;&lt;if $age isnot &quot;child&quot; or &quot;adolescent&quot;&gt;&gt;&lt;span id=&quot;volunteer&quot;&gt;Do you want to defend the city in the Navy?
+&lt;&lt;if $age isnot &quot;child&quot; or $age isnot &quot;adolescent&quot;&gt;&gt;&lt;span id=&quot;volunteer&quot;&gt;Do you want to defend the city in the Navy?
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;link &quot;Volunteer for the navy&quot;&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Stay out of the fighting&quot;&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You wonder if you will make it to [[August 1666]].
 &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
@@ -3517,6 +3521,7 @@ You wonder if you will make it to [[August 1666]].
 //By unknown Dutch artist, &quot;Zee-Slag tussen de Engelse en Nederlandtse Vloot, op den 4 Aug. 1666.&quot; Engraving showing the St. James&#39; Day Battle on August 4th, 1666 between English and Dutch ships//
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;fumigant&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -3571,7 +3576,7 @@ You wonder if you will make it to [[August 1666]].
 &lt;&lt;else&gt;&gt;
 As the summer heat engulfs the city, &lt;span class=&quot;def&quot; data-def=&quot;A deadly infection usually spread to humans by fleas infected with the bacterium yersinia pestis. It manifests in several different ways, including bubonic (lymph node), pneumonic (lungs), and septicemic (bloodstream) plague. Bubonic plague was the least deadly form, at only ~50% fatal, while pneumonic plague was 99% fatal and can be spread directly to other people by coughing and septicemic plague was 100% fatal. Plague killed hundreds of millions of people before the development of antibiotic treatments and still kills some people today. Symptoms include fever, headaches, vomiting, weakness, coughing, shortness of breath, chest pain, abdominal pain, swollen lymph nodes, gangrene, meningitis, and most famously, the appearance of large buboes, or painful pus-filled swellings in the thighs, neck, groin, and armpits. They may turn black and rot away or rupture, spreading the infection around the body.&quot;&gt;plague&lt;/span&gt; numbers continue to rise. But at least there&#39;s good news on the war front, as you hear that the &lt;span class=&quot;def&quot; data-def=&quot;The English Royal Navy, which was primarily composed of heavily armed warships.&quot;&gt;fleet&lt;/span&gt; has burnt more Dutch ships.
 &lt;br&gt;&lt;br&gt;
-&lt;&lt;if $age isnot &quot;child&quot; or &quot;adolescent&quot;&gt;&gt;&lt;span id=&quot;volunteer&quot;&gt;Do you want to join the victorious Navy and burn more Dutch ships?
+&lt;&lt;if $age isnot &quot;child&quot; and $age isnot &quot;adolescent&quot;&gt;&gt;&lt;span id=&quot;volunteer&quot;&gt;Do you want to join the victorious Navy and burn more Dutch ships?
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;link &quot;Volunteer for the navy&quot;&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;You have enlisted on [[HMS Royal Sovereign-&gt;navy-volunteer]]&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt; | &lt;&lt;link &quot;Stay out of the fighting&quot;&gt;&gt;&lt;&lt;replace &quot;#volunteer&quot;&gt;&gt;
 You hope it will be enough to tide you through the last hot month of the year, as [[September 1666]] dawns.
@@ -3582,6 +3587,7 @@ You hope it will be enough to tide you through the last hot month of the year, a
 
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;fumigant&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -3650,7 +3656,7 @@ Early one Sunday morning, you wake to the frantic ringing of church bells.  This
 
 &lt;&lt;else&gt;&gt;You immediately send servants to find as many carts or boats as they can, to carry away your goods, and begin gathering your most important possessions—your money, your papers, your &lt;span class=&quot;def&quot; data-def=&quot;A stick used to mark debts and payments, usually with notches on one side. Usually a debtor and lender would split the stick in half and each keep half the stick as a record of their agreement.&quot;&gt;tally sticks&lt;/span&gt;. &lt;&lt;if $reputation lte 2&gt;&gt;Unfortunately, everyone is so busy saving their own households, they have little to spare for your servants who return empty-handed. All you have is the single cart you already own, which will barely carry anything.&lt;&lt;else&gt;&gt;Luckily, the servants soon return with several carts and you manage to send your most precious household goods out of the path of danger.  &lt;&lt;/if&gt;&gt;  After much agonizing, you task a servant to dig holes in the yard to bury your wine, Parmezan cheese, and most expensive books. Then you and the rest of your &lt;span class=&quot;def&quot; data-def=&quot;All the people living in a home. If there is an adult male living in the home, he is generally considered the head of the household. Widowed women with young children and single women may also be heads of the household. Members of the household then include the head of household, their spouse, and their children, as well as members of the extended family such as grandparents, siblings, aunts, uncles, nieces, nephews, and cousins. Households may additionally include apprentices, journeymen, and servants.&quot;&gt;household&lt;/span&gt; gather all the things you can hold and flee with the fire nipping at your heels.
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;if $socio is &quot;beggars&quot; or &quot;day labourers&quot;&gt;&gt; You and your family take refuge in the open fields just outside the city and watch in horror as it burns for days.  
+&lt;&lt;if $socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot;&gt;&gt; You and your family take refuge in the open fields just outside the city and watch in horror as it burns for days.  
 &lt;&lt;else&gt;&gt; Your household takes refuge in a friend&#39;s house in Westminster and watch in horror as the city burns for days.&lt;&lt;/if&gt;&gt; 
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;else&gt;&gt;
@@ -3674,6 +3680,7 @@ Everyone is still reeling from the shock of the Great Fire at the beginning of [
 &lt;img src=&quot;https://upload.wikimedia.org/wikipedia/commons/b/b6/Great_Fire_London.jpg&quot; width=&quot;100%&quot;&gt;
 //Josepha Jane Battlehooke, The Great Fire of London, 1675//
 &lt;&lt;fumigant&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -3733,12 +3740,13 @@ Everyone is still reeling from the shock of the Great Fire at the beginning of [
 You spend the next several weeks living in a field.  Luckily, there is plenty of work clearing away the debris of the fire and you&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; manage to scrape together enough money to afford new lodgings in the eastern suburbs of the city.  It&#39;s just a single room and you&#39;re a little worried that the building will fall down around you one night, but at least it&#39;s better than freezing to death in the fields. You&#39;re grateful to live long enough to see [[November 1666]].
 &lt;&lt;else&gt;&gt;You&lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt; and your family&lt;&lt;/if&gt;&gt; spend the next several weeks working to clear out the wreckage of your former home.  Even though you work as fast as you can, you won&#39;t be able to rebuild before winter.  &lt;&lt;if $reputation lte 3&gt;&gt;Your poor reputation means that no one is willing to let you stay as a guest with them for long. &lt;&lt;if $age is &quot;child&quot; or $age is &quot;adolescent&quot;&gt;&gt;Luckily, due to your young age, friends of the family allow you to stay with them through the [[winter-&gt;November 1666]].&lt;&lt;else&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt; You end up having to leave the city for the winter&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt; You end up having to sleep in your office all winter&lt;&lt;else&gt;&gt; You end up having to stay in crappy lodgings that are practically a hovel and well beneath your station&lt;&lt;/if&gt;&gt; and are [[very unhappy about it-&gt;November 1666]].&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;Because of your good reputation, friends allow you to stay with them through the [[winter-&gt;November 1666]].&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;else&gt;&gt;
-There&#39;s so many people homeless that there&#39;s money to be made for someone who&#39;s willing to rent out a few rooms of their house, especially with such rainy weather and the increasing cold. &lt;&lt;if $age isnot &quot;child&quot; or $age isnot &quot;adolescent&quot;&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;You instruct your man of business to make sure none of your tenants are illegally subletting.&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;Such activity is beneath your social station, of course, but you are envious of all the people profiting off the disaster.&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt; You open up your house and make a lot of money, but take a hit to your reputation because your neighbors accuse you of profiting off the disaster.&lt;&lt;else&gt;&gt; Not that you have room for such a thing, unfortunately.&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
+There&#39;s so many people homeless that there&#39;s money to be made for someone who&#39;s willing to rent out a few rooms of their house, especially with such rainy weather and the increasing cold. &lt;&lt;if $age isnot &quot;child&quot; and $age isnot &quot;adolescent&quot;&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;You instruct your man of business to make sure none of your tenants are illegally subletting.&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt;Such activity is beneath your social station, of course, but you are envious of all the people profiting off the disaster.&lt;&lt;elseif $socio is &quot;artisans&quot;&gt;&gt; You open up your house and make a lot of money, but take a hit to your reputation because your neighbors accuse you of profiting off the disaster.&lt;&lt;else&gt;&gt; Not that you have room for such a thing, unfortunately.&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 
 The weather may be miserable, but every disaster has a silver lining. Between the fires that still &lt;span class=&quot;def&quot; data-def=&quot;To burn slowly but without flame, produces smoke and heat&quot;&gt;smolder&lt;/span&gt; in the city&#39;s cellars and the rainy weather, &lt;span class=&quot;def&quot; data-def=&quot;A deadly infection usually spread to humans by fleas infected with the bacterium yersinia pestis. It manifests in several different ways, including bubonic (lymph node), pneumonic (lungs), and septicemic (bloodstream) plague. Bubonic plague was the least deadly form, at only ~50% fatal, while pneumonic plague was 99% fatal and can be spread directly to other people by coughing and septicemic plague was 100% fatal. Plague killed hundreds of millions of people before the development of antibiotic treatments and still kills some people today. Symptoms include fever, headaches, vomiting, weakness, coughing, shortness of breath, chest pain, abdominal pain, swollen lymph nodes, gangrene, meningitis, and most famously, the appearance of large buboes, or painful pus-filled swellings in the thighs, neck, groin, and armpits. They may turn black and rot away or rupture, spreading the infection around the body.&quot;&gt;plague&lt;/span&gt; cases are plummeting and you&#39;ve heard that the theatres are finally going to reopen! You greatly look forward to [[November 1666]] 
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;fumigant&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -3808,6 +3816,7 @@ As &lt;span class=&quot;def&quot; data-def=&quot;A Christian holiday beginning o
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="34" name="December 1666" tags="storyline 1666" position="1600,1075" size="100,100">&lt;&lt;nobr&gt;&gt;
 &lt;&lt;if $gender is &quot;female&quot;&gt;&gt;&lt;&lt;if $age is &quot;young adult&quot; or $age is &quot;middle-aged adult&quot;&gt;&gt;&lt;&lt;if $relationship is &quot;married&quot;&gt;&gt;&lt;&lt;if $pregnant is 0&gt;&gt;&lt;&lt;set $pregnant to random(1,10)&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $pregnant +=1&gt;&gt;&lt;&lt;set $miscarriage to random(1,10)&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
@@ -3852,6 +3861,7 @@ Fires still &lt;span class=&quot;def&quot; data-def=&quot;To burn slowly but wit
 
 Congratulations. You have [[survived the Great Plague of London-&gt;stats]]
 
+&lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
@@ -4105,7 +4115,7 @@ The graveyards are beginning to overflow and corpses are being flung into the op
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt;[[Worse, the first case of plague has appeared in your parish.-&gt;First Plague Day]]
 &lt;&lt;else&gt;&gt;
-	&lt;&lt;if $socio is &quot;beggars&quot; or $socio is &quot;day-labourers&quot;&gt;&gt;
+	&lt;&lt;if $socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot;&gt;&gt;
 /* NTS: should these descriptions end with a choice to abandon your work? yes */
     &lt;&lt;if $role is &quot;corpsebearer&quot;&gt;&gt;You have tried to slip a few corpses in from your &lt;span class=&quot;def&quot; data-def=&quot;The smallest administrative unit of the English church. An official known as the parish clerk kept local records of christenings, burials, and marriages of everyone who lived within the parish. In this period, parish officials were responsible for maintaining the local social safety net, which included supporting and licensing beggars.&quot;&gt;parish&lt;/span&gt; and have been turned away. Luckily, their grieving families are still shut into their houses and can&#39;t come out to yell at you over the treatment of the dead.
     &lt;br&gt;
@@ -4138,7 +4148,7 @@ The graveyards are beginning to overflow and corpses are being flung into the op
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt;[[Worse, the first case of plague has appeared in your parish.-&gt;First Plague Day]]
 &lt;&lt;else&gt;&gt;
-	&lt;&lt;if $socio is &quot;beggars&quot; or $socio is &quot;day-labourers&quot;&gt;&gt;
+	&lt;&lt;if $socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot;&gt;&gt;
 /* NTS: should these descriptions end with a choice to abandon your work? yes */
     &lt;&lt;if $role is &quot;corpsebearer&quot;&gt;&gt;You have tried to slip a few corpses in from your &lt;span class=&quot;def&quot; data-def=&quot;The smallest administrative unit of the English church. An official known as the parish clerk kept local records of christenings, burials, and marriages of everyone who lived within the parish. In this period, parish officials were responsible for maintaining the local social safety net, which included supporting and licensing beggars.&quot;&gt;parish&lt;/span&gt; and have been turned away. Luckily, their grieving families are still shut into their houses and can&#39;t come out to yell at you over the treatment of the dead.
     &lt;br&gt;
@@ -4175,7 +4185,7 @@ The graveyards are beginning to overflow and corpses are being flung into the op
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt;[[Worse, the first case of plague has appeared in your parish.-&gt;First Plague Day]]
 &lt;&lt;else&gt;&gt;
-	&lt;&lt;if $socio is &quot;beggars&quot; or $socio is &quot;day-labourers&quot;&gt;&gt;
+	&lt;&lt;if $socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot;&gt;&gt;
 /* NTS: should these descriptions end with a choice to abandon your work? yes */
     &lt;&lt;if $role is &quot;corpsebearer&quot;&gt;&gt;You have tried to slip a few corpses in from your &lt;span class=&quot;def&quot; data-def=&quot;The smallest administrative unit of the English church. An official known as the parish clerk kept local records of christenings, burials, and marriages of everyone who lived within the parish. In this period, parish officials were responsible for maintaining the local social safety net, which included supporting and licensing beggars.&quot;&gt;parish&lt;/span&gt; and have been turned away. Luckily, their grieving families are still shut into their houses and can&#39;t come out to yell at you over the treatment of the dead.
     &lt;br&gt;
@@ -4208,7 +4218,7 @@ The graveyards are beginning to overflow and corpses are being flung into the op
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt;[[Worse, the first case of plague has appeared in your parish.-&gt;First Plague Day]]
 &lt;&lt;else&gt;&gt;
-	&lt;&lt;if $socio is &quot;beggars&quot; or $socio is &quot;day-labourers&quot;&gt;&gt;
+	&lt;&lt;if $socio is &quot;beggars&quot; or $socio is &quot;day labourers&quot;&gt;&gt;
 /* NTS: should these descriptions end with a choice to abandon your work? yes */
     &lt;&lt;if $role is &quot;corpsebearer&quot;&gt;&gt;You have tried to slip a few corpses in from your &lt;span class=&quot;def&quot; data-def=&quot;The smallest administrative unit of the English church. An official known as the parish clerk kept local records of christenings, burials, and marriages of everyone who lived within the parish. In this period, parish officials were responsible for maintaining the local social safety net, which included supporting and licensing beggars.&quot;&gt;parish&lt;/span&gt; and have been turned away. Luckily, their grieving families are still shut into their houses and can&#39;t come out to yell at you over the treatment of the dead.
     &lt;br&gt;
