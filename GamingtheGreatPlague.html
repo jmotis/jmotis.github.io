@@ -6039,22 +6039,51 @@ You died with a good enough reputation that your neighbors say prayers for your 
 
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="101" name="runover" tags="widget" position="2025,400" size="100,100">&lt;&lt;widget &quot;runover&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
-&lt;&lt;set $runover to random (0,5)&gt;&gt;&lt;&lt;if $runover is 1&gt;&gt;
-Send not to know for whom the church bells toll. They toll for you. 
+&lt;&lt;set $runover to random (0,5)&gt;&gt;
+&lt;&lt;if $runover is 1&gt;&gt;
+    Send not to know for whom the church bells toll. They toll for you. 
+    &lt;br&gt;&lt;br&gt;
+    &lt;&lt;if passage() is &quot;September 1666&quot;&gt;&gt;
+        &lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt;Early one Sunday morning, you wake to the frantic ringing of church bells. This isn&#39;t the ordinary &lt;span class=&quot;def&quot; data-def=&quot;Parish churches typically had bells, which they used to ring the hours throughout the day. These bells were also rung to indicate the time of church services and to alert people to fires or other emergencies.&quot;&gt;call to service&lt;/span&gt;—&lt;&lt;if $religion is &quot;member of the Church of England&quot;&gt;&gt;something you were looking forward to attending after you slept in&lt;&lt;else&gt;&gt;as if you&#39;d ever attend a service in the Church of England!&lt;&lt;/if&gt;&gt;—but rather a call to arms. 
+        &lt;br&gt;&lt;br&gt;
+        Unfortunately, there are dangers other than the fire. As you stumble through the streets to flee the conflagration, you are run over by a cart, an accident from which you will not recover.
+        &lt;br&gt;&lt;br&gt;
+        &lt;&lt;else&gt;&gt;One Sunday morning, you awaken and getting ready for church when you look out the window and realize there is a great fire in the distance. After dressing, you go out to find a neighbor who tells you that over 300 houses have burnt down in the night, by &lt;span class=&quot;def&quot; data-def=&quot;In this period, the only bridge across the Thames connecting the two halves of London. It was preceded by several Roman and medieval bridges which were destroyed and rebuilt many times. The bridge in this period was built in 1209. The bridge had 19 piers with thick protective pilings around them. These restricted water flow so much that the water level could be up to 6 feet higher on one side of the bridge than the other. Many houses and shops stood on the bridge until they were removed in the 19th century.&quot;&gt;London Bridge&lt;/span&gt;.
+        &lt;br&gt;&lt;br&gt;
+        Unfortunately, there are dangers even outside the city walls. As you walk out to get a closer look at the conflagration, you are run over by a cart fleeing the flames, an accident from which you will not recover.
+        &lt;&lt;/if&gt;&gt;
+    &lt;&lt;else&gt;&gt;
+    Unfortunately, begging in the street comes with risks in a bustling city like London, and you have been run over by a cart, an accident from which you will not recover.
+    &lt;&lt;/if&gt;&gt;
+    &lt;&lt;if hasVisited(&quot;May 1666&quot;)&gt;&gt;
+        &lt;&lt;if $reputation lte 0&gt;&gt;You died with such a poor reputation that most of your neighbors didn&#39;t care. The rest of them probably cursed your name and hoped you were suffering in hell. 
+        &lt;&lt;else&gt;&gt;You died with a good enough reputation that your neighbors say prayers for your soul. Because of the plague ordinances, none of your neighbors could attend your funeral but your body was at least put into the communal plague pits, instead of being left out to rot.
+        &lt;&lt;/if&gt;&gt;
+    &lt;&lt;else&gt;&gt;
+        &lt;&lt;if $reputation gte 0&gt;&gt;
+            You died with a good enough reputation that your neighbors say prayers for your soul. Your body was buried in your &lt;span class=&quot;def&quot; data-def=&quot;The smallest administrative unit of the English church. An official known as the parish clerk kept local records of christenings, burials, and marriages of everyone who lived within the parish. In this period, parish officials were responsible for maintaining the local social safety net, which included supporting and licensing beggars.&quot;&gt;parish&lt;/span&gt; churchyard. 
+        &lt;&lt;else&gt;&gt;You died with such a poor reputation that most of your neighbors didn&#39;t care. The rest of them probably cursed your name and hoped you were suffering in hell. 
+        &lt;&lt;/if&gt;&gt;
+        &lt;br&gt;&lt;br&gt;
+        &lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;As a God-fearing Catholic, you know you are destined to spend time in purgatory before you can ascend to heaven but you hope that will not take too long&lt;&lt;if $reputation lte 0&gt;&gt;, despite your poor reputation on earth.&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;As a good Protestant, you know that Christ the Redeemer has died for you and your admittance to heaven is guaranteed.
+        &lt;&lt;/if&gt;&gt;
+    &lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
+[[At least you didn&#39;t die of plague-&gt;stats]].
+&lt;&lt;else&gt;&gt;
+    &lt;&lt;if passage() is &quot;September 1666&quot;&gt;&gt;
+        &lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt;Early one Sunday morning, you wake to the frantic ringing of church bells. This isn&#39;t the ordinary &lt;span class=&quot;def&quot; data-def=&quot;Parish churches typically had bells, which they used to ring the hours throughout the day. These bells were also rung to indicate the time of church services and to alert people to fires or other emergencies.&quot;&gt;call to service&lt;/span&gt;—&lt;&lt;if $religion is &quot;member of the Church of England&quot;&gt;&gt;something you were looking forward to attending after you slept in&lt;&lt;else&gt;&gt;as if you&#39;d ever attend a service in the Church of England!&lt;&lt;/if&gt;&gt;—but rather a call to arms. 
+        &lt;br&gt;&lt;br&gt;
+        Unfortunately, there are dangers other than the fire. As you stumble through the streets to flee the conflagration, you are run over by a cart and suffer a serious injury.
+        
+        &lt;&lt;else&gt;&gt;One Sunday morning, you awaken and getting ready for church when you look out the window and realize there is a great fire in the distance. After dressing, you go out to find a neighbor who tells you that over 300 houses have burnt down in the night, by &lt;span class=&quot;def&quot; data-def=&quot;In this period, the only bridge across the Thames connecting the two halves of London. It was preceded by several Roman and medieval bridges which were destroyed and rebuilt many times. The bridge in this period was built in 1209. The bridge had 19 piers with thick protective pilings around them. These restricted water flow so much that the water level could be up to 6 feet higher on one side of the bridge than the other. Many houses and shops stood on the bridge until they were removed in the 19th century.&quot;&gt;London Bridge&lt;/span&gt;.
+        &lt;br&gt;&lt;br&gt;
+        Unfortunately, there are dangers even outside the city walls. As you walk out to get a closer look at the conflagration, you are run over by a cart fleeing the flames and suffer a serious injury.
+        &lt;&lt;/if&gt;&gt;
 &lt;br&gt;&lt;br&gt;
-Unfortunately, begging in the street comes with risks in a bustling city like London, and you have been run over by a cart, an accident from which you will not recover.
-&lt;&lt;if hasVisited(&quot;May 1666&quot;)&gt;&gt;
-&lt;&lt;if $reputation lte 0&gt;&gt;You died with such a poor reputation that most of your neighbors didn&#39;t care. The rest of them probably cursed your name and hoped you were suffering in hell. 
-&lt;&lt;else&gt;&gt;You died with a good enough reputation that your neighbors say prayers for your soul. Because of the plague ordinances, none of your neighbors could attend your funeral but your body was at least put into the communal plague pits, instead of being left out to rot.&lt;&lt;/if&gt;&gt;
-&lt;&lt;else&gt;&gt;
-&lt;&lt;if $reputation gte 0&gt;&gt;
-You died with a good enough reputation that your neighbors say prayers for your soul. Your body was buried in your &lt;span class=&quot;def&quot; data-def=&quot;The smallest administrative unit of the English church. An official known as the parish clerk kept local records of christenings, burials, and marriages of everyone who lived within the parish. In this period, parish officials were responsible for maintaining the local social safety net, which included supporting and licensing beggars.&quot;&gt;parish&lt;/span&gt; churchyard. 
-&lt;&lt;else&gt;&gt;You died with such a poor reputation that most of your neighbors didn&#39;t care. The rest of them probably cursed your name and hoped you were suffering in hell. 
-&lt;&lt;/if&gt;&gt;&lt;br&gt;&lt;br&gt;
-&lt;&lt;if $religion is &quot;Catholic&quot;&gt;&gt;As a God-fearing Catholic, you know you are destined to spend time in purgatory before you can ascend to heaven but you hope that will not take too long&lt;&lt;if $reputation lte 0&gt;&gt;, despite your poor reputation on earth.&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;As a good Protestant, you know that Christ the Redeemer has died for you and your admittance to heaven is guaranteed.&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
-[[At least you didn&#39;t die of plague-&gt;stats]]
-&lt;&lt;else&gt;&gt;
-Alack! Begging in the streets in a city as bustling as London comes with its dangers. You have been run over by a cart and suffered a serious injury.  &lt;&lt;if $reputation lte 1&gt;&gt; Unfortunately, your reputation is so low that your neighbors take no more pity on you and you earn very few spare coins while you recover. &lt;&lt;set $money -=1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $money +=2&gt;&gt;Fortunately, your reputation is so high among your neighbors that the sight of you after your injury invokes great pity (and a few extra coins). Nevertheless, you are glad that you will soon heal.&lt;&lt;/if&gt;&gt; You hear that in some areas of the city they are installing a new innovation - the sidewalk - which will help to keep people off the street and prevent more [[accidents like yours-&gt;healing]]
+ You thank God that you have survived his wrath! &lt;&lt;if $reputation lte 1&gt;&gt;&lt;&lt;set $money -=1&gt;&gt; Unfortunately, your reputation is so low that your neighbors take no more pity on you and you earn very few spare coins [[while you recover.-&gt;healing]]&lt;&lt;else&gt;&gt;&lt;&lt;set $money +=2&gt;&gt;Fortunately, your reputation is so high among your neighbors that the sight of you after your injury invokes great pity (and a few extra coins). Nevertheless, you are glad that [[you will soon heal-&gt;healing]].&lt;&lt;/if&gt;&gt;
+    &lt;&lt;else&gt;&gt;
+    Alack! Begging in the streets in a city as bustling as London comes with its dangers. You have been run over by a cart and suffered a serious injury. &lt;&lt;if $reputation lte 1&gt;&gt;Unfortunately, your reputation is so low that your neighbors take no more pity on you and you earn very few spare coins while you recover. &lt;&lt;set $money -=1&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $money +=2&gt;&gt;Fortunately, your reputation is so high among your neighbors that the sight of you after your injury invokes great pity (and a few extra coins). Nevertheless, you are glad that you will soon heal.&lt;&lt;/if&gt;&gt; You hear that in some areas of the city they are installing a new innovation–the sidewalk–which will help to keep people off the street and prevent more [[accidents like yours-&gt;healing]].   
+    &lt;&lt;/if&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="102" name="fever" tags="widget" position="2150,275" size="100,100">&lt;&lt;widget &quot;fever&quot;&gt;&gt;
