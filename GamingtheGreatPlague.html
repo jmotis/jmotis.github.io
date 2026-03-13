@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.107" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.115" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -1466,8 +1466,8 @@ Your neighbors shut up the entrances to your house and paint a red cross with th
         &lt;&lt;set _decSv5 to []&gt;&gt;&lt;&lt;set _recSv5 to []&gt;&gt;
         &lt;&lt;for _si = 0; _si &lt; $NPCsServants.length; _si++&gt;&gt;
             &lt;&lt;if $NPCsServants[_si].health is &quot;infected&quot;&gt;&gt;
-                &lt;&lt;if _remedyEffect is 1 and random(1,3) is 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _decSv5.push(_si)&gt;&gt;
-                &lt;&lt;elseif _remedyEffect is 0 and random(1,2) is 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _decSv5.push(_si)&gt;&gt;
+                &lt;&lt;if _remedyEffect is 1 and random(1,3) is 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;deceased-pq&quot;&gt;&gt;&lt;&lt;set _decSv5.push(_si)&gt;&gt;
+                &lt;&lt;elseif _remedyEffect is 0 and random(1,2) is 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;deceased-pq&quot;&gt;&gt;&lt;&lt;set _decSv5.push(_si)&gt;&gt;
                 &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recSv5.push(_si)&gt;&gt;
                 &lt;&lt;/if&gt;&gt;
             &lt;&lt;/if&gt;&gt;
@@ -1476,7 +1476,7 @@ Your neighbors shut up the entrances to your house and paint a red cross with th
         &lt;&lt;set _decMs5 to []&gt;&gt;&lt;&lt;set _recMs5 to []&gt;&gt;
         &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
             &lt;&lt;if $NPCsMaster[_mi].health is &quot;infected&quot;&gt;&gt;
-                &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _decMs5.push(_mi)&gt;&gt;
+                &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;deceased-pq&quot;&gt;&gt;&lt;&lt;set _decMs5.push(_mi)&gt;&gt;
                 &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recMs5.push(_mi)&gt;&gt;&lt;&lt;/if&gt;&gt;
             &lt;&lt;/if&gt;&gt;
         &lt;&lt;/for&gt;&gt;
@@ -1484,7 +1484,7 @@ Your neighbors shut up the entrances to your house and paint a red cross with th
         &lt;&lt;set _decEx5 to []&gt;&gt;&lt;&lt;set _recEx5 to []&gt;&gt;
         &lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
             &lt;&lt;if $NPCsExtended[_ei].health is &quot;infected&quot;&gt;&gt;
-                &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _decEx5.push(_ei)&gt;&gt;
+                &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;deceased-pq&quot;&gt;&gt;&lt;&lt;set _decEx5.push(_ei)&gt;&gt;
                 &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recEx5.push(_ei)&gt;&gt;&lt;&lt;/if&gt;&gt;
             &lt;&lt;/if&gt;&gt;
         &lt;&lt;/for&gt;&gt;
@@ -2703,10 +2703,10 @@ You ask around and discover the fire began in the King&#39;s Baker&#39;s house o
 &lt;&lt;if $preFireLocation neq &quot;&quot;&gt;&gt;
 &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;You spend the next several weeks living in a field. The local &lt;&lt;defParish &quot;parish&quot;&gt;&gt; church serves food three times a day to keep you and the others from starving, but winter is coming and you know that you&#39;ll freeze to death if you don&#39;t manage to find permanent shelter before then. &lt;&lt;if $reputation lte 2&gt;&gt;Unfortunately, the first frost comes and you are still homeless because no one would take you in on account of your low reputation. &lt;&lt;if $origin is not &quot;London&quot;&gt;&gt; Your only choices are to [[return to your home in $origin-&gt;go quietly]] or to &lt;&lt;else&gt;&gt;You &lt;&lt;/if&gt;&gt;pray you don&#39;t [[freeze]].
 &lt;&lt;else&gt;&gt;Luckily, just as the first frost hits the city, you manage to find a friend-of-a-friend who is willing to let you sleep on the floor until you can get more [[permanent lodgings-&gt;November 1666]].
-&lt;&lt;set $location to &quot;in the eastern suburbs&quot;&gt;&gt;&lt;&lt;set $parish to weightedEither($eParishes)&gt;&gt;&lt;&lt;generate-landlord-household&gt;&gt;
+&lt;&lt;if $role is &quot;searcher&quot; or $role is &quot;corpsebearer&quot; or $role is &quot;warder&quot; or $role is &quot;nurse&quot;&gt;&gt;&lt;&lt;set $role to &quot;0&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $location to &quot;in the eastern suburbs&quot;&gt;&gt;&lt;&lt;set $parish to weightedEither($eParishes)&gt;&gt;&lt;&lt;generate-landlord-household&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;elseif $socio is &quot;day labourers&quot;&gt;&gt;
-You spend the next several weeks living in a field. Luckily, there is plenty of work clearing away the debris of the fire and you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; manage to scrape together enough money to afford new lodgings in the eastern suburbs of the city. It&#39;s just a single room and you&#39;re a little worried that the building will fall down around you one night, but at least it&#39;s better than freezing to death in the fields. You&#39;re grateful to live long enough to see [[November 1666]].&lt;&lt;set $location to &quot;in the eastern suburbs&quot;&gt;&gt;&lt;&lt;set $parish to weightedEither($eParishes)&gt;&gt;&lt;&lt;generate-landlord-household&gt;&gt;
+You spend the next several weeks living in a field. Luckily, there is plenty of work clearing away the debris of the fire and you&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; manage to scrape together enough money to afford new lodgings in the eastern suburbs of the city. It&#39;s just a single room and you&#39;re a little worried that the building will fall down around you one night, but at least it&#39;s better than freezing to death in the fields. You&#39;re grateful to live long enough to see [[November 1666]].&lt;&lt;if $role is &quot;searcher&quot; or $role is &quot;corpsebearer&quot; or $role is &quot;warder&quot; or $role is &quot;nurse&quot;&gt;&gt;&lt;&lt;set $role to &quot;0&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;set $location to &quot;in the eastern suburbs&quot;&gt;&gt;&lt;&lt;set $parish to weightedEither($eParishes)&gt;&gt;&lt;&lt;generate-landlord-household&gt;&gt;
 &lt;&lt;else&gt;&gt;You&lt;&lt;if $agenum lte 15&gt;&gt; and your family&lt;&lt;/if&gt;&gt; spend the next several weeks working to clear out the wreckage of your former home. Even though you work as fast as you can, you won&#39;t be able to rebuild before winter. &lt;&lt;if $reputation lte 2&gt;&gt;Your poor reputation means that no one is willing to let you stay as a guest with them for long. &lt;&lt;if $agenum lte 15&gt;&gt;Luckily, due to your young age, friends of the family allow you to stay with them through the [[winter-&gt;November 1666]].&lt;&lt;else&gt;&gt;&lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt; You end up having to leave the city for the winter&lt;&lt;elseif $socio is &quot;merchants&quot;&gt;&gt; You end up having to sleep in your office all winter&lt;&lt;else&gt;&gt; You end up having to stay in crappy lodgings that are practically a hovel and well beneath your station&lt;&lt;/if&gt;&gt; and are [[very unhappy about it-&gt;November 1666]].&lt;&lt;/if&gt;&gt;&lt;&lt;else&gt;&gt;Because of your good reputation, friends allow you to stay with them through the [[winter-&gt;November 1666]].&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;
 &lt;&lt;else&gt;&gt;
 &lt;&lt;if $location is &quot;inside the City walls&quot;&gt;&gt;
@@ -2950,7 +2950,7 @@ It is a difficult decision, but &lt;&lt;set-caretaker&gt;&gt;&lt;&lt;if $hoh is 
 &lt;&lt;for _pi = 0; _pi &lt; $NPCs.length; _pi++&gt;&gt;
     &lt;&lt;if $NPCs[_pi].health is &quot;infected&quot;&gt;&gt;
         &lt;&lt;if random(1,2) eq 1&gt;&gt;
-            &lt;&lt;set $NPCs[_pi].health to &quot;deceased&quot;&gt;&gt;
+            &lt;&lt;set $NPCs[_pi].health to &quot;deceased-pq&quot;&gt;&gt;
             &lt;&lt;set _phDead.push(_pi)&gt;&gt;
             /* Silent quick burial for pesthouse deaths */
             &lt;&lt;set $NPCs[_pi].funeralDone to true&gt;&gt;
@@ -2967,7 +2967,7 @@ It is a difficult decision, but &lt;&lt;set-caretaker&gt;&gt;&lt;&lt;if $hoh is 
 &lt;&lt;for _pi = 0; _pi &lt; $NPCsServants.length; _pi++&gt;&gt;
     &lt;&lt;if $NPCsServants[_pi].health is &quot;infected&quot;&gt;&gt;
         &lt;&lt;if random(1,2) eq 1&gt;&gt;
-            &lt;&lt;set $NPCsServants[_pi].health to &quot;deceased&quot;&gt;&gt;
+            &lt;&lt;set $NPCsServants[_pi].health to &quot;deceased-pq&quot;&gt;&gt;
             &lt;&lt;set _phSvDead.push(_pi)&gt;&gt;
             &lt;&lt;set $NPCsServants[_pi].funeralDone to true&gt;&gt;
             &lt;&lt;master-pays 9&gt;&gt;
@@ -3107,7 +3107,7 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
 
 &lt;&lt;widget &quot;health-update&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
 &lt;&lt;silently&gt;&gt;&lt;&lt;if ndef _deceased&gt;&gt;&lt;&lt;set _deceased to []&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;if ndef _recovered&gt;&gt;&lt;&lt;set _recovered to []&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;for _d range _deceased&gt;&gt;
-        &lt;&lt;if $NPCs[_d].health isnot &quot;deceased-pq&quot;&gt;&gt;&lt;&lt;set $NPCs[_d].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;
+        &lt;&lt;set $NPCs[_d].health to &quot;deceased-pq&quot;&gt;&gt;
         &lt;&lt;/for&gt;&gt;
  &lt;&lt;for _r range _recovered&gt;&gt;
  	&lt;&lt;set $NPCs[_r].health to &quot;recovered&quot;&gt;&gt;
@@ -3116,8 +3116,8 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
 &lt;&lt;set _deceasedSv to []&gt;&gt;&lt;&lt;set _recoveredSv to []&gt;&gt;
 &lt;&lt;for _si = 0; _si &lt; $NPCsServants.length; _si++&gt;&gt;
     &lt;&lt;if $NPCsServants[_si].health is &quot;infected&quot;&gt;&gt;
-        &lt;&lt;if _remedyEffect is 1 and random(1,3) is 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _deceasedSv.push(_si)&gt;&gt;
-        &lt;&lt;elseif _remedyEffect is 0 and random(1,2) is 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _deceasedSv.push(_si)&gt;&gt;
+        &lt;&lt;if _remedyEffect is 1 and random(1,3) is 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;deceased-pq&quot;&gt;&gt;&lt;&lt;set _deceasedSv.push(_si)&gt;&gt;
+        &lt;&lt;elseif _remedyEffect is 0 and random(1,2) is 1&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;deceased-pq&quot;&gt;&gt;&lt;&lt;set _deceasedSv.push(_si)&gt;&gt;
         &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsServants[_si].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recoveredSv.push(_si)&gt;&gt;
         &lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
@@ -3126,7 +3126,7 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
 &lt;&lt;set _deceasedMs to []&gt;&gt;&lt;&lt;set _recoveredMs to []&gt;&gt;
 &lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;
     &lt;&lt;if $NPCsMaster[_mi].health is &quot;infected&quot;&gt;&gt;
-        &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _deceasedMs.push(_mi)&gt;&gt;
+        &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;deceased-pq&quot;&gt;&gt;&lt;&lt;set _deceasedMs.push(_mi)&gt;&gt;
         &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recoveredMs.push(_mi)&gt;&gt;&lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
@@ -3134,7 +3134,7 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
 &lt;&lt;set _deceasedEx to []&gt;&gt;&lt;&lt;set _recoveredEx to []&gt;&gt;
 &lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;
     &lt;&lt;if $NPCsExtended[_ei].health is &quot;infected&quot;&gt;&gt;
-        &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _deceasedEx.push(_ei)&gt;&gt;
+        &lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;deceased-pq&quot;&gt;&gt;&lt;&lt;set _deceasedEx.push(_ei)&gt;&gt;
         &lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recoveredEx.push(_ei)&gt;&gt;&lt;&lt;/if&gt;&gt;
     &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
@@ -3193,7 +3193,7 @@ As morning dawns, a terrible realization settles over your &lt;&lt;defHousehold 
     &lt;br&gt;
     As a good Christian, it is your duty to look after the poor, sick, and needy. But as a good Christian, you also know it is a sin to needlessly risk your life. &lt;&lt;set-caretaker&gt;&gt;&lt;&lt;if $hoh is 1&gt;&gt;Do you&lt;&lt;elseif _authoritySick&gt;&gt;With your &lt;&lt;print $caretakerLabel&gt;&gt; too ill to &lt;&lt;if $hoh is 3&gt;&gt;give orders, the decision falls to you&lt;&lt;elseif $hoh is 4&gt;&gt;make decisions, you must decide for yourself&lt;&lt;else&gt;&gt;make decisions, the responsibility falls to you&lt;&lt;/if&gt;&gt;. Do you&lt;&lt;else&gt;&gt;Do you convince your &lt;&lt;if $hoh is 0&gt;&gt;household&lt;&lt;elseif $hoh is 2&gt;&gt;family&lt;&lt;else&gt;&gt;&lt;&lt;print $caretakerLabel&gt;&gt;&lt;&lt;/if&gt;&gt; to&lt;&lt;/if&gt;&gt;:&lt;ul&gt;
 &lt;li&gt;&lt;&lt;link &quot;Quarantine with the sick&quot; &quot;Quarantine, Week 1&quot;&gt;&gt;&lt;&lt;swap-to-other-hh&gt;&gt;&lt;&lt;set $reputation to Math.clamp($reputation + 3, 0, 10)&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;&lt;link &quot;Remain in your own household&quot;&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;set _deadOther to []&gt;&gt;&lt;&lt;set _recovOther to []&gt;&gt;&lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;&lt;&lt;if $NPCsMaster[_mi].health is &quot;infected&quot;&gt;&gt;&lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _deadOther.push(($socio === &quot;servants&quot; &amp;&amp; ($NPCsMaster[_mi].relationship === &quot;male servant&quot; || $NPCsMaster[_mi].relationship === &quot;female servant&quot;) ? &quot;fellow servant&quot; : $NPCsMaster[_mi].relationship) + &quot; &quot; + $NPCsMaster[_mi].name)&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recovOther.push(($socio === &quot;servants&quot; &amp;&amp; ($NPCsMaster[_mi].relationship === &quot;male servant&quot; || $NPCsMaster[_mi].relationship === &quot;female servant&quot;) ? &quot;fellow servant&quot; : $NPCsMaster[_mi].relationship) + &quot; &quot; + $NPCsMaster[_mi].name)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;&lt;&lt;if $NPCsExtended[_ei].health is &quot;infected&quot;&gt;&gt;&lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;deceased&quot;&gt;&gt;&lt;&lt;set _deadOther.push($NPCsExtended[_ei].relationship + &quot; &quot; + $NPCsExtended[_ei].name)&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recovOther.push($NPCsExtended[_ei].relationship + &quot; &quot; + $NPCsExtended[_ei].name)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;check-widowed&gt;&gt;&lt;&lt;/silently&gt;&gt;&lt;&lt;replace &quot;#other-hh-choice&quot;&gt;&gt;You decide to remain in your own household and pray for the sick.&lt;&lt;if _deadOther.length gt 0&gt;&gt; Despite your prayers, &lt;&lt;for _n, _name range _deadOther&gt;&gt;&lt;&lt;if _deadOther.length eq 1&gt;&gt;your _name has&lt;&lt;elseif _n &lt; _deadOther.length - 1&gt;&gt;your _name, &lt;&lt;else&gt;&gt;and your _name have&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt; died.&lt;&lt;/if&gt;&gt;&lt;&lt;if _recovOther.length gt 0&gt;&gt; Thankfully, &lt;&lt;for _n, _name range _recovOther&gt;&gt;&lt;&lt;if _recovOther.length eq 1&gt;&gt;your _name has&lt;&lt;elseif _n &lt; _recovOther.length - 1&gt;&gt;your _name, &lt;&lt;else&gt;&gt;and your _name have&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt; survived.&lt;&lt;/if&gt;&gt;&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;&lt;link &quot;Remain in your own household&quot;&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;set _deadOther to []&gt;&gt;&lt;&lt;set _recovOther to []&gt;&gt;&lt;&lt;for _mi = 0; _mi &lt; $NPCsMaster.length; _mi++&gt;&gt;&lt;&lt;if $NPCsMaster[_mi].health is &quot;infected&quot;&gt;&gt;&lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;deceased-pq&quot;&gt;&gt;&lt;&lt;set _deadOther.push(($socio === &quot;servants&quot; &amp;&amp; ($NPCsMaster[_mi].relationship === &quot;male servant&quot; || $NPCsMaster[_mi].relationship === &quot;female servant&quot;) ? &quot;fellow servant&quot; : $NPCsMaster[_mi].relationship) + &quot; &quot; + $NPCsMaster[_mi].name)&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsMaster[_mi].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recovOther.push(($socio === &quot;servants&quot; &amp;&amp; ($NPCsMaster[_mi].relationship === &quot;male servant&quot; || $NPCsMaster[_mi].relationship === &quot;female servant&quot;) ? &quot;fellow servant&quot; : $NPCsMaster[_mi].relationship) + &quot; &quot; + $NPCsMaster[_mi].name)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;for _ei = 0; _ei &lt; $NPCsExtended.length; _ei++&gt;&gt;&lt;&lt;if $NPCsExtended[_ei].health is &quot;infected&quot;&gt;&gt;&lt;&lt;if random(1,2) eq 1&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;deceased-pq&quot;&gt;&gt;&lt;&lt;set _deadOther.push($NPCsExtended[_ei].relationship + &quot; &quot; + $NPCsExtended[_ei].name)&gt;&gt;&lt;&lt;else&gt;&gt;&lt;&lt;set $NPCsExtended[_ei].health to &quot;recovered&quot;&gt;&gt;&lt;&lt;set _recovOther.push($NPCsExtended[_ei].relationship + &quot; &quot; + $NPCsExtended[_ei].name)&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;check-widowed&gt;&gt;&lt;&lt;/silently&gt;&gt;&lt;&lt;replace &quot;#other-hh-choice&quot;&gt;&gt;You decide to remain in your own household and pray for the sick.&lt;&lt;if _deadOther.length gt 0&gt;&gt; Despite your prayers, &lt;&lt;for _n, _name range _deadOther&gt;&gt;&lt;&lt;if _deadOther.length eq 1&gt;&gt;your _name has&lt;&lt;elseif _n &lt; _deadOther.length - 1&gt;&gt;your _name, &lt;&lt;else&gt;&gt;and your _name have&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt; died.&lt;&lt;/if&gt;&gt;&lt;&lt;if _recovOther.length gt 0&gt;&gt; Thankfully, &lt;&lt;for _n, _name range _recovOther&gt;&gt;&lt;&lt;if _recovOther.length eq 1&gt;&gt;your _name has&lt;&lt;elseif _n &lt; _recovOther.length - 1&gt;&gt;your _name, &lt;&lt;else&gt;&gt;and your _name have&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt; survived.&lt;&lt;/if&gt;&gt;&lt;&lt;storyline-return&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/li&gt;
     &lt;/ul&gt;&lt;/span&gt;
 &lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;
 
@@ -3948,6 +3948,12 @@ You have abandoned $parish and been removed from your position as $office.
 &lt;br&gt;&lt;br&gt;
 &lt;&lt;/if&gt;&gt;
 
+&lt;&lt;if $role is &quot;searcher&quot; or $role is &quot;corpsebearer&quot; or $role is &quot;warder&quot; or $role is &quot;nurse&quot;&gt;&gt;
+You have abandoned $parish and been removed from your position as $role.
+&lt;&lt;set $role to &quot;0&quot;&gt;&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;&lt;/if&gt;&gt;
+
 &lt;&lt;if $socio is &quot;nobles&quot;&gt;&gt;You&lt;&lt;if $agenum lte 15&gt;&gt; convince your family to&lt;&lt;else&gt;&gt; have decided to&lt;&lt;/if&gt;&gt; flee to your country estate.
 &lt;&lt;elseif $socio is &quot;servants&quot;&gt;&gt;Your $masterTitle flees London with you and the rest of &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;her&lt;&lt;else&gt;&gt;his&lt;&lt;/if&gt;&gt; &lt;&lt;defHousehold &quot;household&quot;&gt;&gt;.
     &lt;&lt;elseif $socio is &quot;beggars&quot; and $fled is 2&gt;&gt;You&lt;&lt;if $agenum lte 15&gt;&gt; convince your family &lt;&lt;else&gt;&gt; decide &lt;&lt;/if&gt;&gt;to flee the city to save yourself. Unfortunately, with no money and no reputation to speak of anymore, you only have the option of illegally begging along the road to survive./*note this conditional includes servants who flee their masters*/
@@ -3974,7 +3980,7 @@ In fact, you&lt;&lt;if $socio is &quot;servants&quot;&gt;&gt;r $masterTitle is&l
 &lt;&lt;if _ctx is &quot;initial&quot;&gt;&gt;
 Your $masterTitle decides to &lt;&lt;if random(1,2) is 1&gt;&gt;&lt;&lt;set _masterflee to 1&gt;&gt;flee&lt;&lt;else&gt;&gt;&lt;&lt;set _masterflee to 0&gt;&gt;stay&lt;&lt;/if&gt;&gt;.
 &lt;br&gt;&lt;br&gt;
-&lt;&lt;if $hoh isnot 3 and _masterflee is 1&gt;&gt;Because you do not live in your $masterTitle&#39;s household, you are left behind when they flee. You help pack and then head home, hoping you will be able to &lt;&lt;link &quot;survive as a day labourer.&quot; &quot;Stay&quot;&gt;&lt;&lt;leave-service&gt;&gt;&lt;&lt;set $fled to 4&gt;&gt;&lt;&lt;set $socio to &quot;day labourers&quot;&gt;&gt;&lt;&lt;record-decision &quot;Left behind by fleeing master&quot; 0 0&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;&lt;if $hoh isnot 3 and _masterflee is 1&gt;&gt;Because you do not live in your $masterTitle&#39;s household, you are left behind when they flee. You help pack and then head home, hoping you will be able to &lt;&lt;link &quot;survive as a day labourer.&quot; &quot;Stay&quot;&gt;&lt;&lt;leave-service&gt;&gt;&lt;&lt;for _smi = 0; _smi &lt; $NPCsMaster.length; _smi++&gt;&gt;&lt;&lt;if $NPCsMaster[_smi].health isnot &quot;deceased&quot; and $NPCsMaster[_smi].health isnot &quot;deceased-pq&quot;&gt;&gt;&lt;&lt;set $NPCsMaster[_smi].health to &quot;safe from harm&quot;&gt;&gt;&lt;&lt;set $NPCsMaster[_smi].location to &quot;the countryside&quot;&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/for&gt;&gt;&lt;&lt;set $fled to 4&gt;&gt;&lt;&lt;set $socio to &quot;day labourers&quot;&gt;&gt;&lt;&lt;record-decision &quot;Left behind by fleeing master&quot; 0 0&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;else&gt;&gt;
 As a member of your $masterTitle&#39;s household, your only choices are to follow &lt;&lt;if $masterGender is &quot;female&quot;&gt;&gt;her&lt;&lt;else&gt;&gt;his&lt;&lt;/if&gt;&gt; lead &lt;&lt;if _masterflee is 0&gt;&gt;and remain in the city, or to run away&lt;&lt;else&gt;&gt;and flee the city, or to stay in the city&lt;&lt;/if&gt;&gt; and hope you are not caught for having broken your contract.&lt;br&gt;&lt;br&gt;
 
@@ -5892,14 +5898,14 @@ Do you &lt;span id=&quot;decision&quot;&gt;
 &lt;&lt;else&gt;&gt;
     &lt;&lt;set $money -=6&gt;&gt;&lt;&lt;set $decisions.push({text: &quot;Childbirth: Threw a Party&quot;, money: -6, repDelta: 0, repBefore: $reputation, infectPct: _riskPct})&gt;&gt;
 &lt;&lt;/if&gt;&gt;
-You have your new baby, $NPCs.last().name, baptized then celebrate with all your family, friends, and neighbors. You know such a gathering might be dangerous, in such a time of plague, but there is a good chance that $NPCs.last().name will not be one of the babies who survives their perilous first year of life and you want everyone to meet them.
+You have your new baby, &lt;&lt;= $NPCs.last().name&gt;&gt;, baptized then celebrate with all your family, friends, and neighbors. You know such a gathering might be dangerous, in such a time of plague, but there is a good chance that &lt;&lt;= $NPCs.last().name&gt;&gt; will not be one of the babies who survives their perilous first year of life and you want everyone to meet them.
 &lt;&lt;storyline-return &quot;Continue.&quot; 0&gt;&gt;
 &lt;&lt;/replace&gt;&gt;
 &lt;&lt;/link&gt;&gt; |
 &lt;&lt;link &quot;have a quick baptism&quot;&gt;&gt;
 &lt;&lt;replace &quot;#decision&quot;&gt;&gt;
 &lt;&lt;set $decisions.push({text: &quot;Childbirth: Had a quick baptism&quot;, money: -6, repDelta: 0, repBefore: $reputation, infectPct: null})&gt;&gt;
-You quickly baptize them&lt;&lt;set $money -=6&gt;&gt; and pray to God that $NPCs.last().name will be one of the babies who survives their perilous first year of life.
+You quickly baptize them&lt;&lt;set $money -=6&gt;&gt; and pray to God that &lt;&lt;= $NPCs.last().name&gt;&gt; will be one of the babies who survives their perilous first year of life.
 &lt;&lt;storyline-return &quot;Continue.&quot; 0&gt;&gt;
 &lt;&lt;/replace&gt;&gt;
 &lt;&lt;/link&gt;&gt;
@@ -6556,16 +6562,15 @@ Total plague risk: &lt;b&gt;&lt;&lt;print _cumTotal&gt;&gt;%&lt;/b&gt;
 /* Remember master title before clearing */
 &lt;&lt;set _oldMasterTitle to $masterTitle&gt;&gt;
 
-/* Move all other NPCs (master&#39;s household) to extended */
+/* Move all other NPCs (master&#39;s household) to master array */
 &lt;&lt;for _smi to 0; _smi lt $NPCs.length - 1; _smi++&gt;&gt;
   &lt;&lt;if $NPCs[_smi].health isnot &quot;deceased&quot;&gt;&gt;
-    &lt;&lt;set $NPCsExtended.push($NPCs[_smi])&gt;&gt;
+    &lt;&lt;set $NPCsMaster.push($NPCs[_smi])&gt;&gt;
   &lt;&lt;/if&gt;&gt;
 &lt;&lt;/for&gt;&gt;
 
 /* Start fresh household with just the spouse */
 &lt;&lt;set $NPCs to [_newSpouse]&gt;&gt;
-&lt;&lt;set $NPCsMaster to []&gt;&gt;
 &lt;&lt;set $masterStatus to &quot;&quot;&gt;&gt;
 &lt;&lt;set $masterGender to &quot;&quot;&gt;&gt;
 &lt;&lt;set $masterTitle to &quot;&quot;&gt;&gt;
