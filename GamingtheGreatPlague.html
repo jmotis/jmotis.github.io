@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<tw-storydata name="Gaming the Great Plague 2026 v3.105" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
+	<tw-storydata name="Gaming the Great Plague 2026 v3.107" startnode="3" creator="Twine" creator-version="2.9.2" format="SugarCube" format-version="2.37.3" ifid="82d2fee6-bab5-4bdd-86ed-694046b2191b" options="" tags="" zoom="0.6" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">.def {
 	color: #6A499B;
 	font-weight:bold;
     /*text-decoration: underline dotted;*/
@@ -5023,7 +5023,7 @@ You have some &lt;&lt;defRemedies &quot;remedies&quot;&gt;&gt; on hand in your h
 &lt;&lt;/if&gt;&gt;
 &lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="83" name="Reconnecting" tags="quarantine" position="500,375" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;check-NPCs&gt;&gt;
 &lt;&lt;if _infectedFamily.length gt 0&gt;&gt;Unfortunately, you&#39;re going to be here a while longer. Your &lt;&lt;defHousehold &quot;household&quot;&gt;&gt; is still infected.
-[[You continue to tend to the sick-&gt;Quarantine Continues]]&gt;&gt;
+[[You continue to tend to the sick-&gt;Quarantine Continues]]
 
 &lt;&lt;elseif $pesthouseReparation is 1&gt;&gt;
 /* Player arriving from pesthouse or banishment — skip quarantine checks */
@@ -5235,17 +5235,18 @@ The official Thanksgiving Day for the end of the plague is proclaimed in Novembe
 &lt;br&gt;&lt;br&gt;[[Return to London-&gt;December 1666]]
 &lt;br&gt;
 &lt;&lt;/if&gt;&gt;
-&lt;&lt;/chunkText&gt;&gt;&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="88" name="no-plague" tags="" position="2150,1475" size="100,100">/* empty */</tw-passagedata><tw-passagedata pid="89" name="Stay" tags="" position="1150,1425" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;set-caretaker&gt;&gt;&lt;&lt;flee-blocked&gt;&gt;
+&lt;&lt;/chunkText&gt;&gt;&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="88" name="no-plague" tags="" position="2150,1475" size="100,100">/* empty */</tw-passagedata><tw-passagedata pid="89" name="Stay" tags="" position="1150,1425" size="100,100">&lt;&lt;nobr&gt;&gt;&lt;&lt;set-caretaker&gt;&gt;
+/* Plague infection check — sickPC/sickFam take priority over all stay content */
+&lt;&lt;set _fleeInfected to false&gt;&gt;
+&lt;&lt;if $plagueInfection eq 1&gt;&gt;&lt;&lt;set _fleeInfected to true&gt;&gt;&lt;&lt;/if&gt;&gt;
+&lt;&lt;silently&gt;&gt;&lt;&lt;check-NPCs&gt;&gt;&lt;&lt;set _hasInfectedNPC to (_infectedFamily.length + _infectedServants.length) gt 0&gt;&gt;&lt;&lt;/silently&gt;&gt;
 
-&lt;&lt;set _fleeBlocked to false&gt;&gt;
-&lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;silently&gt;&gt;&lt;&lt;check-NPCs&gt;&gt;&lt;&lt;set _fleeBlocked to (_infectedFamily.length + _infectedServants.length) gt 0&gt;&gt;&lt;&lt;/silently&gt;&gt;
-&lt;&lt;if _fleeBlocked&gt;&gt;&lt;&lt;set $fled to 4&gt;&gt;You prepare your household to flee the city. It takes some time to sort out the travel logistics, but finally everything is in order. They will leave tomorrow.&lt;br&gt;&lt;br&gt;
-&lt;&lt;sickFam&gt;&gt;
-&lt;&lt;else&gt;&gt;&lt;&lt;fled-family&gt;&gt;
-&lt;&lt;/if&gt;&gt;
-&lt;&lt;/if&gt;&gt;
+&lt;&lt;if _fleeInfected&gt;&gt;&lt;&lt;if $fled is 5&gt;&gt;You prepare to flee the city. It takes some time to sort out the travel logistics, but finally everything is in order. You will leave tomorrow. &lt;&lt;/if&gt;&gt;&lt;&lt;sickPC&gt;&gt;
+&lt;&lt;elseif _hasInfectedNPC&gt;&gt;&lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;set $fled to 4&gt;&gt;&lt;&lt;/if&gt;&gt;You prepare your household to flee the city. It takes some time to sort out the travel logistics, but finally everything is in order. They will leave tomorrow.&lt;br&gt;&lt;br&gt;&lt;&lt;sickFam&gt;&gt;
+&lt;&lt;else&gt;&gt;
 
-&lt;&lt;if not _fleeBlocked&gt;&gt;
+&lt;&lt;if $fled is 5&gt;&gt;&lt;&lt;fled-family&gt;&gt;
+&lt;&lt;/if&gt;&gt;
     &lt;&lt;set _plagueWorkShown to false&gt;&gt;
     /* Beggars */
     &lt;&lt;if $socio is &quot;beggars&quot;&gt;&gt;
