@@ -1291,14 +1291,14 @@ As a &lt;&lt;set _age = [&quot;adolescent&quot;, &quot;young adult&quot;, &quot;
 &lt;&lt;set $personalgoods.books = { name: &quot;books&quot;, quantity: 0 }&gt;&gt;
 &lt;&lt;set $personalgoods.knife = { name: &quot;knives&quot;, quantity: 0 }&gt;&gt;
 &lt;&lt;set $personalgoods.sugar = { name: &quot;cone of sugar&quot;, quantity: 0 }&gt;&gt;
-&lt;&lt;set $personalgoods.tooth = { name: &quot;whale teeth&quot;, quantity: 30 }&gt;&gt;
+&lt;&lt;set $personalgoods.tooth = { name: &quot;whale teeth&quot;, quantity: 0 }&gt;&gt;
 &lt;&lt;set _beadsPrice = 50&gt;&gt;
 &lt;&lt;set _booksPrice = 50&gt;&gt;
 &lt;&lt;set _knifePrice = 50&gt;&gt;
 &lt;&lt;set _sugarPrice = 50&gt;&gt;
 &lt;&lt;set _toothPrice = 50&gt;&gt;
 &lt;&lt;set $dependents to 0&gt;&gt;
-&lt;&lt;set $money =10000&gt;&gt;
+
 
 </tw-passagedata><tw-passagedata pid="6" name="Status" tags="" position="25,125" size="100,100">Player stats:
 &lt;ul&gt;&lt;li&gt;Name: $name&lt;/li&gt;
@@ -3397,8 +3397,7 @@ The ship will also need to procure its standard &lt;&lt;deftar &quot;tar&quot;&g
 &lt;&lt;nobr&gt;&gt;
 One of your wives found out about the other &lt;&lt;set $otherwives = ($married-1)&gt;&gt;$otherwives. If you ever end up back in that port you&#39;ll be in trouble. You will try to avoid ships sailing [[in that direction.-&gt;return][$reputation -=3; $getstopick to 1]]
 &lt;&lt;/nobr&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="42" name="Personal Trade" tags="widget" position="925,0" size="100,100">IN PROGRESS
-&lt;&lt;widget &quot;personaltrade&quot;&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="42" name="Personal Trade" tags="widget" position="925,0" size="100,100">&lt;&lt;widget &quot;personaltrade&quot;&gt;&gt;
 &lt;&lt;nobr&gt;&gt;
 &lt;&lt;set $trader to 0&gt;&gt;
 While you are in port will you buy or sell any small goods to carry for your personal trade ventures?&lt;br&gt;&lt;br&gt;
@@ -3410,17 +3409,17 @@ While you are in port will you buy or sell any small goods to carry for your per
     &lt;li&gt;&lt;span id=&quot;sugar&quot;&gt;&lt;&lt;link &quot;A cone of sugar&quot;&gt;&gt;&lt;&lt;replace &quot;#sugar&quot;&gt;&gt;A cone of sugar&lt;&lt;set $money -=50&gt;&gt;&lt;&lt;set $personalgoods.sugar.quantity +=1&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;
     &lt;li&gt;&lt;span id=&quot;tooth&quot;&gt;&lt;&lt;link &quot;Whale teeth&quot;&gt;&gt;&lt;&lt;replace &quot;#tooth&quot;&gt;&gt;&lt;&lt;set $money -=50&gt;&gt;&lt;&lt;set $personalgoods.tooth.quantity +=10&gt;&gt;Some whale teeth&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;
 		&lt;&lt;else&gt;&gt;You don&#39;t have enough money to buy anything.&lt;&lt;/if&gt;&gt;
-        &lt;&lt;if $personalgoods.tooth.quantity gte 0&gt;&gt;&lt;span id=&quot;sell&quot;&gt;&lt;&lt;link &quot;I want to sell&quot;&gt;&gt;&lt;&lt;replace &quot;#sell&quot;&gt;&gt;
+        &lt;&lt;if $personalgoods.beads.quantity gt 0 or $personalgoods.books.quantity gt 0 or $personalgoods.knife.quantity gt 0 or $personalgoods.tooth.quantity gt 0 or $personalgoods.sugar.quantity gt 0&gt;&gt;&lt;span id=&quot;sell&quot;&gt;&lt;&lt;link &quot;I want to sell&quot;&gt;&gt;&lt;&lt;replace &quot;#sell&quot;&gt;&gt;
         &lt;ul&gt;
-        &lt;&lt;if $personalgoods.beads.quantity gte 0&gt;&gt;&lt;li&gt;&lt;span id=&quot;sellbead&quot;&gt;&lt;&lt;link &quot;Beads&quot;&gt;&gt;&lt;&lt;replace &quot;sellbead&quot;&gt;&gt;&lt;&lt;set $money +=_60&gt;&gt;&lt;&lt;set $personalgoods.beads.quantity -=100&gt;&gt;You sell some beads at a small profit.		&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;
+        &lt;&lt;if $personalgoods.beads.quantity gt 0&gt;&gt;&lt;li&gt;&lt;span id=&quot;#sellbead&quot;&gt;&lt;&lt;link &quot;Beads&quot;&gt;&gt;&lt;&lt;replace &quot;sellbead&quot;&gt;&gt;&lt;&lt;set $money +=60&gt;&gt;&lt;&lt;set $personalgoods.beads.quantity -=100&gt;&gt;You sell some beads at a small profit.		&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;
         &lt;&lt;else&gt;&gt;You don&#39;t have any beads to sell.&lt;&lt;/if&gt;&gt;&lt;br&gt;
-        &lt;&lt;if $personalgoods.books.quantity gte 0&gt;&gt;&lt;li&gt;&lt;span id=&quot;sellbook&quot;&gt;&lt;&lt;link &quot;Books&quot;&gt;&gt;&lt;&lt;replace &quot;sellbook&quot;&gt;&gt;&lt;&lt;set $personalgoods.books.quantity -=1&gt;&gt;&lt;&lt;if $location is &quot;at sea&quot;&gt;&gt;You sell a book at a profit. Your 		crewmate is glad for new stories to alleviate the boredom.&lt;&lt;set $money +=_80&gt;&gt;&lt;&lt;else&gt;&gt;You sell a book at a small profit.&lt;&lt;set $money +=60&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;
+        &lt;&lt;if $personalgoods.books.quantity gt 0&gt;&gt;&lt;li&gt;&lt;span id=&quot;#sellbook&quot;&gt;&lt;&lt;link &quot;Books&quot;&gt;&gt;&lt;&lt;replace &quot;sellbook&quot;&gt;&gt;&lt;&lt;set $personalgoods.books.quantity -=1&gt;&gt;&lt;&lt;if $location is &quot;at sea&quot;&gt;&gt;You sell a book at a profit. Your crewmate is glad for new stories to alleviate the boredom.&lt;&lt;set $money +=80&gt;&gt;&lt;&lt;else&gt;&gt;You sell a book at a small profit.&lt;&lt;set $money +=60&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;
         &lt;&lt;else&gt;&gt;You don&#39;t have any books to sell.&lt;&lt;/if&gt;&gt;&lt;br&gt;
-         &lt;&lt;if $personalgoods.knife.quantity gte 0&gt;&gt;&lt;li&gt;&lt;span id=&quot;sellknife&quot;&gt;&lt;&lt;link &quot;Knives&quot;&gt;&gt;&lt;&lt;replace &quot;sellknife&quot;&gt;&gt;&lt;&lt;set $money +=_60&gt;&gt;&lt;&lt;set $personalgoods.knife.quantity -=1&gt;&gt;You sell a knife at a small profit.			&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;
+         &lt;&lt;if $personalgoods.knife.quantity gt 0&gt;&gt;&lt;li&gt;&lt;span id=&quot;#sellknife&quot;&gt;&lt;&lt;link &quot;Knives&quot;&gt;&gt;&lt;&lt;replace &quot;sellknife&quot;&gt;&gt;&lt;&lt;set $money +=60&gt;&gt;&lt;&lt;set $personalgoods.knife.quantity -=1&gt;&gt;You sell a knife at a small profit.			&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;
         &lt;&lt;else&gt;&gt;You don&#39;t have any knives to sell.&lt;&lt;/if&gt;&gt;&lt;br&gt;
-         &lt;&lt;if $personalgoods.sugar.quantity gte 0&gt;&gt;&lt;li&gt;&lt;span id=&quot;sellsugar&quot;&gt;&lt;&lt;link &quot;Sugar&quot;&gt;&gt;&lt;&lt;replace &quot;sellsugar&quot;&gt;&gt;&lt;&lt;set $money +=_60&gt;&gt;&lt;&lt;set $personalgoods.sugar.quantity -=1&gt;&gt;You sell a cone of sugar at a small profit.&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;
+         &lt;&lt;if $personalgoods.sugar.quantity gt 0&gt;&gt;&lt;li&gt;&lt;span id=&quot;sellsugar&quot;&gt;&lt;&lt;link &quot;Sugar&quot;&gt;&gt;&lt;&lt;replace &quot;#sellsugar&quot;&gt;&gt;&lt;&lt;set $money +=60&gt;&gt;&lt;&lt;set $personalgoods.sugar.quantity -=1&gt;&gt;You sell a cone of sugar at a small profit.&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;
         &lt;&lt;else&gt;&gt;You don&#39;t have any sugar to sell.&lt;&lt;/if&gt;&gt;&lt;br&gt;
-         &lt;&lt;if $personalgoods.tooth.quantity gte 0&gt;&gt;&lt;li&gt;&lt;span id=&quot;selltooth&quot;&gt;&lt;&lt;link &quot;Whale teeth&quot;&gt;&gt;&lt;&lt;replace &quot;selltooth&quot;&gt;&gt;&lt;&lt;set $personalgoods.tooth.quantity -=10&gt;&gt;&lt;&lt;if $location is &quot;at sea&quot;&gt;&gt;You sell some whale teeth at a profit. Your crewmates are glad to have some material for their scrimshaw hobby.&lt;&lt;set $money +=100&gt;&gt;&lt;&lt;else&gt;&gt;You sell some whale teeth at a small profit. The sailors who buy them are glad to stock up  for their scrimshaw hobby before their next journey.&lt;&lt;set $money +=_60&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;
+         &lt;&lt;if $personalgoods.tooth.quantity gt 0&gt;&gt;&lt;li&gt;&lt;span id=&quot;selltooth&quot;&gt;&lt;&lt;link &quot;Whale teeth&quot;&gt;&gt;&lt;&lt;replace &quot;#selltooth&quot;&gt;&gt;&lt;&lt;set $personalgoods.tooth.quantity -=10&gt;&gt;&lt;&lt;if $location is &quot;at sea&quot;&gt;&gt;You sell some whale teeth at a profit. Your crewmates are glad to have some material for their scrimshaw hobby.&lt;&lt;set $money +=100&gt;&gt;&lt;&lt;else&gt;&gt;You sell some whale teeth at a small profit. The sailors who buy them are glad to stock up  for their scrimshaw hobby before their next journey.&lt;&lt;set $money +=60&gt;&gt;&lt;&lt;/if&gt;&gt;&lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/li&gt;
         &lt;&lt;else&gt;&gt;You don&#39;t have any beads to sell.&lt;&lt;/if&gt;&gt;&lt;br&gt;
         &lt;/ul&gt;
         &lt;&lt;/replace&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;
