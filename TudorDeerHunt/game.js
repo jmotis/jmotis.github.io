@@ -312,9 +312,10 @@ const G = {
   bolts: 3, deer: null, hounds: [], lady: null, stuck: [], parts: [], pops: [], flight: null,
   hornSide: 0, beaterPose: [0, 0], beaterT: [0, 0],
   banner: null, bonus: 0, passed: false,
-  henry: { anim: 'feast', t: 0, face: 1 }, paintedPlat: true, paid: 0,
+  henry: { anim: 'feast', t: 0, face: 1 }, paintedPlat: true, paid: 0, edu: false, fact: null, factT: 0,
   mouse: { x: W / 2, y: H / 2, shown: false },
 };
+try { G.edu = localStorage.getItem('kingsDeerHuntEdu') === '1'; } catch (e) { /* storage unavailable */ }
 try { G.best = parseInt(localStorage.getItem('kingsDeerHuntBest') || '0', 10) || 0; } catch (e) { /* storage unavailable */ }
 
 const ROUND_GOAL = 1000;   // points that must be won within a round to hunt on
@@ -332,12 +333,51 @@ function payLady() {
   L.state = 'leave'; L.t = 0; L.dir = -L.dir;
   banner('', 'Her ladyship withdraws and the hunt resumes!', 2.4, '#ffe08a');
 }
+// ---- education mode (E): a fact about Henry for every deer taken, read from facts.md
+let FACTS = [], factsFromFile = false, factIdx = 0;
+const BUILTIN_FACTS = [   // used only if facts.md cannot be read (e.g. the page was opened straight from disk)
+  'Henry was born on June 28, 1491 in Greenwich. The castle in the background of this game is Greenwich Castle, but he was born in the nearby royal Palace of Placentia.',
+  'Henry was the second son of King Henry VII of England and Queen Elizabeth of York. According to the laws of primogeniture, Elizabeth was arguably the rightful heir to the throne on the death of her father and brothers. Henry VII won the throne at the Battle of Bosworth in 1485 then married her to secure his dynasty.',
+  'Henry had an older brother, Arthur, an older sister, Margaret, and a younger sister, Mary, who survived to be at least teenagers.',
+  'As a small child, Henry was invested with numerous honors, including being made the Duke of York at age three.',
+  "When Henry was ten years old, his older brother Arthur married a princess named Catherine of Aragon, the daughter of King Ferdinand II of Aragon and Queen Isabella I of Castile (who famously sponsored Christopher Columbus' voyages to the New World).",
+  'In 1502, his older brother Arthur died at the age of 15 and Henry became heir to the throne.',
+  "Henry's father died in 1509, leaving the seventeen-year-old to take the throne as Henry VIII. This was the first uncontested succession in over half a century.",
+  'Henry VIII married Catherine of Aragon on June 11, 1509.',
+  'Henry VIII died on January 28, 1547.',
+];
+function parseFacts(md) {     // bullets under the "## Facts" heading (or every bullet, if there is no such heading)
+  const m = /^##\s*facts\s*$/im.exec(md), body = m ? md.slice(m.index + m[0].length) : md;
+  return body.split(/\r?\n/).map(l => /^\s*(?:[-*+]|\d+[.)])\s+(.+)$/.exec(l)).filter(Boolean)
+    .map(x => x[1].replace(/\*\*|__|`/g, '').trim()).filter(Boolean);
+}
+FACTS = BUILTIN_FACTS;
+fetch('facts.md?t=' + Date.now()).then(r => r.ok ? r.text() : Promise.reject()).then(t => { const f = parseFacts(t); if (f.length) { FACTS = f; factsFromFile = true; } }).catch(() => {});
+function toggleEdu() {
+  G.edu = !G.edu;
+  try { localStorage.setItem('kingsDeerHuntEdu', G.edu ? '1' : '0'); } catch (e) { /* ignore */ }
+  if (G.state !== 'title' && G.state !== 'gameOver') banner('', G.edu ? 'Education mode on: a fact about Henry for every deer taken.' : 'Education mode off.', 2, '#cfe8ff');
+}
+function dismissFact() { G.fact = null; nextDeer(); }
+function wrapLines(str, maxW) {
+  const out = []; let line = '';
+  for (const w of str.split(/\s+/)) { const t = line ? line + ' ' + w : w; if (line && ctx.measureText(t).width > maxW) { out.push(line); line = w; } else line = t; }
+  if (line) out.push(line); return out;
+}
+function drawFactPanel() {
+  const f = G.fact, pw = 640, lh = 25;
+  ctx.font = `18px ${FONT_B}`;
+  const lines = wrapLines(f.text, pw - 64), ph = 62 + lines.length * lh, px = (W - pw) / 2, py = Math.max(70, 250 - ph / 2);
+  parchment(px, py, pw, ph, 12);
+  lines.forEach((l, i) => plain(l, W / 2, py + 34 + i * lh, 18, '#3a2410'));
+  if (G.factT > 0.6) plain('Click to continue the hunt', W / 2, py + ph - 20, 14, '#7a1420', FONT_B, 'center', 'bold');
+}
 function setHenry(anim, face) { G.henry.anim = anim; G.henry.t = 0; if (face) G.henry.face = face; }
 function banner(text, sub, dur = 2, color = '#fff3d0') { G.banner = { text, sub, t: 0, dur, color }; }
 function pop(text, x, y, color = '#fff3d0', size = 26) { G.pops.push({ text, x, y, t: 0, color, size }); }
 
 function startGame() {
-  G.score = 0; G.shown = 0; G.round = 1; G.paid = 0;
+  G.score = 0; G.shown = 0; G.round = 1; G.paid = 0; G.fact = null;
   startRound();
 }
 function startRound() {
@@ -436,6 +476,7 @@ function fire(mx, my) {
     } else {
       const pts = POINTS[d.type]; G.score += pts; G.roundPts += pts; G.bagged++;
       Sound.hit(d.type === 'stag'); Sound.cheer();
+      if (G.edu && FACTS.length) { G.fact = { text: FACTS[factIdx % FACTS.length], n: factIdx % FACTS.length + 1, of: FACTS.length }; factIdx++; }
       pop('+' + pts, d.x * 2, (d.y - 55) * 2, d.type === 'stag' ? '#ffd84a' : '#fff3d0', d.type === 'stag' ? 40 : 30);
       if (d.type === 'stag') banner('', 'A royal stag! Huzzah!', 1.6, '#ffe08a');
       setTimeout(() => setHenry('cheer'), 380);
@@ -528,7 +569,8 @@ function update(dt) {
     case 'loading': if (pending === 0) { bgAlt = [buildBG(true), buildBG(false)]; bgC = bgAlt[0]; G.state = 'title'; } break;
     case 'roundIntro': if (G.timer <= 0) nextDeer(); break;
     case 'wait': if (G.timer <= 0) spawnDeer(); break;
-    case 'resolve': if (G.timer <= 0) nextDeer(); break;
+    case 'resolve': if (G.timer <= 0) { if (G.fact) { G.state = 'fact'; G.factT = 0; } else nextDeer(); } break;
+    case 'fact': G.factT += dt; break;                       // the hunt waits while the fact is read
     case 'roundEnd': if (G.timer <= 0) { if (G.passed) { G.round++; startRound(); } else gameOver(); } break;
   }
 }
@@ -762,7 +804,7 @@ function drawMiniDeer(type, x, y) {
 }
 function drawTitle() {
   ctx.fillStyle = 'rgba(15,10,5,0.45)'; ctx.fillRect(0, 0, W, H);
-  const px = 150, py = 40, pw = W - 300, ph = 400;
+  const px = 150, py = 34, pw = W - 300, ph = 424;
   parchment(px, py, pw, ph, 14);
   ctx.font = `bold 40px ${FONT_H}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   ctx.fillStyle = '#7a1420'; ctx.fillText('Darest Thou Hunt with Henry VIII?', W / 2, py + 52, pw - 50);
@@ -781,6 +823,7 @@ function drawTitle() {
   });
   plain('Ten deer are flushed each round: seven ordinary, two great stags, one pet.', W / 2, py + 350, 14, '#4a3015', FONT_B, 'center', 'italic');
   plain(`Win ${ROUND_GOAL} points in a round to hunt on.  Three bolts per deer.  M mutes, P pauses.`, W / 2, py + 372, 14, '#4a3015', FONT_B, 'center', 'italic');
+  plain(`Education mode is ${G.edu ? 'ON' : 'off'}: press E for a fact about Henry with every deer taken.`, W / 2, py + 396, 14, G.edu ? '#2f6a36' : '#4a3015', FONT_B, 'center', G.edu ? 'bold' : 'italic');
   if (Math.floor(G.t * 2) % 2) text('Click to begin the hunt', W / 2, py + ph + 26, 26, '#ffe08a');
 }
 function drawPayPanel() {
@@ -851,6 +894,8 @@ function render() {
   }
   if (G.state === 'title') drawTitle();
   if (payDue()) drawPayPanel();
+  if (G.state === 'fact' && G.fact) drawFactPanel();
+  if (G.edu && G.state !== 'title') plain('Education mode on (E)', 22, 76, 12, '#e6f2ff', FONT_B, 'left', 'bold');
   if (G.state === 'roundEnd') drawRoundEnd();
   if (G.state === 'gameOver') drawGameOver();
   if (G.paused) { ctx.fillStyle = 'rgba(15,10,5,0.5)'; ctx.fillRect(0, 0, W, H); text('Paused', W / 2, H / 2, 44, '#ffe08a'); }
@@ -868,12 +913,15 @@ canvas.addEventListener('pointerdown', e => {
   if (G.paused) { G.paused = false; return; }
   if (G.state === 'title') startGame();
   else if (G.state === 'gameOver') { if (G.timer <= 0) startGame(); }
+  else if (G.state === 'fact') { if (G.factT > 0.6) dismissFact(); }
   else if (G.state === 'compensate') { if (payDue() && inPayBtn(x, y)) payLady(); }
   else fire(x, y);
 });
 canvas.addEventListener('contextmenu', e => e.preventDefault());
 window.addEventListener('keydown', e => {
   if (e.key === 'm' || e.key === 'M') Sound.toggleMute();
+  if (e.key === 'e' || e.key === 'E') toggleEdu();
+  if ((e.key === ' ' || e.key === 'Enter') && G.state === 'fact' && G.factT > 0.6) { e.preventDefault(); dismissFact(); }
   if (e.key === 'f' || e.key === 'F') G.paintedPlat = !G.paintedPlat;   // compare platforms
   if ((e.key === 't' || e.key === 'T') && bgAlt.length) bgC = bgC === bgAlt[0] ? bgAlt[1] : bgAlt[0];   // compare tree lines
   if ((e.key === 'p' || e.key === 'P') && G.state !== 'title' && G.state !== 'gameOver') G.paused = !G.paused;
@@ -888,5 +936,5 @@ function frame(now) {
 }
 requestAnimationFrame(frame);
 
-window.__game = G; G.step = update; G.draw = render;   // handy for debugging in the console
+window.__game = G; G.factsInfo = () => ({ n: FACTS.length, fromFile: factsFromFile }); G.step = update; G.draw = render;   // handy for debugging in the console
 })();
