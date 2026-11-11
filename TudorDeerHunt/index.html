@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>Darest Thou Hunt with Henry VIII?</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #14110d; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas {
+    width: min(100vw, calc(100vh * 16 / 9));
+    height: min(100vh, calc(100vw * 9 / 16));
+    display: block; cursor: none; touch-action: none;
+    box-shadow: 0 0 60px rgba(0,0,0,.8);
+  }
+</style>
+</head>
+<body>
+<canvas id="game" width="1920" height="1080"></canvas>
+<script src="game.js"></script>
+</body>
+</html>
