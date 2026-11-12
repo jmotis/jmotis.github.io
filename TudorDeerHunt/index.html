@@ -2,21 +2,166 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Darest Thou Hunt with Henry VIII?</title>
 <style>
+  :root { --vh: 100vh; --bar: 74px; }                      /* --bar: room kept beside the game for the on-screen buttons */
+  @supports (height: 100dvh) { :root { --vh: 100dvh; } }   /* the visible height on phones, allowing for the address bar */
   html, body { margin: 0; height: 100%; background: #14110d; overflow: hidden; }
   body { display: flex; align-items: center; justify-content: center; }
   canvas {
-    width: min(100vw, calc(100vh * 16 / 9));
-    height: min(100vh, calc(100vw * 9 / 16));
-    display: block; cursor: none; touch-action: none;
+    width: min(100vw, calc(var(--vh) * 16 / 9));
+    height: min(var(--vh), calc(100vw * 9 / 16));
+    display: block; cursor: none; touch-action: manipulation;
     box-shadow: 0 0 60px rgba(0,0,0,.8);
   }
+
+  /* ---- About page (press A) ---- */
+  :is(#about, #history) { position: fixed; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center;
+           padding: 3vh 3vw; box-sizing: border-box; background: rgba(15,10,5,.72); }
+  :is(#about, #history)[hidden] { display: none; }
+  :is(#about, #history) .sheet { width: min(760px, 100%); max-height: 100%; overflow-y: auto; box-sizing: border-box;
+                  padding: 28px 44px 32px; border: 2px solid #7a5a2c; border-radius: 12px;
+                  background: linear-gradient(#f1e2b8, #dcc48e); box-shadow: 0 6px 40px rgba(0,0,0,.6);
+                  color: #3a2410; font: 17px/1.6 Georgia, 'Times New Roman', serif; }
+  :is(#about, #history) h1 { margin: 0 0 4px; text-align: center; color: #7a1420; line-height: 1.2;
+              font: bold 34px 'Luminari', 'Trattatello', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif; }
+  :is(#about, #history) h2 { margin: 28px 0 6px; color: #7a1420; font-size: 20px; }
+  :is(#about, #history) p { margin: 0 0 14px; }
+  :is(#about, #history) hr { border: 0; border-top: 2px solid #b8860b; margin: 12px 40px 20px; }
+  :is(#about, #history) img { display: block; max-width: 100%; height: auto; margin: 6px auto; border: 1px solid #7a5a2c; }
+  :is(#about, #history) figure { margin: 20px 0; }
+  :is(#about, #history) figcaption { margin-top: 6px; text-align: center; font-size: 14px; font-style: italic; color: #6b4a2a; }
+  :is(#about, #history) .close { position: sticky; top: 0; float: right; margin: -10px -26px 0 12px; padding: 8px 14px; cursor: pointer;
+                  border: 2px solid #e7b93c; border-radius: 8px; background: #7a1420; color: #ffe9a8; font: bold 15px Georgia, serif; }
+  :is(#about, #history) .hint { margin: 22px 0 0; text-align: center; font-size: 14px; font-style: italic; color: #5e4320; }
+
+  /* ---- Touch devices: on-screen buttons (shown once the page knows it is on a touch screen) ---- */
+  /* On a computer the buttons are invisible until one is reached with the Tab key, or until letter-key shortcuts are turned off. */
+  #touchbar { display: flex; position: fixed; z-index: 5; right: max(6px, env(safe-area-inset-right)); top: 50%;
+              transform: translateY(-50%); flex-direction: column; gap: 8px; opacity: 0; pointer-events: none; }
+  body.touch #touchbar, body.nokeys #touchbar, #touchbar:focus-within { opacity: 1; pointer-events: auto; }
+  /* When the buttons are showing, the game makes room for them so they never cover the field:
+     beside the game when the screen is wide, in a row beneath it when the screen is tall. */
+  body.touch canvas, body.nokeys canvas {
+    width: min(calc(100vw - var(--bar) - env(safe-area-inset-right, 0px)), calc(var(--vh) * 16 / 9));
+    height: min(var(--vh), calc((100vw - var(--bar) - env(safe-area-inset-right, 0px)) * 9 / 16));
+  }
+  body.touch, body.nokeys { box-sizing: border-box; padding-right: calc(var(--bar) + env(safe-area-inset-right, 0px)); }
+  @media (orientation: portrait) {
+    body.touch, body.nokeys { flex-direction: column; gap: 12px; padding-right: 0; }
+    body.touch canvas, body.nokeys canvas { width: 100vw; height: calc(100vw * 9 / 16); }
+    body.touch #touchbar, body.nokeys #touchbar { position: static; transform: none; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+  }
+  #touchbar button { width: 62px; min-height: 44px; padding: 4px 2px; border: 2px solid #e7b93c; border-radius: 8px;
+                     background: rgba(122,20,32,.88); color: #ffe9a8; font: bold 12px/1.15 Georgia, serif;
+                     touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  #touchbar button.on { background: rgba(47,106,54,.92); }
+  #touchbar button:disabled { opacity: .4; }
+
+  /* ---- Touch devices held upright: ask the player to turn the phone ---- */
+  #rotate { position: fixed; inset: 0; z-index: 20; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 18px; padding: 24px; box-sizing: border-box; text-align: center; background: rgba(15,10,5,.93);
+            color: #ffe9a8; font: 20px/1.45 Georgia, serif; }
+  #rotate[hidden] { display: none; }
+  #rotate .big { color: #ffd84a; font: bold 30px 'Luminari', 'Trattatello', 'Palatino Linotype', Palatino, Georgia, serif; }
+  #rotate .turn { font-size: 64px; line-height: 1; }
+  #rotate button { padding: 10px 18px; border: 2px solid #e7b93c; border-radius: 8px; background: #7a1420; color: #ffe9a8; font: bold 16px Georgia, serif; }
+
+  /* ---- Keyboard focus is always clearly visible ---- */
+  button:focus-visible, input:focus-visible { outline: 3px solid #ffffff; outline-offset: 2px; box-shadow: 0 0 0 6px #14110d; }
+  :is(#about, #history) .sheet:focus-visible { outline: 4px solid #ffd84a; outline-offset: 3px; }
+  :is(#about, #history) .options { margin: 8px 0 0; padding: 12px 16px; border: 1px solid #7a5a2c; border-radius: 8px; background: rgba(255,255,255,.25); }
+  :is(#about, #history) .options label { display: block; margin: 6px 0; cursor: pointer; }
+  :is(#about, #history) .options input { width: 18px; height: 18px; margin-right: 8px; vertical-align: -3px; accent-color: #7a1420; }
+
+  /* ---- "Read the history" link: the first thing a keyboard or screen-reader user reaches; hidden until focused ---- */
+  #historyLink { position: fixed; z-index: 30; left: 8px; top: 8px; padding: 10px 16px; border: 2px solid #e7b93c; border-radius: 8px;
+                 background: #7a1420; color: #ffe9a8; font: bold 16px Georgia, serif; transform: translateY(-200%); }
+  #historyLink:focus { transform: none; outline: 3px solid #ffffff; outline-offset: 2px; }
+  #history ol { margin: 0 0 8px; padding-left: 2.4em; }
+  #history li { margin: 0 0 12px; }
+  .linkbtn { padding: 8px 14px; cursor: pointer; border: 2px solid #e7b93c; border-radius: 8px; background: #7a1420; color: #ffe9a8; font: bold 15px Georgia, serif; }
 </style>
 </head>
 <body>
-<canvas id="game" width="1920" height="1080"></canvas>
+<a href="#history" id="historyLink">Read the history of Henry VIII without playing the game</a>
+<canvas id="game" width="1920" height="1080" role="img"
+  aria-label="Darest Thou Hunt with Henry VIII? A shooting-gallery game drawn entirely as moving pictures: deer run across a field and the player aims a crossbow at them. The game depends on sight and cannot be played with a screen reader. Every fact the game teaches can be read as text instead: use the link at the top of the page, “Read the history of Henry VIII without playing the game”, or press H."></canvas>
+
+<!-- ===================== ABOUT PAGE =====================
+     Shown when the player presses A; pressing A again (or Escape) closes it. The game pauses while it is open.
+     Edit the text below freely. Each paragraph goes between <p> and </p>; use <em>…</em> for italics.
+     To add a heading:   <h2>Heading text</h2>
+     To add an image, put the file in this folder (or a subfolder such as about-images) and add:
+         <figure>
+           <img src="about-images/your-picture.jpg" alt="Short description of the picture">
+           <figcaption>Optional caption</figcaption>
+         </figure>
+     The page scrolls on its own once it is taller than the window. -->
+<div id="about" hidden>
+  <div class="sheet" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+    <button class="close" type="button" id="aboutClose">Close</button>
+    <h1 id="aboutTitle">About This Game</h1>
+    <hr>
+
+    <p>This game was inspired by descriptions of King Henry VII and Henry VIII hunting in Simon Thurley's <em>Houses of Power: the Places that Shaped the Tudor World</em> (Penguin Random House 2017), 101-105, 259-262. This iteration of the game was created in November 2026 using human-in-the-loop agentic coding with Fable 5.2 for the game code, GPT 5.4 for sprite generation, and Sonnet 4.6 for planning.</p>
+
+    <p>The castle in the background of this game is a 16-bit pixel rendition of Greenwich Castle, a hunting lodge in Greenwich just outside of London. The royals primarily hunted with hawks there, as the park there was too small for hunting deer on horseback. Deer hunting happened instead at places like Woodstock, Hatfield (where they killed 200 deer in one day in 1541), or Waltham (where Henry killed a tame stag and had to pay the lady who owned it 7s 6d).</p>
+
+    <p>In this game, deer are being hunted from a standing, where servants drive the deer in front of a static location for people to shoot with crossbows or bows. Normally, Henry would have shot from a grand standing that looked more like a multi-story building than an open wooden platform like you see in the game, but that would have made it impossible for players to see the character and so the game is deliberately historically inaccurate. The food is representative, more than realistic, and the turkey leg is a nod to the ubiquitous Renaissance Faire food rather than how Henry really would have been snacking during such an event. Horns were sounded when a stag approached, to ensure that the people in the standing didn't miss it.</p>
+
+    <p>The king's sprite has been generated from his historical portrait. The servants were generated from randomly chosen servants present in <em>The Field of the Cloth of Gold</em> of circa 1545, which is part of the Royal Collection at Hampton Court. The two hunting dogs are from Jacopo Bassano's <em>Two Hounds</em> of circa 1548 now held in the Louvre. The noblewoman was generated from a full-length portrait of Catherine Parr (previously identified as Lady Jane Grey).</p>
+
+    <h2>Playing with the keyboard</h2>
+    <p>The arrow keys move the crosshair (hold Shift for finer aim). Space or Enter looses a bolt, and also begins the hunt, continues after a fact, and pays her ladyship. The Tab key reaches on-screen buttons for this page, education mode, the music and pausing.</p>
+
+    <h2>Accessibility options</h2>
+    <div class="options">
+      <label><input type="checkbox" id="optBig"> Larger text in the game</label>
+      <label><input type="checkbox" id="optKeys"> Turn off the single-letter shortcuts (A, E, H, M, O, P) and show on-screen buttons instead</label>
+    </div>
+    <p>This game is drawn entirely as moving pictures and cannot be played with a screen reader. Every fact it teaches about Henry VIII can be read as text instead.</p>
+    <p><button type="button" class="linkbtn" id="aboutToHistory">Read the history without playing</button></p>
+
+    <p class="hint">Choose Close, or press Escape, to return to the hunt.</p>
+  </div>
+</div>
+
+<!-- ===================== READ THE HISTORY =====================
+     A text version of every education-mode fact, for screen-reader users and anyone who would rather read than hunt.
+     Opened with the link at the top of the page, the H key, the History button, or the button on the About page.
+     The facts themselves are filled in by game.js from facts.md: edit that file, not this block. -->
+<div id="history" hidden>
+  <div class="sheet" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="historyTitle">
+    <button class="close" type="button" id="historyClose">Close</button>
+    <h1 id="historyTitle">The History of Henry VIII</h1>
+    <hr>
+    <p>These are the facts the game reveals in education mode, one for each deer taken, in the order a player would meet them. Here they can simply be read. Headings mark each period of Henry's life.</p>
+    <p id="historyNote" hidden></p>
+    <div id="historyBody"></div>
+    <p class="hint">Choose Close, or press Escape, to return to the game.</p>
+  </div>
+</div>
+
+<!-- On-screen buttons for phones and tablets, which have no keyboard. Hidden on computers. -->
+<div id="touchbar">
+  <button type="button" id="tbAbout">About</button>
+  <button type="button" id="tbHistory">History</button>
+  <button type="button" id="tbEdu">Facts<br>off</button>
+  <button type="button" id="tbMute">Music<br>on</button>
+  <button type="button" id="tbPause">Pause</button>
+</div>
+
+<!-- Shown on a phone held upright. -->
+<div id="rotate" hidden>
+  <div class="turn">&#8635;</div>
+  <div class="big">Turn thy phone sideways</div>
+  <div>The hunting field is wide. Hold your phone sideways for a view fit for a king.</div>
+  <button type="button" id="rotateSkip">Play upright anyway</button>
+</div>
+
+<script src="original-art.js"></script>
 <script src="game.js"></script>
 </body>
 </html>

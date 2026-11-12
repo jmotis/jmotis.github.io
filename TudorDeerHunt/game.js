@@ -38,25 +38,39 @@ function loadImg(name) {
   const im = new Image(); pending++;
   im.onload = () => { im.ok = true; pending--; };
   im.onerror = () => { pending--; };
-  im.src = 'sprites/' + name + '.png?v=12';
+  im.src = 'sprites/' + name + '.png?v=13';
   IMG[name] = im;
 }
 const LADY_META = {   // 0,1 running  2 falling to her knees  3 weeping
   lady0: { w: 211, h: 300, ax: 105 }, lady1: { w: 198, h: 302, ax: 99 }, lady2: { w: 244, h: 195, ax: 122 }, lady3: { w: 211, h: 197, ax: 105 },
 };
-const LADY_H = 120;      // her standing height in design pixels at lane scale 1
+const LADY_H = 114;      // her standing height in design pixels at lane scale 1
 Object.keys(HENRY_META).forEach(loadImg);
 const SERV_META = {   // 0 standing  1 stepping forward  2 blowing the horn
   serv0: { w: 112, h: 300, ax: 62 }, serv1: { w: 138, h: 300, ax: 70 }, serv2: { w: 208, h: 312, ax: 63 },
   serv3: { w: 145, h: 338, ax: 82 },   // both hands in the air
+  // servant 2 (slashed doublet, red hose): 0 trumpet, 1-3 arms folded, 4-5 fists raised
+  sb0: { w: 126, h: 296, ax: 60 }, sb1: { w: 137, h: 300, ax: 68 }, sb2: { w: 138, h: 296, ax: 69 }, sb3: { w: 146, h: 294, ax: 73 }, sb4: { w: 167, h: 313, ax: 95 }, sb5: { w: 141, h: 313, ax: 79 },
+  // servant 3 (yellow sleeves, striped breeches): 0-1 standing, 2 horn, 3-4 hands up
+  sc0: { w: 131, h: 300, ax: 76 }, sc1: { w: 127, h: 300, ax: 72 }, sc2: { w: 145, h: 293, ax: 62 }, sc3: { w: 179, h: 310, ax: 119 }, sc4: { w: 142, h: 309, ax: 79 },
+  // servant 4 (young, plain red tunic, black hose): 0-1 standing, 2 horn, 3-4 hands up
+  sd0: { w: 112, h: 300, ax: 60 }, sd1: { w: 112, h: 300, ax: 60 }, sd2: { w: 160, h: 296, ax: 59 }, sd3: { w: 126, h: 347, ax: 66 }, sd4: { w: 122, h: 344, ax: 62 },
 };
 const SERV_H = 110;     // a servant's height in design pixels at lane scale 1
 // two servants per side (lo coords for the left side; mirrored on the right). They stand nearer than every deer lane.
-const SERV_POS = [[48, 190], [14, 237]];
+const SERV_POS = [[48, 190], [21, 237]];
 Object.keys(LADY_META).forEach(loadImg);
+// Four different men. CAST[side][spot]: side 0 = left, 1 = right; spot 0 = further up the field (he blows the horn), 1 = nearest.
+const SERVANTS = {
+  one:   { idle: 'serv0', horn: 'serv2', wave: ['serv3', 'serv1'] },
+  two:   { idle: 'sb1',   horn: 'sb0',   wave: ['sb4', 'sb5'] },
+  three: { idle: 'sc0',   horn: 'sc2',   wave: ['sc3', 'sc4'] },
+  four:  { idle: 'sd0',   horn: 'sd2',   wave: ['sd3', 'sd4'] },
+};
+const CAST = [['one', 'two'], ['four', 'three']];
 Object.keys(SERV_META).forEach(loadImg);
 loadImg('sky');
-loadImg('treeline'); loadImg('castle'); loadImg('platform'); loadImg('standard');
+loadImg('treeline'); loadImg('castle'); loadImg('platform'); loadImg('standard'); loadImg('bush');
 // deer sheets: frames 0-2 gallop, 3 collapsing, 4 lying still. ay = distance from the frame top to the ground line.
 const DEER_META = {
   doe0: { w: 215, h: 153, ax: 107, ay: 160 }, doe1: { w: 190, h: 160, ax: 95, ay: 161 }, doe2: { w: 187, h: 160, ax: 93, ay: 160 }, doe3: { w: 233, h: 83, ax: 116, ay: 83 }, doe4: { w: 235, h: 55, ax: 117, ay: 55 },
@@ -312,12 +326,13 @@ const G = {
   bolts: 3, deer: null, hounds: [], lady: null, stuck: [], parts: [], pops: [], flight: null,
   hornSide: 0, beaterPose: [0, 0], beaterT: [0, 0],
   banner: null, bonus: 0, passed: false,
-  henry: { anim: 'feast', t: 0, face: 1 }, paintedPlat: true, paid: 0, edu: false, fact: null, factT: 0,
+  henry: { anim: 'feast', t: 0, face: 1 }, paintedPlat: true, paid: 0, aboutOpen: false, touch: false, rotateOpen: false, rotateSkipped: false, bigText: false, noKeys: false, edu: false, fact: null, factT: 0, orig: false, won: false,
   mouse: { x: W / 2, y: H / 2, shown: false },
 };
 try { G.edu = localStorage.getItem('kingsDeerHuntEdu') === '1'; } catch (e) { /* storage unavailable */ }
 try { G.best = parseInt(localStorage.getItem('kingsDeerHuntBest') || '0', 10) || 0; } catch (e) { /* storage unavailable */ }
 
+const MAX_ROUNDS = 20;     // 200 deer, then the light fades
 const ROUND_GOAL = 1000;   // points that must be won within a round to hunt on
 const laneScale = y => 0.72 + (y - 140) / 85 * 0.43;
 
@@ -334,25 +349,55 @@ function payLady() {
   banner('', 'Her ladyship withdraws and the hunt resumes!', 2.4, '#ffe08a');
 }
 // ---- education mode (E): a fact about Henry for every deer taken, read from facts.md
-let FACTS = [], factsFromFile = false, factIdx = 0;
-const BUILTIN_FACTS = [   // used only if facts.md cannot be read (e.g. the page was opened straight from disk)
-  'Henry was born on June 28, 1491 in Greenwich. The castle in the background of this game is Greenwich Castle, but he was born in the nearby royal Palace of Placentia.',
-  'Henry was the second son of King Henry VII of England and Queen Elizabeth of York. According to the laws of primogeniture, Elizabeth was arguably the rightful heir to the throne on the death of her father and brothers. Henry VII won the throne at the Battle of Bosworth in 1485 then married her to secure his dynasty.',
-  'Henry had an older brother, Arthur, an older sister, Margaret, and a younger sister, Mary, who survived to be at least teenagers.',
-  'As a small child, Henry was invested with numerous honors, including being made the Duke of York at age three.',
+let FACTS = [], factsFromFile = false;
+// Each round owns its own block of facts: round 1 shows facts 1-9, round 2 facts 10-18, and so on. Within a round the
+// first deer taken shows the block's first fact, the second its second... This holds whether or not education mode was on
+// earlier, so a player can leave it off for the early rounds and switch it on later to read the later facts.
+const FACTS_PER_ROUND = 9;      // a round has at most nine deer that can be taken (ten, less her ladyship's pet)
+const factIndex = (round, takenThisRound) => (round - 1) * FACTS_PER_ROUND + (takenThisRound - 1);
+const BUILTIN_FACTS = [   // the first nine facts of facts.md; used only if that file cannot be read (e.g. the page was opened straight from disk)
+  "Henry was born on June 28, 1491 in Greenwich. The castle in the background of this game is Greenwich Castle, but he was born in the nearby royal Palace of Placentia.",
+  "Henry was the second son of King Henry VII of England and Queen Elizabeth of York. According to the laws of primogeniture, Elizabeth was arguably the rightful heir to the throne on the death of her father and brothers. Henry VII won the throne at the Battle of Bosworth in 1485 then married her to secure his dynasty.",
+  "Henry had an older brother, Arthur, an older sister, Margaret, and a younger sister, Mary, who survived to be at least teenagers.",
+  "As a small child, Henry was invested with numerous honors, including being made the Duke of York at age three.",
   "When Henry was ten years old, his older brother Arthur married a princess named Catherine of Aragon, the daughter of King Ferdinand II of Aragon and Queen Isabella I of Castile (who famously sponsored Christopher Columbus' voyages to the New World).",
-  'In 1502, his older brother Arthur died at the age of 15 and Henry became heir to the throne.',
-  "Henry's father died in 1509, leaving the seventeen-year-old to take the throne as Henry VIII. This was the first uncontested succession in over half a century.",
-  'Henry VIII married Catherine of Aragon on June 11, 1509.',
-  'Henry VIII died on January 28, 1547.',
+  "In 1502, his older brother Arthur died at the age of 15 and Henry became heir to the throne.",
+  "Henry's father died on April 22, 1509, leaving the seventeen-year-old to take the throne as Henry VIII. This was the first uncontested succession in over half a century.",
+  "Henry inherited a stable kingdom and a full treasury, thanks to his father's careful (and sometimes ruthless) handling of money. Henry spent most of that money within a few years.",
+  "The young Henry was over six feet tall, athletic, and considered very handsome, with reddish-gold hair. He was also stubborn and had a fierce temper.",
 ];
 function parseFacts(md) {     // bullets under the "## Facts" heading (or every bullet, if there is no such heading)
   const m = /^##\s*facts\s*$/im.exec(md), body = m ? md.slice(m.index + m[0].length) : md;
   return body.split(/\r?\n/).map(l => /^\s*(?:[-*+]|\d+[.)])\s+(.+)$/.exec(l)).filter(Boolean)
     .map(x => x[1].replace(/\*\*|__|`/g, '').trim()).filter(Boolean);
 }
+// The same facts grouped under the "### ..." headings of facts.md, for the Read the history page.
+function parseSections(md) {
+  const m = /^##\s*facts\s*$/im.exec(md), body = m ? md.slice(m.index + m[0].length) : md;
+  const out = []; let cur = null;
+  for (const line of body.split(/\r?\n/)) {
+    const hd = /^\s*#{3,}\s+(.+?)\s*$/.exec(line), it = /^\s*(?:[-*+]|\d+[.)])\s+(.+)$/.exec(line);
+    if (hd) { cur = { title: hd[1], facts: [] }; out.push(cur); }
+    else if (it) { const f = it[1].replace(/\*\*|__|`/g, '').trim(); if (!f) continue; if (!cur) { cur = { title: '', facts: [] }; out.push(cur); } cur.facts.push(f); }
+  }
+  return out.filter(sec => sec.facts.length);
+}
 FACTS = BUILTIN_FACTS;
-fetch('facts.md?t=' + Date.now()).then(r => r.ok ? r.text() : Promise.reject()).then(t => { const f = parseFacts(t); if (f.length) { FACTS = f; factsFromFile = true; } }).catch(() => {});
+let SECTIONS = [{ title: 'Childhood and accession, 1491–1509', facts: BUILTIN_FACTS }];
+fetch('facts.md?t=' + Date.now()).then(r => r.ok ? r.text() : Promise.reject()).then(t => { const f = parseFacts(t); if (f.length) { FACTS = f; SECTIONS = parseSections(t); factsFromFile = true; } }).catch(() => {});
+function renderHistory() {      // fills the Read the history page with real text: a heading and a numbered list for each period
+  const body = document.getElementById('historyBody'), note = document.getElementById('historyNote'); if (!body) return;
+  body.textContent = ''; let n = 1;
+  for (const sec of SECTIONS) {
+    if (sec.title) { const h2 = document.createElement('h2'); h2.textContent = sec.title; body.appendChild(h2); }
+    const ol = document.createElement('ol'); ol.start = n;
+    for (const f of sec.facts) { const li = document.createElement('li'); li.textContent = f; ol.appendChild(li); n++; }
+    body.appendChild(ol);
+  }
+  note.hidden = factsFromFile;
+  note.textContent = factsFromFile ? '' : 'Only the first nine facts are shown, because the game was opened directly from a disk. Opened from a website, or with the Play Game launcher, this page lists every fact.';
+}
+const tapWord = () => G.touch ? 'Tap' : 'Click or press Enter';
 function toggleEdu() {
   G.edu = !G.edu;
   try { localStorage.setItem('kingsDeerHuntEdu', G.edu ? '1' : '0'); } catch (e) { /* ignore */ }
@@ -365,19 +410,19 @@ function wrapLines(str, maxW) {
   if (line) out.push(line); return out;
 }
 function drawFactPanel() {
-  const f = G.fact, pw = 640, lh = 25;
-  ctx.font = `18px ${FONT_B}`;
+  const f = G.fact, pw = G.bigText ? 760 : 640, lh = fs(18) + 7;
+  ctx.font = `${fs(18)}px ${FONT_B}`;
   const lines = wrapLines(f.text, pw - 64), ph = 62 + lines.length * lh, px = (W - pw) / 2, py = Math.max(70, 250 - ph / 2);
   parchment(px, py, pw, ph, 12);
   lines.forEach((l, i) => plain(l, W / 2, py + 34 + i * lh, 18, '#3a2410'));
-  if (G.factT > 0.6) plain('Click to continue the hunt', W / 2, py + ph - 20, 14, '#7a1420', FONT_B, 'center', 'bold');
+  if (G.factT > 0.6) plain(`${tapWord()} to continue the hunt`, W / 2, py + ph - 20, 14, '#7a1420', FONT_B, 'center', 'bold');
 }
 function setHenry(anim, face) { G.henry.anim = anim; G.henry.t = 0; if (face) G.henry.face = face; }
 function banner(text, sub, dur = 2, color = '#fff3d0') { G.banner = { text, sub, t: 0, dur, color }; }
 function pop(text, x, y, color = '#fff3d0', size = 26) { G.pops.push({ text, x, y, t: 0, color, size }); }
 
 function startGame() {
-  G.score = 0; G.shown = 0; G.round = 1; G.paid = 0; G.fact = null;
+  G.score = 0; G.shown = 0; G.round = 1; G.paid = 0; G.fact = null; G.won = false;
   startRound();
 }
 function startRound() {
@@ -386,7 +431,7 @@ function startRound() {
   G.idx = -1; G.results = new Array(10).fill(null); G.bagged = 0; G.bonus = 0; G.roundPts = 0;
   G.deer = null; G.lady = null; G.hounds = []; G.stuck = [];
   G.state = 'roundIntro'; G.timer = 2.2;
-  banner('Round ' + G.round, `Win ${ROUND_GOAL} points this round to please the King`, 2.2);
+  banner(`Round ${G.round} of ${MAX_ROUNDS}`, `Win ${ROUND_GOAL} points this round to please the King`, 2.2);
   setHenry('feast'); Sound.fanfare();
 }
 function nextDeer() {
@@ -400,7 +445,7 @@ function nextDeer() {
   if (type === 'stag') {
     G.timer = 2.6; Sound.horn();
     const s = G.pendingDir > 0 ? 0 : 1; G.beaterPose[s] = 2; G.beaterT[s] = 2.5;
-    banner('', 'Hark, the horn! A great stag is afoot…', 2.4, '#ffe08a');
+    banner('', 'Hark, the horn! A great stag is headed your way!', 2.4, '#ffe08a');
   } else G.timer = 1.1;
 }
 function spawnDeer() {
@@ -448,11 +493,21 @@ function deerHit(d, px, py) {
   const s = laneScale(d.y) * (d.type === 'stag' ? 1.25 : 1);
   const hop = -3 * laneScale(d.y) * Math.abs(Math.sin(Math.PI * d.phase));
   const dx = (px - d.x) * d.dir / s, dy = (py - (d.y + hop)) / s;
+  if (G.orig) {      // the code-drawn deer are a slightly different shape
+    const dyo = (py - (d.y - 6 * laneScale(d.y) * Math.abs(Math.sin(Math.PI * d.phase)))) / s;
+    return (Math.abs(dx) <= 20 && dyo >= -39 && dyo <= 1) || (dx >= 7 && dx <= 32 && dyo >= -54 && dyo <= -32);
+  }
   if (Math.abs(dx) <= 25 && dy >= -34 && dy <= 1) return true;      // body + legs
   if (dx >= 10 && dx <= 31 && dy >= -43 && dy <= -24) return true;  // neck + head (antlers don't count)
   return false;
 }
-function fire(mx, my) {
+// A fingertip is far less exact than a mouse pointer and hides the target, so a tap that lands just beside a deer still counts.
+function touchHit(d, px, py) {
+  if (deerHit(d, px, py)) return true;
+  for (const r of [5, 10]) for (let a = 0; a < 8; a++) if (deerHit(d, px + Math.cos(a * Math.PI / 4) * r, py + Math.sin(a * Math.PI / 4) * r)) return true;
+  return false;
+}
+function fire(mx, my, touch) {
   if (G.state !== 'deer' || !G.deer || G.deer.state !== 'run' || G.bolts <= 0) return;
   const px = mx / 2, py = my / 2;
   G.bolts--;
@@ -462,7 +517,7 @@ function fire(mx, my) {
   const ox = HENRY_X * 2 + face * 62, oy = HENRY_FEET * 2 - 122;
   G.flight = { x0: ox, y0: oy, x1: mx, y1: my, t: 0 };
   const d = G.deer;
-  if (deerHit(d, px, py)) {
+  if (touch ? touchHit(d, px, py) : deerHit(d, px, py)) {
     d.state = 'hit'; d.st = 0;
     for (let i = 0; i < 10; i++) G.parts.push({ x: px, y: py, vx: rand(-60, 60), vy: rand(-80, 10), t: 0, life: rand(0.3, 0.6), col: i % 2 ? '#fff3b0' : '#ffffff', g: 160 });
     if (d.type === 'pet') {
@@ -471,14 +526,14 @@ function fire(mx, my) {
       const fromLeft = d.x < LW / 2;
       G.lady = { x: fromLeft ? -30 : LW + 30, y: d.y + 3, tx: d.x + (fromLeft ? -32 : 32), dir: fromLeft ? 1 : -1, state: 'run', t: 0, wept: false };
       setTimeout(() => { if (G.henry.anim !== 'sulk') setHenry('sulk'); }, 450);
-      banner("Alas! Her ladyship's pet deer!", 'All thy points are forfeit.', 3.2, '#ffb0b0');
+      banner("You slew her ladyship's pet deer!", 'Alas, all thy points are forfeit.', 3.2, '#ffb0b0');
       G.results[G.idx] = 'slain'; G.state = 'compensate';     // play waits until her ladyship has been paid
     } else {
       const pts = POINTS[d.type]; G.score += pts; G.roundPts += pts; G.bagged++;
       Sound.hit(d.type === 'stag'); Sound.cheer();
-      if (G.edu && FACTS.length) { G.fact = { text: FACTS[factIdx % FACTS.length], n: factIdx % FACTS.length + 1, of: FACTS.length }; factIdx++; }
+      if (G.edu && FACTS.length) G.fact = { text: FACTS[factIndex(G.round, G.bagged) % FACTS.length] };
       pop('+' + pts, d.x * 2, (d.y - 55) * 2, d.type === 'stag' ? '#ffd84a' : '#fff3d0', d.type === 'stag' ? 40 : 30);
-      if (d.type === 'stag') banner('', 'A royal stag! Huzzah!', 1.6, '#ffe08a');
+      if (d.type === 'stag') banner('', 'A magnificent stag!', 1.6, '#ffe08a');
       setTimeout(() => setHenry('cheer'), 380);
       resolve(d.type === 'stag' ? 'stag' : 'hit', 2.1);
     }
@@ -535,7 +590,7 @@ function update(dt) {
         d.turnX = d.dir > 0 ? Math.min(LW - 50, rand(d.x + 80, LW - 60)) : Math.max(50, rand(60, d.x - 80));
       }
       if (G.state === 'deer' && (d.x < -50 || d.x > LW + 50)) {
-        if (d.type === 'pet') { banner('', "Her ladyship's pet trots safely home.", 1.6, '#c8f0c0'); resolve('spared', 1.4); }
+        if (d.type === 'pet') { banner('', "Her ladyship's pet has left the area.", 1.6, '#c8f0c0'); resolve('spared', 1.4); }
         else if (d.type === 'stag') { banner('', 'The great stag got away!', 1.3, '#ffd0a0'); setHenry('sulk'); Sound.sulk(); resolve('miss', 1.5); }
         else { if (G.henry.anim !== 'feast') setHenry('feast'); resolve('miss', 0.9); }   // an ordinary deer? His Majesty keeps eating
         G.deer = null;
@@ -557,7 +612,7 @@ function update(dt) {
     } else {
       L.sob += dt; if (L.sob > 4.4) { L.sob = 0; Sound.weep(); }    // she will not stop until she is compensated
       if (L.t > 0.45 && Math.random() < dt * 11) {
-      const hd = LADY_H * laneScale(L.y) / 2;
+      const hd = G.orig ? 52 * laneScale(L.y) : LADY_H * laneScale(L.y) / 2;
       G.parts.push({ x: L.x + L.dir * 0.13 * hd + rand(-2, 2), y: L.y - 0.5 * hd, vx: rand(-26, 26), vy: rand(-34, -8), t: 0, life: 0.7, col: Math.random() < 0.3 ? '#e8f8ff' : '#8fd8ff', g: 150 });
       }
     }
@@ -571,11 +626,61 @@ function update(dt) {
     case 'wait': if (G.timer <= 0) spawnDeer(); break;
     case 'resolve': if (G.timer <= 0) { if (G.fact) { G.state = 'fact'; G.factT = 0; } else nextDeer(); } break;
     case 'fact': G.factT += dt; break;                       // the hunt waits while the fact is read
-    case 'roundEnd': if (G.timer <= 0) { if (G.passed) { G.round++; startRound(); } else gameOver(); } break;
+    case 'roundEnd': if (G.timer <= 0) {
+      if (!G.passed) gameOver();
+      else if (G.round >= MAX_ROUNDS) { G.won = true; gameOver(); setHenry('feast'); Sound.fanfare(); }   // the hunt is complete
+      else { G.round++; startRound(); }
+    } break;
   }
 }
 
 // ---------------------------------------------------------------- drawing: low-res scene
+// ---- the original code-drawn look (O key)
+const OA = window.ORIGINAL_ART;
+function drawDeerOrig(d) {
+  const ls = laneScale(d.y), set = OA.DEER[d.type];
+  shadow(d.x, d.y, 15 * ls * (d.type === 'stag' ? 1.25 : 1));
+  if (d.state === 'run') {
+    const fr = set.run[Math.floor(d.phase * OA.RUN_FRAMES) % OA.RUN_FRAMES];
+    const hop = -6 * ls * Math.abs(Math.sin(Math.PI * d.phase));
+    drawSprite(fr, d.x, d.y + hop, d.dir * ls, ls);
+    if (d.type === 'pet' && d.glint % 1.1 < 0.16) {
+      const jx = Math.round(d.x + d.dir * 18 * ls), jy = Math.round(d.y + hop - 33 * ls);
+      lo.fillStyle = '#ffffff'; lo.fillRect(jx - 2, jy, 5, 1); lo.fillRect(jx, jy - 2, 1, 5);
+    }
+    return;
+  }
+  const fr = set.dead;
+  const k = d.state === 'hit' ? 0 : d.state === 'fall' ? d.st / 0.5 : 1;
+  const arc = d.state === 'fall' ? Math.sin(k * Math.PI) * 16 * ls : 0;
+  const shake = d.state === 'hit' ? Math.sin(d.st * 80) * 1.5 : 0;
+  const alpha = d.state === 'down' && d.type !== 'pet' ? clamp(1.6 - d.st, 0, 1) : 1;
+  const cy = lerp(d.y - fr.bc * ls, d.y - fr.bc * ls * 0.36, k) - arc;
+  lo.save(); lo.globalAlpha = alpha;
+  lo.translate(Math.round(d.x + shake), Math.round(cy)); lo.rotate(k * Math.PI * d.dir); lo.scale(d.dir * ls, ls);
+  lo.drawImage(fr.c, -fr.ox, -fr.oy + fr.bc);
+  lo.restore();
+}
+function origEntities(ents) {
+  for (let s = 0; s < 2; s++) {
+    const pose = G.beaterPose[s], bob = Math.floor(G.t * 2 + s) % 2;
+    const ex = s ? LW - 30 : 30, ex2 = s ? LW - 14 : 14;
+    ents.push({ y: 206, f: () => drawSprite(OA.BEATER[pose], ex, 206 - (pose === 1 ? bob : 0), s ? -1 : 1, 1) });
+    ents.push({ y: 164, f: () => drawSprite(OA.BEATER[pose === 2 ? 0 : pose], ex2, 164, s ? -0.8 : 0.8, 0.8) });
+    if (pose === 2) for (let i = 0; i < 3; i++) {
+      const a = (G.t * 0.9 + i / 3) % 1;
+      ents.push({ y: 999, f: () => { lo.fillStyle = `rgba(255,224,138,${1 - a})`; const nx = Math.round(ex + (s ? -18 : 18) + (s ? -1 : 1) * a * 22), ny = Math.round(166 - a * 26 + Math.sin(a * 9) * 3); lo.fillRect(nx, ny, 2, 2); lo.fillRect(nx + 2, ny - 5, 1, 6); lo.fillRect(nx + 2, ny - 5, 3, 1); } });
+    }
+  }
+  for (const o of G.hounds) ents.push({ y: o.y, f: () => { const s = laneScale(o.y); shadow(o.x, o.y, 9 * s); drawSprite(OA.HOUND[Math.floor(o.phase * 4) % 4], o.x, o.y - 2 * s * Math.abs(Math.sin(o.phase * Math.PI)), o.dir * s, s); } });
+  if (G.deer) ents.push({ y: G.deer.y, f: () => drawDeerOrig(G.deer) });
+  if (G.lady) { const L = G.lady; ents.push({ y: L.y + 0.5, f: () => { const s = laneScale(L.y) * 1.05; const fr = L.state !== 'weep' ? OA.LADY[Math.floor(L.t * 9) % 2] : OA.LADY[2 + Math.floor(L.t * 5) % 2]; shadow(L.x, L.y, 11 * s); drawSprite(fr, L.x, L.y, L.dir * s, s); } }); }
+}
+function setOriginal(on) {
+  G.orig = on; G.paintedPlat = !on;
+  if (bgAlt.length) bgC = bgAlt[on ? 1 : 0];
+  if (G.state !== 'title' && G.state !== 'gameOver') banner('', on ? 'Original code-drawn artwork (O to switch back)' : 'Painted artwork', 1.8, '#cfe8ff');
+}
 function drawSprite(fr, x, y, sx, sy) {
   lo.save(); lo.translate(Math.round(x), Math.round(y)); lo.scale(sx, sy); lo.drawImage(fr.c, -fr.ox, -fr.oy); lo.restore();
 }
@@ -585,13 +690,10 @@ function drawDeer(d) {      // low-res layer: just the shadow; the deer itself i
   if (d.state === 'down' && d.type !== 'pet' && d.st > 1.2) return;
   shadow(d.x, d.y, 21 * laneScale(d.y) * (d.type === 'stag' ? 1.2 : 1));
 }
-function drawHoundsHi(behindDeer) {     // hounds further away than the deer are drawn before it, nearer ones after
-  const dy = G.deer ? G.deer.y : -1;
-  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
-  for (const o of G.hounds) {
-    if ((o.y < dy) !== behindDeer) continue;
+function drawHoundHi(o) {
+  {
     const key = o.kind + Math.floor(o.phase * HOUND_FRAMES[o.kind]) % HOUND_FRAMES[o.kind], im = IMG[key], m = HOUND_META[key];
-    if (!im || !im.ok) continue;
+    if (!im || !im.ok) return;
     const sc = 0.5 * laneScale(o.y) * (o.kind === 'dogb' ? 1.2 : 1);      // the brown hound is the bigger dog
     ctx.save(); ctx.translate(o.x * 2, o.y * 2 + 2); if (o.dir < 0) ctx.scale(-1, 1);
     ctx.drawImage(im, -m.ax * sc, -m.ay * sc, m.w * sc, m.h * sc);
@@ -621,30 +723,58 @@ function renderScene() {
   if (!bgC) { lo.fillStyle = '#1b1712'; lo.fillRect(0, 0, LW, LH); return; }
   lo.drawImage(bgC, 0, 0);
   const ents = [];
+  if (G.orig) origEntities(ents);
   // shadows under the servants (the servants themselves are drawn on the hi-res layer)
-  for (let sd = 0; sd < 2; sd++) for (const [px, py] of SERV_POS) { const x = sd ? LW - px : px; ents.push({ y: py, f: () => shadow(x, py, 11 * laneScale(py)) }); }
+  else for (let sd = 0; sd < 2; sd++) for (const [px, py] of SERV_POS) { const x = sd ? LW - px : px; ents.push({ y: py, f: () => shadow(x, py, 11 * laneScale(py)) }); }
   for (const b of G.stuck) ents.push({ y: b.y, f: () => { lo.globalAlpha = clamp(6 - b.t, 0, 1); lo.fillStyle = '#5c3f22'; for (let i = 0; i < 6; i++) lo.fillRect(Math.round(b.x) + i, Math.round(b.y) - 1 - i, 1, 1); lo.fillStyle = '#f0ece0'; lo.fillRect(Math.round(b.x) + 5, Math.round(b.y) - 8, 2, 2); lo.globalAlpha = 1; } });
-  for (const o of G.hounds) ents.push({ y: o.y, f: () => shadow(o.x, o.y, 15 * laneScale(o.y)) });
-  if (G.deer) ents.push({ y: G.deer.y, f: () => drawDeer(G.deer) });
-  if (G.lady) { const L = G.lady; ents.push({ y: L.y + 0.5, f: () => shadow(L.x, L.y, 13 * laneScale(L.y)) }); }
+  if (!G.orig) for (const o of G.hounds) ents.push({ y: o.y, f: () => shadow(o.x, o.y, 15 * laneScale(o.y)) });
+  if (!G.orig && G.deer) ents.push({ y: G.deer.y, f: () => drawDeer(G.deer) });
+  if (!G.orig && G.lady) { const L = G.lady; ents.push({ y: L.y + 0.5, f: () => shadow(L.x, L.y, 13 * laneScale(L.y)) }); }
   ents.sort((a, b) => a.y - b.y);
   for (const e of ents) e.f();
 }
-function drawServants(behindDeer) {     // a servant standing further back than the deer is drawn before it
-  const dy = G.deer ? G.deer.y : -1;
-  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
-  for (let sd = 0; sd < 2; sd++) SERV_POS.forEach(([px, py], i) => {
-    if ((py < dy) !== behindDeer) return;
+// Two bushes, deliberately unmatched, each cut off by the edge of the screen. Design coords: cx = centre, base = foot of the bush.
+const BUSHES = [
+  { cx: -2,  base: 318, w: 85, flip: false },      // left: about half showing
+  { cx: 978, base: 352, w: 108, flip: true },       // right: lower, bigger, about a third showing
+];
+function drawBush(b) {
+  const im = IMG.bush; if (!im.ok) return;
+  {
+    const h = b.w * im.height / im.width;
+    ctx.fillStyle = 'rgba(20,40,15,0.3)'; ctx.beginPath(); ctx.ellipse(b.cx, b.base - 2, b.w * 0.48, 4, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.save(); ctx.translate(b.cx, b.base); if (b.flip) ctx.scale(-1, 1);
+    ctx.drawImage(im, -b.w / 2, -h, b.w, h);
+    ctx.restore();
+  }
+}
+function drawServant(sd, i) {
+  const [px, py] = SERV_POS[i];
+  {
     const pose = G.beaterPose[sd];
-    let key = 'serv0';
-    if (pose === 2 && i === 0) key = 'serv2';                                   // the nearer-in man carries the horn
-    else if (pose === 1) key = Math.floor(G.t * 5 + i) % 2 ? 'serv3' : 'serv1';   // waving his arms to drive the deer
+    const who = SERVANTS[CAST[sd][i]];
+    let key = who.idle;
+    if (pose === 2 && i === 0) key = who.horn;                                  // the man further up the field carries the horn
+    else if (pose === 1) key = who.wave[Math.floor(G.t * 5 + i) % 2];             // waving his arms to drive the deer
     const im = IMG[key], m = SERV_META[key]; if (!im || !im.ok) return;
-    const sc = SERV_H * laneScale(py) / 300, x = (sd ? LW - px : px) * 2;
+    const sc = SERV_H * laneScale(py) / 300 * (i === 0 ? 1.155 : 1), x = (sd ? LW - px : px) * 2;   // the further-up pair drawn larger (10%, then 5% more)
     ctx.save(); ctx.translate(x, py * 2 + 2); if (sd) ctx.scale(-1, 1);
     ctx.drawImage(im, -m.ax * sc, -m.h * sc, m.w * sc, m.h * sc);
     ctx.restore();
-  });
+  }
+}
+// Everything standing on the field is drawn strictly back-to-front by where its feet are (y in low-res scene units),
+// so a hound, deer or the lady passes behind anyone standing nearer than it and in front of anyone further away.
+function drawFieldHi() {
+  const items = [];
+  for (const b of BUSHES) items.push({ y: b.base / 2, f: () => drawBush(b) });
+  for (let sd = 0; sd < 2; sd++) SERV_POS.forEach(([, py], i) => items.push({ y: py, f: () => drawServant(sd, i) }));
+  for (const o of G.hounds) items.push({ y: o.y, f: () => drawHoundHi(o) });
+  if (G.deer) items.push({ y: G.deer.y, f: drawDeerHi });
+  if (G.lady) items.push({ y: G.lady.y + 0.5, f: drawLady });
+  items.sort((a, b) => a.y - b.y);
+  ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+  for (const it of items) it.f();
 }
 // ---- painted platform + Henry's royal standard (hi-res layer). F switches back to the code-drawn platform.
 const PLAT_IMG = { w: 820, h: 711, dx: 274.5, dy: 276.8, sc: 0.5 };
@@ -682,7 +812,7 @@ const paintedPlatform = () => G.paintedPlat && IMG.platform.ok;
 function renderOverlay() {
   ov.clearRect(0, 0, LW, LH);
   if (!bgC) return;
-  for (let sd = 0; sd < 2; sd++) if (G.beaterPose[sd] === 2) {                    // notes drifting from the horn
+  if (!G.orig) for (let sd = 0; sd < 2; sd++) if (G.beaterPose[sd] === 2) {                    // notes drifting from the horn
     const [px, py] = SERV_POS[0], hd = SERV_H * laneScale(py) / 2, dir = sd ? -1 : 1;
     const bx = (sd ? LW - px : px) + dir * 0.46 * hd, by = py - 1.0 * hd;
     for (let i = 0; i < 3; i++) {
@@ -710,12 +840,16 @@ function drawLady() {
 }
 
 // ---------------------------------------------------------------- drawing: hi-res layer
+// Larger-text option (About page): small and medium text is drawn about a quarter bigger; headings are already large.
+const fs = size => G.bigText && size < 20 ? Math.round(size * 1.25 + 1) : size;
 function text(str, x, y, size, color, font = FONT_H, align = 'center', weight = 'bold') {
+  size = fs(size);
   ctx.font = `${weight} ${size}px ${font}`; ctx.textAlign = align; ctx.textBaseline = 'middle';
   ctx.lineJoin = 'round'; ctx.lineWidth = Math.max(3, size / 6); ctx.strokeStyle = 'rgba(30,18,8,0.9)';
   ctx.strokeText(str, x, y); ctx.fillStyle = color; ctx.fillText(str, x, y);
 }
 function plain(str, x, y, size, color, font = FONT_B, align = 'center', weight = 'normal') {
+  size = fs(size);
   ctx.font = `${weight} ${size}px ${font}`; ctx.textAlign = align; ctx.textBaseline = 'middle'; ctx.fillStyle = color; ctx.fillText(str, x, y);
 }
 function drawHenry() {
@@ -747,9 +881,17 @@ function parchment(x, y, w, h, r = 10) {
 const TALLY_BASE = 55, TALLY_DEPTH = 82, TALLY_K = 0.215, TALLY_Y = 46;   // design px: icon bottoms, crop depth, scale, row centre
 function tallyIcon(x, y, r) {
   const ink = '#4a3015';
-  if (!r) { ctx.strokeStyle = 'rgba(74,48,21,0.5)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(x, y, 6, 0, Math.PI * 2); ctx.stroke(); return; }
-  if (r === 'miss') { ctx.strokeStyle = '#8b8371'; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(x - 5, y - 5); ctx.lineTo(x + 5, y + 5); ctx.moveTo(x + 5, y - 5); ctx.lineTo(x - 5, y + 5); ctx.stroke(); return; }
-  if (r === 'spared') { ctx.fillStyle = '#2f8a46'; ctx.beginPath(); ctx.moveTo(x, y + 6); ctx.bezierCurveTo(x - 11, y - 2, x - 5, y - 9, x, y - 3); ctx.bezierCurveTo(x + 5, y - 9, x + 11, y - 2, x, y + 6); ctx.fill(); return; }
+  if (!r) { ctx.strokeStyle = '#75613c'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(x, y, 6, 0, Math.PI * 2); ctx.stroke(); return; }
+  if (r === 'miss') { ctx.strokeStyle = '#6a6353'; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(x - 5, y - 5); ctx.lineTo(x + 5, y + 5); ctx.moveTo(x + 5, y - 5); ctx.lineTo(x - 5, y + 5); ctx.stroke(); return; }
+  if (r === 'spared') { ctx.fillStyle = '#236b35'; ctx.beginPath(); ctx.moveTo(x, y + 6); ctx.bezierCurveTo(x - 11, y - 2, x - 5, y - 9, x, y - 3); ctx.bezierCurveTo(x + 5, y - 9, x + 11, y - 2, x, y + 6); ctx.fill(); return; }
+  if (G.orig) {      // the original drawn icons
+    if (r === 'slain') { ctx.fillStyle = '#2f7fc4'; ctx.beginPath(); ctx.moveTo(x, y - 8); ctx.bezierCurveTo(x + 8, y + 1, x + 5, y + 7, x, y + 7); ctx.bezierCurveTo(x - 5, y + 7, x - 8, y + 1, x, y - 8); ctx.fill(); return; }
+    ctx.fillStyle = r === 'stag' ? '#b8860b' : '#8a5a30';
+    ctx.beginPath(); ctx.ellipse(x, y + 2, 4.5, 6, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(x - 6, y - 2, 3.5, 2, -0.5, 0, Math.PI * 2); ctx.ellipse(x + 6, y - 2, 3.5, 2, 0.5, 0, Math.PI * 2); ctx.fill();
+    if (r === 'stag') { ctx.strokeStyle = '#b8860b'; ctx.lineWidth = 1.6; ctx.beginPath(); for (const s of [-1, 1]) { ctx.moveTo(x + s * 2, y - 3); ctx.lineTo(x + s * 5, y - 11); ctx.moveTo(x + s * 3.5, y - 7); ctx.lineTo(x + s * 8, y - 9); ctx.moveTo(x + s * 4.5, y - 9.5); ctx.lineTo(x + s * 2, y - 13); } ctx.stroke(); }
+    ctx.fillStyle = ink; ctx.fillRect(x - 1, y + 5, 2, 2); return;
+  }
   if (r === 'slain') { ctx.fillStyle = 'rgba(160,24,40,0.28)'; ctx.beginPath(); ctx.arc(x, y, 10, 0, Math.PI * 2); ctx.fill(); }   // her pet: marked in red
   // head-and-shoulders cut from the matching deer sprite
   // One scale for all three, and one shared bottom edge (TALLY_BASE). Each crop runs from `top` (the crown of the head)
@@ -760,7 +902,13 @@ function tallyIcon(x, y, r) {
   ctx.drawImage(im, sx, 0, sw, sh, x - sw * k / 2, TALLY_BASE - sh * k, sw * k, sh * k);
 }
 function boltIcon(x, y, on) {
-  ctx.save(); ctx.globalAlpha = on ? 1 : 0.22; ctx.translate(x, y); ctx.rotate(-0.35); ctx.scale(0.75, 0.75);
+  ctx.save(); ctx.translate(x, y); ctx.rotate(-0.35); ctx.scale(0.75, 0.75);
+  if (!on) {      // a spent bolt: a plain grey outline, still clearly visible against the parchment
+    ctx.strokeStyle = '#6f675a'; ctx.lineWidth = 2; ctx.lineJoin = 'round';
+    ctx.beginPath(); ctx.moveTo(-13, 0); ctx.lineTo(9, 0); ctx.moveTo(15, 0); ctx.lineTo(8, -4.5); ctx.lineTo(8, 4.5); ctx.closePath();
+    ctx.moveTo(-6, 0); ctx.lineTo(-9, -6); ctx.lineTo(-17, -6); ctx.lineTo(-13, 0); ctx.lineTo(-17, 6); ctx.lineTo(-9, 6); ctx.closePath(); ctx.stroke();
+    ctx.restore(); return;
+  }
   ctx.fillStyle = '#6b4a2a'; ctx.fillRect(-13, -1.5, 24, 3);
   ctx.fillStyle = '#5a5f6a'; ctx.beginPath(); ctx.moveTo(15, 0); ctx.lineTo(8, -4.5); ctx.lineTo(8, 4.5); ctx.fill();
   ctx.fillStyle = '#c8202a'; ctx.beginPath(); ctx.moveTo(-13, -1.5); ctx.lineTo(-17, -6); ctx.lineTo(-9, -6); ctx.lineTo(-6, -1.5); ctx.fill();
@@ -769,23 +917,23 @@ function boltIcon(x, y, on) {
 }
 function drawHUD() {
   parchment(10, 8, W - 20, 54, 8);       // inner border lines at y = 13 and y = 57
-  plain('SCORE', 28, 27, 11, '#7a5a2c', FONT_B, 'left', 'bold');
+  plain('SCORE', 28, 27, 11, '#5e4320', FONT_B, 'left', 'bold');
   plain(String(Math.round(G.shown)).padStart(5, '0'), 28, 45, 20, '#3a2410', FONT_B, 'left', 'bold');
-  plain('BEST', 128, 27, 11, '#7a5a2c', FONT_B, 'left', 'bold');
+  plain('BEST', 128, 27, 11, '#5e4320', FONT_B, 'left', 'bold');
   plain(String(Math.max(G.best, G.score)).padStart(5, '0'), 128, 45, 16, '#6b4a2a', FONT_B, 'left', 'bold');
   // the bag: ten deer per round
   const x0 = W / 2 - 9 * 15;
-  plain(`THIS ROUND:  ${G.roundPts} of ${ROUND_GOAL} points needed`, W / 2, 21, 10, G.roundPts >= ROUND_GOAL ? '#2f6a36' : '#7a5a2c', FONT_B, 'center', 'bold');
+  plain(`THIS ROUND:  ${G.roundPts} of 1000 points needed`, W / 2, 21, 10, G.roundPts >= ROUND_GOAL ? '#24592b' : '#5e4320', FONT_B, 'center', 'bold');
   for (let i = 0; i < 10; i++) {
     const x = x0 + i * 30;
     if (i === G.idx && (G.state === 'deer' || G.state === 'wait')) { ctx.fillStyle = 'rgba(200,32,42,0.25)'; ctx.beginPath(); ctx.arc(x, TALLY_Y, 10, 0, Math.PI * 2); ctx.fill(); }
     tallyIcon(x, TALLY_Y, G.results[i]);
   }
-  plain('BOLTS', W - 232, 27, 11, '#7a5a2c', FONT_B, 'left', 'bold');
+  plain('BOLTS', W - 232, 27, 11, '#5e4320', FONT_B, 'left', 'bold');
   for (let i = 0; i < 3; i++) boltIcon(W - 220 + i * 26, 43, i < G.bolts);
-  plain('ROUND', W - 28, 27, 11, '#7a5a2c', FONT_B, 'right', 'bold');
+  plain('ROUND', W - 28, 27, 11, '#5e4320', FONT_B, 'right', 'bold');
   plain(String(G.round), W - 28, 45, 20, '#3a2410', FONT_B, 'right', 'bold');
-  if (Sound.muted) plain('muted (M)', W - 100, 45, 11, '#8b3a2a', FONT_B, 'right');
+  if (Sound.muted && !G.touch && !G.noKeys) plain('muted (M)', W - 84, 27, 11, '#8b3a2a', FONT_B, 'right');   // touch and no-shortcut players see the Music button instead
 }
 function drawCrosshair() {
   if (!G.mouse.shown) return;
@@ -798,65 +946,110 @@ function drawCrosshair() {
   ctx.fillStyle = '#c8202a'; ctx.beginPath(); ctx.arc(x, y, 2.5, 0, Math.PI * 2); ctx.fill();
 }
 function drawMiniDeer(type, x, y) {
+  if (G.orig) { const fr = OA.DEER[type].run[1], s = type === 'stag' ? 0.62 : 0.9; ctx.imageSmoothingEnabled = false; ctx.drawImage(fr.c, x - fr.ox * s, y - 2 - fr.oy * s, fr.c.width * s, fr.c.height * s); ctx.imageSmoothingEnabled = true; return; }
   const key = DEER_KEY[type] + '0', im = IMG[key], m = DEER_META[key]; if (!im || !im.ok) return;
   const sc = 0.3;
   ctx.drawImage(im, x - m.ax * sc, y - m.ay * sc, m.w * sc, m.h * sc);
 }
+// Width a parchment needs so every line fits: the widest of `lines` ([text, size, style, font, extra]) plus padding,
+// never narrower than minW and never wider than the screen. `extra` is space taken beside a line (e.g. an icon column).
+function fitWidth(minW, lines, pad = 64) {
+  let w = minW;
+  for (const [str, size, style = 'normal', font = FONT_B, extra = 0] of lines) {
+    ctx.font = `${style} ${fs(size)}px ${font}`;
+    w = Math.max(w, ctx.measureText(str).width + pad + extra);
+  }
+  return Math.min(W - 24, Math.ceil(w));
+}
 function drawTitle() {
   ctx.fillStyle = 'rgba(15,10,5,0.45)'; ctx.fillRect(0, 0, W, H);
-  const px = 150, py = 34, pw = W - 300, ph = 424;
-  parchment(px, py, pw, ph, 14);
-  ctx.font = `bold 40px ${FONT_H}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  ctx.fillStyle = '#7a1420'; ctx.fillText('Darest Thou Hunt with Henry VIII?', W / 2, py + 52, pw - 50);
-  plain('a royal deer hunt, starring His Majesty, his crossbow, and his dinner', W / 2, py + 92, 16, '#4a3015', FONT_B, 'center', 'italic');
-  ctx.strokeStyle = '#b8860b'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(px + 60, py + 112); ctx.lineTo(px + pw - 60, py + 112); ctx.stroke();
+  const TITLE = 'Darest Thou Hunt with Henry VIII?';
+  const SUB = 'by the Grace of God, King of England and France, Defender of the Faith and Lord of Ireland';
   const rows = [
     ['ordinary', 'A deer', '100 points', '#3a2410'],
-    ['stag', 'A great stag — listen for the hunting horn', '500 points', '#8a5a00'],
-    ['pet', "A deer in a jewelled collar — her ladyship's pet", 'lose ALL thy points', '#a01828'],
+    ['stag', 'A great stag', '500 points', '#6b4600'],
+    ['pet', "A deer in a jewelled collar", 'lose ALL thy points', '#a01828'],
   ];
+  const NOTES = [
+    '',
+    G.touch || G.noKeys ? 'Use the buttons for the about page, the history, education mode, music and pause.'
+            : `E starts education mode, M mutes the music, P pauses the game, A brings up the about page.`,
+    `Education mode is ${G.edu ? 'ON : learn a fact about Henry with every deer taken.' : 'off : play the game without interruption.'}`,
+  ];
+  const py = 34, ph = 424;
+  const pw = fitWidth(W - 300, [[SUB, 16, 'italic'], ...NOTES.map(n => [n, 14, 'bold']),
+    ...rows.flatMap(r => [[r[1], 17, 'normal', FONT_B, 240], [r[2], 17, 'bold', FONT_B, 240]])]);
+  const px = (W - pw) / 2, cx0 = W / 2 - 330;       // cx0: left edge of the deer-and-points column
+  parchment(px, py, pw, ph, 14);
+  ctx.font = `bold 40px ${FONT_H}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillStyle = '#7a1420'; ctx.fillText(TITLE, W / 2, py + 52, pw - 50);
+  plain(SUB, W / 2, py + 92, 16, '#4a3015', FONT_B, 'center', 'italic');
+  ctx.strokeStyle = '#b8860b'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(px + 60, py + 112); ctx.lineTo(px + pw - 60, py + 112); ctx.stroke();
   rows.forEach(([type, label, pts, col], i) => {
     const y = py + 168 + i * 68;
-    drawMiniDeer(type, px + 95, y + 28);
-    plain(label, px + 150, y - 8, 17, '#3a2410', FONT_B, 'left');
-    plain(pts, px + 150, y + 15, 17, col, FONT_B, 'left', 'bold');
+    drawMiniDeer(type, cx0 + 95, y + 28);
+    plain(label, cx0 + 150, y - 8, 17, '#3a2410', FONT_B, 'left');
+    plain(pts, cx0 + 150, y + 15, 17, col, FONT_B, 'left', 'bold');
   });
-  plain('Ten deer are flushed each round: seven ordinary, two great stags, one pet.', W / 2, py + 350, 14, '#4a3015', FONT_B, 'center', 'italic');
-  plain(`Win ${ROUND_GOAL} points in a round to hunt on.  Three bolts per deer.  M mutes, P pauses.`, W / 2, py + 372, 14, '#4a3015', FONT_B, 'center', 'italic');
-  plain(`Education mode is ${G.edu ? 'ON' : 'off'}: press E for a fact about Henry with every deer taken.`, W / 2, py + 396, 14, G.edu ? '#2f6a36' : '#4a3015', FONT_B, 'center', G.edu ? 'bold' : 'italic');
-  if (Math.floor(G.t * 2) % 2) text('Click to begin the hunt', W / 2, py + ph + 26, 26, '#ffe08a');
+  plain(NOTES[0], W / 2, py + 350, 14, '#4a3015', FONT_B, 'center', 'italic');
+  plain(NOTES[1], W / 2, py + 372, 14, '#4a3015', FONT_B, 'center', 'italic');
+  plain(NOTES[2], W / 2, py + 396, 14, G.edu ? '#24592b' : '#4a3015', FONT_B, 'center', G.edu ? 'bold' : 'italic');
+  text(`${tapWord()} to begin the hunt`, W / 2, py + ph + 26, 26, '#ffe08a');
 }
 function drawPayPanel() {
-  const pw = 420, ph = 118, px = (W - pw) / 2, py = 162, B = PAY_BTN;
+  const MSG = 'Compensate her ladyship for her lost property.', BTN = 'Pay her 7 shillings 6 pence', B = PAY_BTN;
+  B.w = fitWidth(280, [[BTN, 17, 'bold']], 44); B.x = (W - B.w) / 2;       // the button grows with its label
+  const pw = Math.max(fitWidth(420, [[MSG, 17, 'italic']]), B.w + 60), ph = 118, px = (W - pw) / 2, py = 162;
   parchment(px, py, pw, ph, 12);
-  plain('Compensate her ladyship for her lost property.', W / 2, py + 34, 17, '#3a2410', FONT_B, 'center', 'italic');
+  plain(MSG, W / 2, py + 34, 17, '#3a2410', FONT_B, 'center', 'italic');
   const hot = inPayBtn(G.mouse.x, G.mouse.y);
   ctx.fillStyle = hot ? '#9a1c2a' : '#7a1420'; ctx.beginPath(); ctx.roundRect(B.x, B.y, B.w, B.h, 8); ctx.fill();
   ctx.strokeStyle = '#e7b93c'; ctx.lineWidth = 2; ctx.beginPath(); ctx.roundRect(B.x + 2, B.y + 2, B.w - 4, B.h - 4, 6); ctx.stroke();
-  ctx.font = `bold 17px ${FONT_B}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#ffe9a8';
-  ctx.fillText('Pay her 7 shillings 6 pence', W / 2, B.y + B.h / 2 + 1, B.w - 28);     // squeezed to stay inside the gold border
+  ctx.font = `bold ${fs(17)}px ${FONT_B}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#ffe9a8';
+  ctx.fillText(BTN, W / 2, B.y + B.h / 2 + 1, B.w - 28);     // squeezed to stay inside the gold border
 }
 function drawRoundEnd() {
-  const pw = 440, ph = 190, px = (W - pw) / 2, py = 120;
+  const head = G.passed ? `Round ${G.round} complete` : 'The King is displeased';
+  const pts = `Points this round: ${G.roundPts}   (needed ${ROUND_GOAL})`;
+  const pet = G.results.includes('slain') ? "Her ladyship's pet: slain. She is inconsolable." : "Her ladyship's pet: safe.";
+  const last = G.bonus ? `A perfect hunt!  Royal bonus +${G.bonus}` : !G.passed ? 'You have failed.' : G.round >= MAX_ROUNDS ? 'Your servants cannot find any more deer.' : 'More deer are being driven in…';
+  const pw = fitWidth(440, [[head, 34, 'bold', FONT_H], [pts, 18], [pet, 16, 'italic'], [last, 18, 'bold']]), ph = 190, px = (W - pw) / 2, py = 120;
   parchment(px, py, pw, ph, 12);
   ctx.font = `bold 34px ${FONT_H}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  ctx.fillStyle = '#7a1420'; ctx.fillText(G.passed ? `Round ${G.round} complete` : 'The King is displeased', W / 2, py + 40);
-  plain(`Points this round: ${G.roundPts}   (needed ${ROUND_GOAL})`, W / 2, py + 86, 18, '#3a2410');
-  const pet = G.results.includes('slain') ? "Her ladyship's pet: slain. She is inconsolable." : "Her ladyship's pet: spared.";
-  plain(pet, W / 2, py + 114, 16, G.results.includes('slain') ? '#a01828' : '#2f6a36', FONT_B, 'center', 'italic');
-  if (G.bonus) plain(`A perfect hunt!  Royal bonus +${G.bonus}`, W / 2, py + 146, 18, '#8a5a00', FONT_B, 'center', 'bold');
-  else plain(G.passed ? 'More deer are being driven in…' : 'The hunt is over.', W / 2, py + 146, 16, '#4a3015');
+  ctx.fillStyle = '#7a1420'; ctx.fillText(head, W / 2, py + 40);
+  plain(pts, W / 2, py + 86, 18, '#3a2410');
+  plain(pet, W / 2, py + 114, 16, G.results.includes('slain') ? '#a01828' : '#24592b', FONT_B, 'center', 'italic');
+  if (G.bonus) plain(last, W / 2, py + 146, 18, '#6b4600', FONT_B, 'center', 'bold');
+  else plain(last, W / 2, py + 146, 16, '#4a3015');
+}
+function drawVictory() {
+  const HEAD = 'A Most Excellent Hunt!', REC = 'A new record for the royal game book!', AGAIN = `${tapWord()} to hunt again`;
+  const msg = "His Majesty Henry VIII declares this was an excellent hunt, but the light is fading so now it's time to feast!";
+  const stats = `All ${MAX_ROUNDS} rounds completed   ·   Best: ${G.best}` + (G.paid ? `   ·   Funds spent from the royal purse: ${money(G.paid)}` : '');
+  const pw = fitWidth(600, [[HEAD, 40, 'bold', FONT_H], [stats, 16], [REC, 16, 'bold'], [AGAIN, 18, 'bold']]), ph = 290, px = (W - pw) / 2, py = 84;
+  parchment(px, py, pw, ph, 12);
+  ctx.font = `bold 40px ${FONT_H}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillStyle = '#7a1420'; ctx.fillText(HEAD, W / 2, py + 46);
+  ctx.font = `italic ${fs(18)}px ${FONT_B}`;
+  wrapLines(msg, pw - 90).forEach((l, i) => plain(l, W / 2, py + 96 + i * 25, 18, '#3a2410', FONT_B, 'center', 'italic'));
+  plain(`Final score: ${G.score}`, W / 2, py + 172, 24, '#3a2410', FONT_B, 'center', 'bold');
+  plain(stats, W / 2, py + 206, 16, '#4a3015');
+  if (G.score > 0 && G.score >= G.best) plain(REC, W / 2, py + 232, 16, '#6b4600', FONT_B, 'center', 'bold');
+  if (G.timer <= 0) plain(AGAIN, W / 2, py + 262, 18, '#7a1420', FONT_B, 'center', 'bold');
 }
 function drawGameOver() {
   ctx.fillStyle = 'rgba(15,10,5,0.5)'; ctx.fillRect(0, 0, W, H);
-  const pw = 460, ph = 220, px = (W - pw) / 2, py = 110;
+  if (G.won) return drawVictory();
+  const HEAD = 'The Hunt Is Ended', REC = 'A new record for the royal game book!', AGAIN = `${tapWord()} to hunt again`;
+  const stats = `Reached round ${G.round}   ·   Best: ${G.best}` + (G.paid ? `   ·   Funds spent from the royal purse: ${money(G.paid)}` : '');
+  const pw = fitWidth(460, [[HEAD, 44, 'bold', FONT_H], [`Final score: ${G.score}`, 24, 'bold'], [stats, 16], [REC, 16, 'bold'], [AGAIN, 18, 'bold']]), ph = 220, px = (W - pw) / 2, py = 110;
   parchment(px, py, pw, ph, 12);
   ctx.font = `bold 44px ${FONT_H}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  ctx.fillStyle = '#7a1420'; ctx.fillText('The Hunt Is Ended', W / 2, py + 48);
+  ctx.fillStyle = '#7a1420'; ctx.fillText(HEAD, W / 2, py + 48);
   plain(`Final score: ${G.score}`, W / 2, py + 100, 24, '#3a2410', FONT_B, 'center', 'bold');
-  plain(`Reached round ${G.round}   ·   Best: ${G.best}` + (G.paid ? `   ·   Given to her ladyship: ${money(G.paid)}` : ''), W / 2, py + 134, 16, '#4a3015');
-  if (G.score > 0 && G.score >= G.best) plain('A new record for the royal game book!', W / 2, py + 160, 16, '#8a5a00', FONT_B, 'center', 'bold');
-  if (G.timer <= 0 && Math.floor(G.t * 2) % 2) plain('Click to hunt again', W / 2, py + 192, 18, '#7a1420', FONT_B, 'center', 'bold');
+  plain(stats, W / 2, py + 134, 16, '#4a3015');
+  if (G.score > 0 && G.score >= G.best) plain(REC, W / 2, py + 160, 16, '#6b4600', FONT_B, 'center', 'bold');
+  if (G.timer <= 0) plain(AGAIN, W / 2, py + 192, 18, '#7a1420', FONT_B, 'center', 'bold');
 }
 
 function render() {
@@ -864,18 +1057,13 @@ function render() {
   renderScene();
   ctx.imageSmoothingEnabled = false;
   ctx.drawImage(loC, 0, 0, W, H);
-  drawServants(true);
-  drawHoundsHi(true);
-  drawDeerHi();
-  drawHoundsHi(false);
-  drawLady();
-  drawServants(false);
+  if (!G.orig) drawFieldHi();
   renderOverlay();
   ctx.imageSmoothingEnabled = false;
   ctx.drawImage(ovC, 0, 0, W, H);
   ctx.imageSmoothingEnabled = true;
   if (paintedPlatform()) drawPlatformHi(G.t);
-  if (G.state === 'loading') { text('Saddling the horses…', W / 2, H / 2, 28, '#ffe08a'); return; }
+  if (G.state === 'loading') { text('Sending out the servants and hounds…', W / 2, H / 2, 28, '#ffe08a'); return; }
   if (G.flight) {
     const f = G.flight, t = f.t, t0 = Math.max(0, t - 0.25);
     ctx.strokeStyle = '#3a2410'; ctx.lineWidth = 4; ctx.lineCap = 'round';
@@ -895,7 +1083,7 @@ function render() {
   if (G.state === 'title') drawTitle();
   if (payDue()) drawPayPanel();
   if (G.state === 'fact' && G.fact) drawFactPanel();
-  if (G.edu && G.state !== 'title') plain('Education mode on (E)', 22, 76, 12, '#e6f2ff', FONT_B, 'left', 'bold');
+  if (G.edu && G.state !== 'title') text('Education mode on' + (G.touch || G.noKeys ? '' : ' (E)'), 22, 76, 12, '#e6f2ff', FONT_B, 'left', 'bold');
   if (G.state === 'roundEnd') drawRoundEnd();
   if (G.state === 'gameOver') drawGameOver();
   if (G.paused) { ctx.fillStyle = 'rgba(15,10,5,0.5)'; ctx.fillRect(0, 0, W, H); text('Paused', W / 2, H / 2, 44, '#ffe08a'); }
@@ -903,34 +1091,147 @@ function render() {
 }
 
 // ---------------------------------------------------------------- input + loop
-function toDesign(e) { const r = canvas.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * W, (e.clientY - r.top) / r.height * H]; }
+function toDesign(e) { const r = canvas.getBoundingClientRect(); if (!r.width || !r.height) return [G.mouse.x, G.mouse.y]; return [(e.clientX - r.left) / r.width * W, (e.clientY - r.top) / r.height * H]; }
 canvas.addEventListener('pointermove', e => { const [x, y] = toDesign(e); G.mouse.x = x; G.mouse.y = y; G.mouse.shown = e.pointerType !== 'touch'; });
-canvas.addEventListener('pointerleave', () => { G.mouse.shown = false; });
+canvas.addEventListener('pointerleave', () => { G.mouse.shown = false; pressArmed = false; });
 canvas.addEventListener('pointerdown', e => {
   e.preventDefault();
   const [x, y] = toDesign(e); G.mouse.x = x; G.mouse.y = y; G.mouse.shown = e.pointerType !== 'touch';
+  if (e.pointerType === 'touch') setTouch();
   Sound.init();
+  // Shooting happens the instant you press, as a game needs. Everything else (starting, continuing, paying, resuming)
+  // waits for the release, so a press made by mistake can be cancelled by sliding off before letting go.
+  if (G.paused || PRESS_STATES.includes(G.state)) { pressArmed = true; return; }
+  fire(x, y, e.pointerType === 'touch');
+});
+const PRESS_STATES = ['title', 'gameOver', 'fact', 'compensate'];
+let pressArmed = false;
+function activate(x, y, viaKey) {
   if (G.paused) { G.paused = false; return; }
   if (G.state === 'title') startGame();
   else if (G.state === 'gameOver') { if (G.timer <= 0) startGame(); }
   else if (G.state === 'fact') { if (G.factT > 0.6) dismissFact(); }
-  else if (G.state === 'compensate') { if (payDue() && inPayBtn(x, y)) payLady(); }
-  else fire(x, y);
-});
+  else if (G.state === 'compensate') { if (payDue() && (viaKey || inPayBtn(x, y))) payLady(); }
+}
+canvas.addEventListener('pointerup', e => { if (!pressArmed) return; pressArmed = false; const [x, y] = toDesign(e); activate(x, y, false); });
+canvas.addEventListener('pointercancel', () => { pressArmed = false; });
 canvas.addEventListener('contextmenu', e => e.preventDefault());
+// ---- Touch devices: on-screen buttons stand in for the keyboard, and a prompt asks for the phone to be turned sideways
+const $ = id => document.getElementById(id);
+const canPause = () => G.state !== 'title' && G.state !== 'gameOver';
+function setTouch() { if (G.touch) return; G.touch = true; document.body.classList.add('touch'); checkRotate(); }
+function checkRotate() {
+  const el = $('rotate'); if (!el) return;
+  G.rotateOpen = G.touch && !G.rotateSkipped && window.matchMedia('(orientation: portrait)').matches;
+  el.hidden = !G.rotateOpen;
+}
+function syncTouchBar() {
+  if (!$('touchbar')) return;
+  const set = (id, on, html) => { const b = $(id); if (b.dataset.s !== html) { b.dataset.s = html; b.innerHTML = html; } b.classList.toggle('on', on); };
+  set('tbEdu', G.edu, G.edu ? 'Facts<br>on' : 'Facts<br>off');
+  set('tbMute', !Sound.muted, Sound.muted ? 'Music<br>off' : 'Music<br>on');
+  set('tbPause', G.paused, G.paused ? 'Resume' : 'Pause');
+  $('tbPause').disabled = !canPause();
+}
+if ($('touchbar')) {
+  $('tbAbout').addEventListener('click', () => toggleAbout());
+  $('tbEdu').addEventListener('click', () => toggleEdu());
+  $('tbMute').addEventListener('click', () => { Sound.init(); Sound.toggleMute(); });
+  $('tbPause').addEventListener('click', () => { if (canPause()) G.paused = !G.paused; });
+  $('aboutClose').addEventListener('click', () => toggleAbout(false));
+  $('touchbar').addEventListener('click', syncTouchBar);            // update the button labels straight away
+  $('rotateSkip').addEventListener('click', () => { G.rotateSkipped = true; checkRotate(); });
+  window.addEventListener('resize', checkRotate);
+  window.addEventListener('orientationchange', checkRotate);
+  if (navigator.maxTouchPoints > 0 && window.matchMedia('(pointer: coarse)').matches) setTouch();   // a phone or tablet
+}
+// ---- About page (A): an HTML overlay in index.html, so it can scroll and hold images. The game waits while it is open.
+const aboutEl = document.getElementById('about');
+const PAGES = { about: aboutEl, history: document.getElementById('history') };
+let pageOpen = null, pageReturn = null;
+function showPage(name, show) {
+  const el = PAGES[name]; if (!el) return;
+  const open = show === undefined ? pageOpen !== name : show;
+  if (open) {
+    if (pageOpen === name) return;
+    if (pageOpen) PAGES[pageOpen].hidden = true; else pageReturn = document.activeElement;     // switching pages keeps the original return point
+    pageOpen = name; el.hidden = false;
+    if (name === 'history') renderHistory();
+    const sheet = el.querySelector('.sheet'); sheet.scrollTop = 0; sheet.focus();              // focused so arrow keys and Page Down scroll it
+  } else {
+    if (pageOpen !== name) return;
+    el.hidden = true; pageOpen = null;
+  }
+  G.aboutOpen = !!pageOpen; held.clear();                                                    // the game waits while either page is open
+  for (const id of ['game', 'touchbar', 'historyLink']) { const x = $(id); if (x) x.inert = G.aboutOpen; }   // nothing behind the page can be reached
+  if (!pageOpen && pageReturn && pageReturn !== document.body && pageReturn.focus) pageReturn.focus();       // put focus back where it was
+}
+const toggleAbout = show => showPage('about', show);
+const toggleHistory = show => showPage('history', show);
+// ---- Accessibility options (ticked on the About page, remembered between visits)
+function setOption(key, on) {
+  G[key] = on;
+  if (key === 'noKeys') document.body.classList.toggle('nokeys', on);
+  try { localStorage.setItem('kingsDeerHunt_' + key, on ? '1' : '0'); } catch (e) { /* ignore */ }
+}
+for (const [id, key] of [['optBig', 'bigText'], ['optKeys', 'noKeys']]) {
+  const box = $(id); if (!box) continue;
+  let saved = false; try { saved = localStorage.getItem('kingsDeerHunt_' + key) === '1'; } catch (e) { /* ignore */ }
+  box.checked = saved; setOption(key, saved);
+  box.addEventListener('change', () => setOption(key, box.checked));
+}
+// ---- Keyboard play: arrow keys aim, Space or Enter shoots and presses whatever is on offer
+const held = new Set();
+const ARROWS = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] };
+let fineAim = false;
+function moveCrosshair(dt) {
+  if (!held.size || G.paused || G.aboutOpen || G.rotateOpen) return;
+  let dx = 0, dy = 0; for (const k of held) { dx += ARROWS[k][0]; dy += ARROWS[k][1]; }
+  const v = (fineAim ? 150 : 480) * dt;
+  G.mouse.x = clamp(G.mouse.x + dx * v, 0, W); G.mouse.y = clamp(G.mouse.y + dy * v, 0, H); G.mouse.shown = true;
+}
+window.addEventListener('keyup', e => { held.delete(e.key); fineAim = e.shiftKey; });
+window.addEventListener('blur', () => held.clear());
+for (const name of Object.keys(PAGES)) if (PAGES[name]) PAGES[name].addEventListener('pointerdown', e => { if (e.target === PAGES[name]) showPage(name, false); });   // click outside the sheet closes it
+if ($('historyLink')) {
+  $('historyLink').addEventListener('click', e => { e.preventDefault(); toggleHistory(true); });
+  $('historyClose').addEventListener('click', () => toggleHistory(false));
+  $('aboutToHistory').addEventListener('click', () => toggleHistory(true));
+  $('tbHistory').addEventListener('click', () => toggleHistory());
+}
 window.addEventListener('keydown', e => {
-  if (e.key === 'm' || e.key === 'M') Sound.toggleMute();
-  if (e.key === 'e' || e.key === 'E') toggleEdu();
-  if ((e.key === ' ' || e.key === 'Enter') && G.state === 'fact' && G.factT > 0.6) { e.preventDefault(); dismissFact(); }
-  if (e.key === 'f' || e.key === 'F') G.paintedPlat = !G.paintedPlat;   // compare platforms
-  if ((e.key === 't' || e.key === 'T') && bgAlt.length) bgC = bgC === bgAlt[0] ? bgAlt[1] : bgAlt[0];   // compare tree lines
-  if ((e.key === 'p' || e.key === 'P') && G.state !== 'title' && G.state !== 'gameOver') G.paused = !G.paused;
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const letters = !G.noKeys, k = e.key.toLowerCase();        // single-letter shortcuts can be switched off on the About page
+  fineAim = e.shiftKey;
+  if (letters && k === 'a') { toggleAbout(); return; }
+  if (letters && k === 'h') { toggleHistory(); return; }
+  if (G.aboutOpen) {       // while reading, only Escape (close) and M (music) do anything
+    if (e.key === 'Escape' && pageOpen) showPage(pageOpen, false);
+    if (letters && k === 'm') Sound.toggleMute();
+    return;
+  }
+  const onControl = e.target instanceof Element && e.target.closest('button, input');   // Space and Enter belong to a focused button
+  if (ARROWS[e.key]) { e.preventDefault(); held.add(e.key); G.mouse.shown = true; return; }
+  if ((e.key === ' ' || e.key === 'Enter') && !onControl) {
+    e.preventDefault(); if (e.repeat) return;
+    Sound.init();
+    if (!G.paused && !PRESS_STATES.includes(G.state)) fire(G.mouse.x, G.mouse.y, false);
+    else activate(G.mouse.x, G.mouse.y, true);
+    return;
+  }
+  if (!letters) return;
+  if (k === 'm') Sound.toggleMute();
+  if (k === 'e') toggleEdu();
+  if (k === 'o') setOriginal(!G.orig);   // the original code-drawn artwork
+  if (k === 'p' && G.state !== 'title' && G.state !== 'gameOver') G.paused = !G.paused;
 });
 
 let last = performance.now();
 function frame(now) {
   const dt = Math.min(0.05, (now - last) / 1000); last = now;
-  if (!G.paused) update(dt);
+  moveCrosshair(dt);
+  if (!G.paused && !G.aboutOpen && !G.rotateOpen) update(dt);
+  syncTouchBar();
   render();
   requestAnimationFrame(frame);
 }
