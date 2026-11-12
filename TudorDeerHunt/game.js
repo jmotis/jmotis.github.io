@@ -348,7 +348,7 @@ function payLady() {
   L.state = 'leave'; L.t = 0; L.dir = -L.dir;
   banner('', 'Her ladyship withdraws and the hunt resumes!', 2.4, '#ffe08a');
 }
-// ---- education mode (E): a fact about Henry for every deer taken, read from facts.md
+// ---- education mode (E): learn a fact about Henry with every deer taken, read from facts.md
 let FACTS = [], factsFromFile = false;
 // Each round owns its own block of facts: round 1 shows facts 1-9, round 2 facts 10-18, and so on. Within a round the
 // first deer taken shows the block's first fact, the second its second... This holds whether or not education mode was on
@@ -401,7 +401,7 @@ const tapWord = () => G.touch ? 'Tap' : 'Click or press Enter';
 function toggleEdu() {
   G.edu = !G.edu;
   try { localStorage.setItem('kingsDeerHuntEdu', G.edu ? '1' : '0'); } catch (e) { /* ignore */ }
-  if (G.state !== 'title' && G.state !== 'gameOver') banner('', G.edu ? 'Education mode on: a fact about Henry for every deer taken.' : 'Education mode off.', 2, '#cfe8ff');
+  if (G.state !== 'title' && G.state !== 'gameOver') banner('', G.edu ? 'Education mode on: learn a fact about Henry with every deer taken.' : 'Education mode off.', 2, '#cfe8ff');
 }
 function dismissFact() { G.fact = null; nextDeer(); }
 function wrapLines(str, maxW) {
@@ -933,7 +933,6 @@ function drawHUD() {
   for (let i = 0; i < 3; i++) boltIcon(W - 220 + i * 26, 43, i < G.bolts);
   plain('ROUND', W - 28, 27, 11, '#5e4320', FONT_B, 'right', 'bold');
   plain(String(G.round), W - 28, 45, 20, '#3a2410', FONT_B, 'right', 'bold');
-  if (Sound.muted && !G.touch && !G.noKeys) plain('muted (M)', W - 84, 27, 11, '#8b3a2a', FONT_B, 'right');   // touch and no-shortcut players see the Music button instead
 }
 function drawCrosshair() {
   if (!G.mouse.shown) return;
@@ -1084,6 +1083,7 @@ function render() {
   if (payDue()) drawPayPanel();
   if (G.state === 'fact' && G.fact) drawFactPanel();
   if (G.edu && G.state !== 'title') text('Education mode on' + (G.touch || G.noKeys ? '' : ' (E)'), 22, 76, 12, '#e6f2ff', FONT_B, 'left', 'bold');
+  if (Sound.muted && G.state !== 'title') text('Muted' + (G.touch || G.noKeys ? '' : ' (M)'), W - 22, 76, 12, '#e6f2ff', FONT_B, 'right', 'bold');   // mirrors the education label, on the right
   if (G.state === 'roundEnd') drawRoundEnd();
   if (G.state === 'gameOver') drawGameOver();
   if (G.paused) { ctx.fillStyle = 'rgba(15,10,5,0.5)'; ctx.fillRect(0, 0, W, H); text('Paused', W / 2, H / 2, 44, '#ffe08a'); }
