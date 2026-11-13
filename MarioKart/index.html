@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Queens' Gallop</title>
+<style>
+  :root { --parch:#efe3c2; --ink:#2b1d12; --gold:#b8892b; --red:#8c1c13; --green:#14663c; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; background:#1b140e; color:var(--ink); overflow:hidden;
+    font-family: "Hoefler Text", "Baskerville", "Palatino Linotype", Georgia, serif; }
+  canvas { position:fixed; inset:0; width:100vw; height:100vh; display:block; }
+  #fx { pointer-events:none; }
+  .panel { background:var(--parch); border:3px double var(--ink); box-shadow:0 4px 18px rgba(0,0,0,.45); }
+
+  /* ---------- menu ---------- */
+  #menu { position:fixed; inset:0; overflow:auto; padding:22px 16px 30px; text-align:center;
+    background: linear-gradient(rgba(27,20,14,.72), rgba(27,20,14,.88)), url(img/map-plain.jpg) center/cover; }
+  #menu h1 { margin:0; color:var(--parch); font-size:clamp(34px,5.4vw,64px); letter-spacing:.04em; font-variant:small-caps;
+    text-shadow:0 3px 0 #000; }
+  #menu .sub { color:#d9c79a; font-style:italic; margin:4px 0 18px; font-size:clamp(14px,1.6vw,19px); }
+  #cards { display:grid; align-items:start; grid-template-columns:repeat(6, minmax(0,1fr)); gap:12px; max-width:1320px; margin:0 auto; }
+  @media (max-width:1000px){ #cards { grid-template-columns:repeat(3, minmax(0,1fr)); } }
+  @media (max-width:560px){ #cards { grid-template-columns:repeat(2, minmax(0,1fr)); } }
+  .card { padding:8px 8px 10px; cursor:pointer; text-align:center; transition:transform .12s, box-shadow .12s; font:inherit; color:inherit; }
+  .card:hover, .card.sel { transform:translateY(-6px); box-shadow:0 0 0 4px var(--gold), 0 10px 24px rgba(0,0,0,.6); }
+  .card img { width:100%; aspect-ratio:3/4; object-fit:cover; object-position:50% 12%; display:block; border:2px solid var(--ink); }
+  .card h2 { margin:8px 0 0; font-size:18px; line-height:1.1; min-height:2.2em; display:flex; align-items:center; justify-content:center; }
+  .card .dates { font-size:12.5px; color:#5b4630; }
+  .card .motto { font-style:italic; font-size:13px; margin:5px 0 7px; min-height:2.5em; }
+  .card .note { font-size:10.5px; color:#6b5a45; margin-top:6px; line-height:1.25; min-height:2.5em; }
+  .stat { display:grid; grid-template-columns:62px 1fr; align-items:center; gap:6px; font-size:11.5px; text-align:left; margin-top:3px; }
+  .bar { height:7px; background:#cdbf9a; border:1px solid var(--ink); }
+  .bar i { display:block; height:100%; background:var(--red); }
+  #levels { margin:0 0 16px; color:#e8dcb9; font-size:16px; }
+  #levels span { margin-right:8px; font-style:italic; }
+  #levels button { font:inherit; font-size:15px; padding:5px 16px; margin:0 3px; background:transparent; color:#e8dcb9; border:2px solid #b7a57c; cursor:pointer; }
+  #levels button.on { background:var(--parch); color:var(--ink); border-color:var(--gold); font-weight:700; }
+  #how { color:#e8dcb9; margin:18px auto 0; max-width:900px; font-size:15px; line-height:1.5; }
+  #how kbd { background:var(--parch); color:var(--ink); border:1px solid #000; border-radius:3px; padding:1px 6px; font:600 12.5px ui-monospace, Menlo, monospace; }
+  #how small { display:block; margin-top:10px; color:#b7a57c; font-size:12px; }
+
+  /* ---------- HUD ---------- */
+  #hud { position:fixed; inset:0; pointer-events:none; display:none; }
+  #pos { position:absolute; left:18px; bottom:14px; font-size:76px; font-weight:700; color:var(--parch); line-height:1;
+    text-shadow:0 0 2px #000, 3px 3px 0 #000; }
+  #pos sup { font-size:32px; }
+  #top { position:absolute; left:50%; top:10px; transform:translateX(-50%); padding:5px 20px; text-align:center; white-space:nowrap; }
+  #street { font-size:21px; font-variant:small-caps; letter-spacing:.05em; }
+  #lapline { font-size:13.5px; color:#4b3a28; font-variant-numeric:tabular-nums; }
+  #itembox { position:absolute; right:18px; top:12px; width:96px; padding:6px; text-align:center; }
+  #itembox canvas { position:static; width:64px; height:64px; margin:0 auto; }
+  #itemname { font-size:12.5px; line-height:1.15; min-height:2.3em; }
+  #standings { position:absolute; left:14px; top:12px; padding:6px 10px 6px 6px; font-size:13.5px; }
+  #standings div { display:flex; align-items:center; gap:7px; padding:2px 0; }
+  #standings img { width:26px; height:26px; border-radius:50%; border:2px solid var(--gold); object-fit:cover; }
+  #standings .me { font-weight:700; color:var(--red); }
+  #msg { position:absolute; left:50%; top:24%; transform:translateX(-50%); font-size:22px; color:var(--parch);
+    text-shadow:0 0 3px #000, 2px 2px 0 #000; font-style:italic; opacity:0; transition:opacity .25s; white-space:nowrap; }
+  #count { position:fixed; inset:0; display:none; align-items:center; justify-content:center; pointer-events:none;
+    font-size:150px; font-weight:700; color:var(--parch); text-shadow:0 0 4px #000, 6px 6px 0 #000; font-variant:small-caps; }
+
+  /* ---------- results ---------- */
+  #results { position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(20,14,8,.55); }
+  #results .panel { padding:18px 28px 22px; min-width:min(470px,92vw); text-align:center; }
+  #results h2 { margin:0 0 2px; font-size:30px; font-variant:small-caps; }
+  #results p { margin:0 0 10px; font-style:italic; }
+  #results table { width:100%; border-collapse:collapse; font-size:16px; }
+  #results td { padding:5px 6px; border-top:1px solid #b9a779; text-align:left; font-variant-numeric:tabular-nums; }
+  #results td:last-child { text-align:right; }
+  #results tr.me td { font-weight:700; color:var(--red); }
+  #results img { width:30px; height:30px; border-radius:50%; border:2px solid var(--gold); vertical-align:middle; object-fit:cover; }
+  button.btn { font:inherit; font-size:16px; margin:16px 6px 0; padding:8px 18px; background:var(--green); color:#fff; border:2px solid var(--ink); cursor:pointer; }
+  button.btn.alt { background:var(--parch); color:var(--ink); }
+  #loading { position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:#1b140e; color:var(--parch); font-size:24px; font-style:italic; }
+</style>
+</head>
+<body>
+<canvas id="gl"></canvas>
+<canvas id="fx"></canvas>
+
+<div id="hud">
+  <div id="standings" class="panel"></div>
+  <div id="top" class="panel"><div id="street">The Strand</div><div id="lapline">Lap 1 of 2 · 0:00.00</div></div>
+  <div id="itembox" class="panel"><canvas id="itemicon" width="128" height="128"></canvas><div id="itemname">—</div></div>
+  <div id="pos">1<sup>st</sup></div>
+  <div id="msg"></div>
+</div>
+<div id="count"></div>
+
+<div id="menu">
+  <h1>The Queens' Gallop</h1>
+  <div class="sub">Six queens, two laps, one city — a horse race through Tudor London on the “Agas” map</div>
+  <div id="levels"><span>Rivals:</span>
+    <button data-level="easy">Easy</button><button data-level="normal">Normal</button><button data-level="hard">Hard</button>
+  </div>
+  <div id="cards"></div>
+  <div id="how">
+    <kbd>↑</kbd>/<kbd>W</kbd> gallop &nbsp; <kbd>←</kbd> <kbd>→</kbd>/<kbd>A</kbd> <kbd>D</kbd> steer &nbsp; <kbd>↓</kbd>/<kbd>S</kbd> rein in &nbsp;
+    <kbd>Space</kbd> jump &nbsp; <kbd>Shift</kbd> or <kbd>E</kbd> use item &nbsp; <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> level &nbsp; <kbd>M</kbd> mute &nbsp; <kbd>Esc</kbd> quit to menu
+    <br>Ride through the Tudor roses to win an item. Jump the hay bales. Stay on the road — the houses are slow going.
+    <small>The route follows real streets: the Strand, Fleet Street, Ludgate Hill, St Paul's Churchyard, Watling Street, Budge Row, Candlewick Street, Eastcheap,
+    Tower Street, the Minories, Aldgate, Leadenhall Street, Cornhill, the Poultry, Cheapside, Newgate Street, Snow Hill, Holborn, St Giles and St Martin's Lane.
+    The map shows London c. 1560, a little after Henry's death in 1547. Map image and street lines: the Agas Map edition of
+    <i>The Map of Early Modern London</i> (MoEML), University of Victoria, mapoflondon.uvic.ca.</small>
+  </div>
+</div>
+
+<div id="results"><div class="panel">
+  <h2 id="rtitle"></h2><p id="rsub"></p>
+  <table id="rtable"></table>
+  <button class="btn" id="again">Race again</button><button class="btn alt" id="tomenu">Choose another queen</button>
+</div></div>
+<div id="loading">Unrolling the map…</div>
+
+<script src="track.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
